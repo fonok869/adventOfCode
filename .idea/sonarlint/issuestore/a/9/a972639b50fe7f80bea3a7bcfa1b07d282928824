@@ -1,0 +1,14 @@
+
+Z	java:S106<"9Replace this use of System.out or System.err by a logger.(ÆÿÇíşÿÿÿÿ8ïØÄ‘â.
+U	java:S106$"9Replace this use of System.out or System.err by a logger.(’¨ÿÂ8ïØÄ‘â.
+U	java:S106>"9Replace this use of System.out or System.err by a logger.(º…¼º8ïØÄ‘â.
+T	java:S106?"9Replace this use of System.out or System.err by a logger.(¢á@8ïØÄ‘â.
+U	java:S106;"9Replace this use of System.out or System.err by a logger.(òªèä8ïØÄ‘â.
+]
+java:S1119+";Refactor the code to remove this label and the need for it.(å±éıÿÿÿÿ8ïØÄ‘â.
+£
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ıö‘”ÿÿÿÿÿ8ùŠÎüá.
+t
+java:S3776!"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(×é¼øÿÿÿÿ8ïØÄ‘â.
+Z	java:S106="9Replace this use of System.out or System.err by a logger.(Èá·şıÿÿÿÿ8ïØÄ‘â.
+z	java:S1355"YReduce the total number of break and continue statements in this loop to use at most one.(»ß£àşÿÿÿÿ8ïØÄ‘â.

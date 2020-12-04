@@ -1,0 +1,8 @@
+
+T
+java:S2130'"9Use "Integer.parseInt" for this string-to-int conversion.(©†¢øÿÿÿÿ
+S	java:S106 "9Replace this use of System.out or System.err by a logger.(úÃÑùşÿÿÿÿ
+T
+java:S2130("9Use "Integer.parseInt" for this string-to-int conversion.(ÚÛêëûÿÿÿÿ
+c
+java:S1126;"AReplace this if-then-else statement by a single return statement.(íä†âùÿÿÿÿ8‹ò€”â.
