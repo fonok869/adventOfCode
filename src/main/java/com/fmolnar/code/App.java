@@ -13,6 +13,12 @@ import com.fmolnar.code.day06.Day06Challenge01;
 import com.fmolnar.code.day06.Day06Challenge02;
 import com.fmolnar.code.day07.Day07Challenge01;
 import com.fmolnar.code.day07.Day07Challenge02;
+import com.fmolnar.code.day08.Day08Challenge01;
+import com.fmolnar.code.day08.Day08Challenge02;
+import com.fmolnar.code.day09.Day09Challenge01;
+import com.fmolnar.code.day09.Day09Challenge02;
+import com.fmolnar.code.day10.Day10Challenge01;
+import com.fmolnar.code.day10.Day10Challenge02;
 
 import java.io.IOException;
 
@@ -80,10 +86,33 @@ public class App {
 //        System.out.println("Day7 ------- 01");
 //        day07Challenge01.calculate();
 
-        Day07Challenge02 day07Challenge02 = new Day07Challenge02();
-        System.out.println("Day7 ------- 02");
-        day07Challenge02.calculate();
+//        Day07Challenge02 day07Challenge02 = new Day07Challenge02();
+//        System.out.println("Day7 ------- 02");
+//        day07Challenge02.calculate();
 
+        Day08Challenge01 day08Challenge01 = new Day08Challenge01();
+        System.out.println("Day08 ------- 01");
+        day08Challenge01.calculate();
+
+        Day08Challenge02 day08Challenge02 = new Day08Challenge02();
+        System.out.println("Day08 ------- 02");
+        day08Challenge02.calculate();
+
+        Day09Challenge01 day09Challenge01 = new Day09Challenge01();
+        System.out.println("Day09 ------- 01");
+        day09Challenge01.calculate();
+
+        Day09Challenge02 day09Challenge02 = new Day09Challenge02();
+        System.out.println("Day09 ------- 02");
+        day09Challenge02.calculate();
+
+        Day10Challenge01 day10Challenge01 = new Day10Challenge01();
+        System.out.println("Day10 ------- 01");
+        day10Challenge01.calculate();
+
+        Day10Challenge02 day10Challenge02 = new Day10Challenge02();
+        System.out.println("Day10 ------- 02");
+        day10Challenge02.calculate();
 
     }
 
