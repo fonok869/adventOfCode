@@ -19,6 +19,12 @@ import com.fmolnar.code.day09.Day09Challenge01;
 import com.fmolnar.code.day09.Day09Challenge02;
 import com.fmolnar.code.day10.Day10Challenge01;
 import com.fmolnar.code.day10.Day10Challenge02;
+import com.fmolnar.code.day11.Day11Challenge01;
+import com.fmolnar.code.day11.Day11Challenge02;
+import com.fmolnar.code.day11.Day11ChallengeBeauty01;
+import com.fmolnar.code.day11.Day11ChallengeBeauty02;
+import com.fmolnar.code.day12.Day12Challenge01;
+import com.fmolnar.code.day12.Day12Challenge02;
 
 import java.io.IOException;
 
@@ -90,29 +96,47 @@ public class App {
 //        System.out.println("Day7 ------- 02");
 //        day07Challenge02.calculate();
 
-        Day08Challenge01 day08Challenge01 = new Day08Challenge01();
-        System.out.println("Day08 ------- 01");
-        day08Challenge01.calculate();
+//        Day08Challenge01 day08Challenge01 = new Day08Challenge01();
+//        System.out.println("Day08 ------- 01");
+//        day08Challenge01.calculate();
+//
+//        Day08Challenge02 day08Challenge02 = new Day08Challenge02();
+//        System.out.println("Day08 ------- 02");
+//        day08Challenge02.calculate();
+//
+//        Day09Challenge01 day09Challenge01 = new Day09Challenge01();
+//        System.out.println("Day09 ------- 01");
+//        day09Challenge01.calculate();
+//
+//        Day09Challenge02 day09Challenge02 = new Day09Challenge02();
+//        System.out.println("Day09 ------- 02");
+//        day09Challenge02.calculate();
+//
+//        Day10Challenge01 day10Challenge01 = new Day10Challenge01();
+//        System.out.println("Day10 ------- 01");
+//        day10Challenge01.calculate();
+//
+//        Day10Challenge02 day10Challenge02 = new Day10Challenge02();
+//        System.out.println("Day10 ------- 02");
+//        day10Challenge02.calculate();
 
-        Day08Challenge02 day08Challenge02 = new Day08Challenge02();
-        System.out.println("Day08 ------- 02");
-        day08Challenge02.calculate();
+//        Day11Challenge01 day11Challenge01 = new Day11Challenge01();
+//        day11Challenge01.calculate();
 
-        Day09Challenge01 day09Challenge01 = new Day09Challenge01();
-        System.out.println("Day09 ------- 01");
-        day09Challenge01.calculate();
+//        Day11Challenge02 day11Challenge02 = new Day11Challenge02();
+//        day11Challenge02.calculate();
+//
+//        Day11ChallengeBeauty01 day11ChallengeBeauty01 = new Day11ChallengeBeauty01();
+//        day11ChallengeBeauty01.calculate();
 
-        Day09Challenge02 day09Challenge02 = new Day09Challenge02();
-        System.out.println("Day09 ------- 02");
-        day09Challenge02.calculate();
+//        Day12Challenge01 day12Challenge01 = new Day12Challenge01();
+//        day12Challenge01.calculate();
 
-        Day10Challenge01 day10Challenge01 = new Day10Challenge01();
-        System.out.println("Day10 ------- 01");
-        day10Challenge01.calculate();
+//        Day12Challenge02 day12Challenge02 = new Day12Challenge02();
+//        day12Challenge02.calculate();
 
-        Day10Challenge02 day10Challenge02 = new Day10Challenge02();
-        System.out.println("Day10 ------- 02");
-        day10Challenge02.calculate();
+        Day11ChallengeBeauty02  day11ChallengeBeauty02 = new Day11ChallengeBeauty02();
+        day11ChallengeBeauty02.calculate();
 
     }
 
