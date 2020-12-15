@@ -27,6 +27,10 @@ import com.fmolnar.code.day12.Day12Challenge01;
 import com.fmolnar.code.day12.Day12Challenge02;
 import com.fmolnar.code.day13.Day13Challenge01;
 import com.fmolnar.code.day13.Day13Challenge02;
+import com.fmolnar.code.day14.Day14Challenge01;
+import com.fmolnar.code.day14.Day14Challenge02;
+import com.fmolnar.code.day15.Day15Challenge01;
+import com.fmolnar.code.day15.Day15Challenge02;
 
 import java.io.IOException;
 
@@ -144,8 +148,20 @@ public class App {
  //       Day13Challenge01 day13Challenge01 = new Day13Challenge01();
  //       day13Challenge01.calculate();
 
-        Day13Challenge02 day13Challenge02 = new Day13Challenge02();
-        day13Challenge02.calculate();
+//        Day13Challenge02 day13Challenge02 = new Day13Challenge02();
+//        day13Challenge02.calculate();
+
+//        Day14Challenge01 day14Challenge01 = new Day14Challenge01();
+//        day14Challenge01.calculate();
+
+//        Day14Challenge02 day14Challenge02 = new Day14Challenge02();
+//        day14Challenge02.calculate();
+
+//        Day15Challenge01 day15Challenge01 = new Day15Challenge01();
+//        day15Challenge01.calculate2();
+
+        Day15Challenge02 day15Challenge02 = new Day15Challenge02();
+        day15Challenge02.calculate();
 
     }
 

@@ -12,7 +12,6 @@ public class Day13Challenge02 {
     public Day13Challenge02() {
     }
 
-    Integer time;
     String listBus;
     List<Integer> buses = new ArrayList<>();
 
