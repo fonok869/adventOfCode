@@ -157,11 +157,11 @@ public class App {
 //        Day14Challenge02 day14Challenge02 = new Day14Challenge02();
 //        day14Challenge02.calculate();
 
-//        Day15Challenge01 day15Challenge01 = new Day15Challenge01();
-//        day15Challenge01.calculate2();
+        Day15Challenge01 day15Challenge01 = new Day15Challenge01();
+        day15Challenge01.calculate2();
 
-        Day15Challenge02 day15Challenge02 = new Day15Challenge02();
-        day15Challenge02.calculate();
+//        Day15Challenge02 day15Challenge02 = new Day15Challenge02();
+//        day15Challenge02.calculate();
 
     }
 
