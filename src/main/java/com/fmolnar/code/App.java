@@ -31,6 +31,8 @@ import com.fmolnar.code.day14.Day14Challenge01;
 import com.fmolnar.code.day14.Day14Challenge02;
 import com.fmolnar.code.day15.Day15Challenge01;
 import com.fmolnar.code.day15.Day15Challenge02;
+import com.fmolnar.code.day16.Day16Challenge01;
+import com.fmolnar.code.day16.Day16Challenge02;
 
 import java.io.IOException;
 
@@ -38,6 +40,7 @@ import java.io.IOException;
  * Launch day
  */
 public class App {
+
 
     public static void main(String[] args) throws IOException {
 //        //DAY1
@@ -157,11 +160,18 @@ public class App {
 //        Day14Challenge02 day14Challenge02 = new Day14Challenge02();
 //        day14Challenge02.calculate();
 
-        Day15Challenge01 day15Challenge01 = new Day15Challenge01();
-        day15Challenge01.calculate2();
+//        Day15Challenge01 day15Challenge01 = new Day15Challenge01();
+//        day15Challenge01.calculate2();
 
 //        Day15Challenge02 day15Challenge02 = new Day15Challenge02();
 //        day15Challenge02.calculate();
+
+//        Day16Challenge01 day16Challenge01 = new Day16Challenge01();
+//        day16Challenge01.calculate();
+
+        Day16Challenge02 day16Challenge02 = new Day16Challenge02();
+        day16Challenge02.calculate();
+
 
     }
 
