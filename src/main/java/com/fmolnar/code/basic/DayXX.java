@@ -11,7 +11,7 @@ public class DayXX {
 
     private List<String> lines = new ArrayList<>();
     public void calculate() throws IOException {
-        InputStream reader = getClass().getResourceAsStream("/day17/input.txt");
+        InputStream reader = getClass().getResourceAsStream("/day18/input.txt");
         try (BufferedReader file = new BufferedReader(new InputStreamReader(reader));) {
             String line;
             while ((line = file.readLine()) != null) {
