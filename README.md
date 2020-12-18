@@ -1,10 +1,4 @@
 # adventOfCode
-<style> 
- td {
-  text-align: center;
- }
-
-</style>
 <body>
 <div style="text-align: center;">
 <h1>My solutions to the competition of AdventOfCode 2020</h1>
@@ -16,93 +10,93 @@
   </tr>
     <tr>
         <td>2020/12/01</td>
-		<td>&#10004;&#65039;</td>
-		<td>&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
     </tr>
 	<tr>
         <td>2020/12/02</td>
-		<td>&#10004;&#65039;</td>
-		<td>&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
     </tr>
 	<tr>
         <td>2020/12/03</td>
-		<td>&#10004;&#65039;</td>
-		<td>&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
     </tr>
 	<tr>
         <td>2020/12/04</td>
-		<td>&#10004;&#65039;</td>
-		<td>&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
     </tr>
 	<tr>
         <td>2020/12/05</td>
-		<td>&#10004;&#65039;</td>
-		<td>&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
     </tr>
 	<tr>
         <td>2020/12/06</td>
-		<td>&#10004;&#65039;</td>
-		<td>&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
     </tr>
 	<tr>
         <td>2020/12/07</td>
-		<td>&#10004;&#65039;</td>
-		<td>&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
     </tr>
 	<tr>
         <td>2020/12/08</td>
-		<td>&#10004;&#65039;</td>
-		<td>&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
     </tr>
 	<tr>
         <td>2020/12/09</td>
-		<td>&#10004;&#65039;</td>
-		<td>&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
     </tr>
 	<tr>
         <td>2020/12/10</td>
-		<td>&#10004;&#65039;</td>
-		<td>&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
     </tr>
 	<tr>
         <td>2020/12/11</td>
-		<td>&#10004;&#65039;</td>
-		<td>&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
     </tr>
 	<tr>
         <td>2020/12/12</td>
-		<td>&#10004;&#65039;</td>
-		<td>&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
     </tr>
 	<tr>
         <td>2020/12/13</td>
-		<td>&#10004;&#65039;</td>
-		<td>&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
     </tr>
 	<tr>
         <td>2020/12/14</td>
-		<td>&#10004;&#65039;</td>
-		<td>&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
     </tr>
 	<tr>
         <td>2020/12/15</td>
-		<td>&#10004;&#65039;</td>
-		<td>&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
     </tr>
 	<tr>
         <td>2020/12/16</td>
-		<td>&#10004;&#65039;</td>
-		<td>&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
     </tr>
 	<tr>
         <td>2020/12/17</td>
-		<td>&#10004;&#65039;</td>
-		<td>&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
     </tr>
 	<tr>
         <td>2020/12/18</td>
-		<td>&#10004;&#65039;</td>
-		<td>&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
     </tr>
 	
 </table>
