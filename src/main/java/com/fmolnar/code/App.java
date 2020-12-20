@@ -37,6 +37,8 @@ import com.fmolnar.code.day17.Day17Challenge01;
 import com.fmolnar.code.day17.Day17Challenge02;
 import com.fmolnar.code.day18.Day18Challenge01;
 import com.fmolnar.code.day18.Day18Challenge02;
+import com.fmolnar.code.day19.Day19Challenge01;
+import com.fmolnar.code.day19.Day19Challenge02;
 
 import java.io.IOException;
 
@@ -182,11 +184,17 @@ public class App {
 //        Day17Challenge02 day17Challenge02 = new Day17Challenge02();
 //        day17Challenge02.calculate();
 
-        Day18Challenge01 day18Challenge01 = new Day18Challenge01();
-        day18Challenge01.calculate();
+//        Day18Challenge01 day18Challenge01 = new Day18Challenge01();
+//        day18Challenge01.calculate();
+//
+//        Day18Challenge02 day18Challenge02 = new Day18Challenge02();
+//        day18Challenge02.calculate();
 
-        Day18Challenge02 day18Challenge02 = new Day18Challenge02();
-        day18Challenge02.calculate();
+        Day19Challenge01 day19Challenge01 = new Day19Challenge01();
+        day19Challenge01.calculate();
+
+//        Day19Challenge02 day19Challenge02 = new Day19Challenge02();
+//        day19Challenge02.calculate();
 
 
     }
