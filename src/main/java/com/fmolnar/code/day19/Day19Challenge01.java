@@ -34,7 +34,6 @@ public class Day19Challenge01 {
                     if (line.startsWith("a") || line.startsWith("b")) {
                         messages.add(line);
                     } else if (!isAOrB(line)) {
-                        System.out.println(line);
                         transformLine(line);
                     }
                 }
@@ -44,8 +43,6 @@ public class Day19Challenge01 {
         while ((keyMap.size()) != rulesMap.size() + 2) {
             iterateDictionary();
         }
-        System.out.println("MapRules: " + rulesMap);
-        System.out.println("KeyMap: " + keyMap);
         System.out.println("Count: " + checkMessages());
     }
 
@@ -57,7 +54,6 @@ public class Day19Challenge01 {
         for (String message : messages) {
             if (rulesToMatch.contains(message)) {
                 counter++;
-                break;
             }
         }
         return counter;
@@ -75,6 +71,8 @@ public class Day19Challenge01 {
             if (0L == newList.stream().filter(s -> s.matches(".*\\d.*")).count()) {
                 withoutWhiteSpace.addAll(removeAllSpaces(newList));
                 keyMap.put(rule.getKey(), new HashSet<>(withoutWhiteSpace));
+                System.out.println("SzamElotte: " + rule.getKey() + " List :" + rule.getValue());
+                System.out.println("Szam : " + rule.getKey() + " List :" + withoutWhiteSpace);
                 rulesMap.put(rule.getKey(), withoutWhiteSpace);
                 continue;
             }
@@ -95,7 +93,15 @@ public class Day19Challenge01 {
                 Set<String> toReplace = keyMap.get(Integer.valueOf(matcherAnyDigit.group(0)));
                 for (String toRep : toReplace) {
                     String newCodexLine = codexLine;
-                    newStringList.add(newCodexLine.replace(matcherAnyDigit.group(0), toRep));
+                    String number = matcherAnyDigit.group(0);
+                    int firstIndex = newCodexLine.indexOf(number);
+                    int lastIndex = newCodexLine.lastIndexOf(number);
+                    if(firstIndex == lastIndex){
+                        newStringList.add(newCodexLine.replace(number, toRep));
+                    } else {
+                        String uj = newCodexLine.substring(0,Math.max(firstIndex-1, 0)) + toRep + newCodexLine.substring(Math.min(firstIndex + number.length(), number.length()));
+                        newStringList.add(uj);
+                    }
                 }
             } else { // nincs KeyMap-ben
                 newStringList.add(codexLine);
@@ -126,12 +132,10 @@ public class Day19Challenge01 {
     }
 
     private void transformLine(String rule) {
-        String simple = "^((\\d+)\\:\\s(\\d+\\s\\d+))";
-        Pattern simpleString = Pattern.compile(simple);
-        String doubleS = "^((\\d+)\\:\\s(\\d+\\s\\d+)\\s\\|\\s(\\d+\\s\\d+))";
-        Pattern doubleString = Pattern.compile(doubleS);
         List<String> values = new ArrayList<>();
         if (rule.contains("|")) {
+            String doubleS = "^((\\d+)\\:\\s(\\d+\\s\\d+)\\s\\|\\s(\\d+\\s\\d+))$";
+            Pattern doubleString = Pattern.compile(doubleS);
             Matcher matcherDouble = doubleString.matcher(rule);
             if (matcherDouble.find()) {
                 values.add(matcherDouble.group(3));
@@ -139,7 +143,7 @@ public class Day19Challenge01 {
                 System.out.println("Transformed: " + Integer.valueOf(matcherDouble.group(2)) + " List: " + values);
                 rulesMap.put(Integer.valueOf(matcherDouble.group(2)), values);
             } else {
-                String doubleSimple = "^((\\d+)\\:\\s(\\d+)\\s\\|\\s(\\d+))";
+                String doubleSimple = "^((\\d+)\\:\\s(\\d+)\\s\\|\\s(\\d+))$";
                 Pattern doubleSimplePattern = Pattern.compile(doubleSimple);
                 Matcher doubleSimpleMatcher = doubleSimplePattern.matcher(rule);
                 System.out.println("Line : " + rule);
@@ -149,11 +153,22 @@ public class Day19Challenge01 {
                     System.out.println("Transformed: " + Integer.valueOf(doubleSimpleMatcher.group(2)) + " List: " + values);
                     rulesMap.put(Integer.valueOf(doubleSimpleMatcher.group(2)), values);
                 } else {
-                    throw new RuntimeException("Case not implemented");
+                    String oneTwo = "^((\\d+)\\:\\s(\\d+)\\s\\|\\s(\\d+\\s\\d+))$";
+                    Matcher matcherOneTwo = Pattern.compile(oneTwo).matcher(rule);
+                    if(matcherOneTwo.find()){
+                        values.add(matcherOneTwo.group(3));
+                        values.add(matcherOneTwo.group(4));
+                        System.out.println("Transformed: " + Integer.valueOf(matcherOneTwo.group(2)) + " List: " + values);
+                        rulesMap.put(Integer.valueOf(matcherOneTwo.group(2)), values);
+                    } else{
+                        throw new RuntimeException("Case not implemented");
+                    }
                 }
 
             }
         } else {
+            String simple = "^((\\d+)\\:\\s(\\d+\\s\\d+))$";
+            Pattern simpleString = Pattern.compile(simple);
             Matcher matcherSimple = simpleString.matcher(rule);
             if (matcherSimple.find()) {
                 // TODO enleverv plus tard
@@ -162,7 +177,7 @@ public class Day19Challenge01 {
                 System.out.println("Transformed: " + Integer.valueOf(matcherSimple.group(2)) + " List: " + values);
                 rulesMap.put(Integer.valueOf(matcherSimple.group(2)), values);
             } else {
-                String simp = "^((\\d+)\\:\\s(\\d+))";
+                String simp = "^((\\d+)\\:\\s(\\d+))$";
                 Pattern simpleStr = Pattern.compile(simp);
                 Matcher matcher = simpleStr.matcher(rule);
                 if (matcher.find()) {

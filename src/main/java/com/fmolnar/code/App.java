@@ -39,6 +39,22 @@ import com.fmolnar.code.day18.Day18Challenge01;
 import com.fmolnar.code.day18.Day18Challenge02;
 import com.fmolnar.code.day19.Day19Challenge01;
 import com.fmolnar.code.day19.Day19Challenge02;
+import com.fmolnar.code.day20.Day20Challenge01;
+import com.fmolnar.code.day20.Day20Challenge02;
+import com.fmolnar.code.day20.Day20Challenge02Original;
+import com.fmolnar.code.day21.Day21Beauty01;
+import com.fmolnar.code.day21.Day21Challenge01;
+import com.fmolnar.code.day22.Day22Beauty02;
+import com.fmolnar.code.day22.Day22Challenge01;
+import com.fmolnar.code.day22.Day22Challenge02;
+import com.fmolnar.code.day23.Day23Challenge01;
+import com.fmolnar.code.day23.Day23Challenge02;
+import com.fmolnar.code.day23.Day23ChallengeV201;
+import com.fmolnar.code.day23.Day23ChallengeV202;
+import com.fmolnar.code.day23.Day23Refacto01;
+import com.fmolnar.code.day24.Day24Challenge01;
+import com.fmolnar.code.day24.Day24Challenge02;
+import com.fmolnar.code.day25.Day25Challenge01;
 
 import java.io.IOException;
 
@@ -154,8 +170,8 @@ public class App {
 //        Day11ChallengeBeauty02  day11ChallengeBeauty02 = new Day11ChallengeBeauty02();
 //        day11ChallengeBeauty02.calculate();
 
- //       Day13Challenge01 day13Challenge01 = new Day13Challenge01();
- //       day13Challenge01.calculate();
+        //       Day13Challenge01 day13Challenge01 = new Day13Challenge01();
+        //       day13Challenge01.calculate();
 
 //        Day13Challenge02 day13Challenge02 = new Day13Challenge02();
 //        day13Challenge02.calculate();
@@ -190,12 +206,65 @@ public class App {
 //        Day18Challenge02 day18Challenge02 = new Day18Challenge02();
 //        day18Challenge02.calculate();
 
-        Day19Challenge01 day19Challenge01 = new Day19Challenge01();
-        day19Challenge01.calculate();
+//        Day19Challenge01 day19Challenge01 = new Day19Challenge01();
+//        day19Challenge01.calculate();
 
 //        Day19Challenge02 day19Challenge02 = new Day19Challenge02();
 //        day19Challenge02.calculate();
 
+//        Day20Challenge01 day20Challenge01 = new Day20Challenge01();
+//        day20Challenge01.calculate();
+
+//          Day20Challenge01 day20Challenge01 = new Day20Challenge01();
+//        day20Challenge01.calculate();
+
+//        Day20Challenge02 day20Challenge02 = new Day20Challenge02();
+//        day20Challenge02.calculate();
+
+//        Day20Challenge02Original original = new Day20Challenge02Original();
+//        original.calculate();
+
+//        Day21Challenge01 day21Challenge01 = new Day21Challenge01();
+//        day21Challenge01.calculate();
+
+//        Day21Beauty01 day21Beauty01 = new Day21Beauty01();
+//        day21Beauty01.calculate();
+
+//        Day22Challenge01 day22Challenge01 = new Day22Challenge01();
+//        day22Challenge01.calculate();
+
+//        Day22Challenge02 day22Challenge02 = new Day22Challenge02();
+//        day22Challenge02.calculate();
+
+//        Day22Beauty02 day22Beauty02 = new Day22Beauty02();
+//        day22Beauty02.calculate();
+
+//        Day23Challenge01 day23Challenge01 = new Day23Challenge01();
+//        day23Challenge01.caulculate();
+
+//        Day23ChallengeV201 day23ChallengeV201 = new Day23ChallengeV201();
+//        day23ChallengeV201.caulculate();
+
+//        Day23Refacto01 day23Refacto01 = new Day23Refacto01();
+//        day23Refacto01.caulculate();
+
+//        Day23Challenge02 day23Challenge02 = new Day23Challenge02();
+//        day23Challenge02.caulculate();
+
+//        Day23ChallengeV202 day23ChallengeV202 = new Day23ChallengeV202();
+//        day23ChallengeV202.caulculate();
+
+//        Day25Challenge01 day25Challenge01 = new Day25Challenge01();
+//        day25Challenge01.calculate();
+
+//        Day24Challenge01 day24Challenge01 = new Day24Challenge01();
+//        day24Challenge01.calculate();
+
+//        Day24Challenge02 day24Challenge02 = new Day24Challenge02();
+//        day24Challenge02.calculate();
+
+        Day25Challenge01 day25Challenge01 = new Day25Challenge01();
+        day25Challenge01.calculate();
 
     }
 

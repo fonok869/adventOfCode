@@ -1,4 +1,4 @@
-package com.fmolnar.code.sudoku;
+package com.fmolnar.code.codewars.sudoku;
 
 import java.util.Arrays;
 import java.util.HashSet;

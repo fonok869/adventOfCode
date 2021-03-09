@@ -1,4 +1,4 @@
-package com.fmolnar.code.sudoku;
+package com.fmolnar.code.codewars.sudoku;
 
 import org.junit.Test;
 
