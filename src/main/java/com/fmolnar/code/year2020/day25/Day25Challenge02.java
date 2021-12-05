@@ -1,4 +1,4 @@
-package com.fmolnar.code.basic;
+package com.fmolnar.code.year2020.day25;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,7 +7,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DayXX {
+public class Day25Challenge02 {
+
+    public Day25Challenge02() {
+    }
 
     private List<String> lines = new ArrayList<>();
     public void calculate() throws IOException {
@@ -23,5 +26,4 @@ public class DayXX {
 
         System.out.println("Sum: " + lines);
     }
-
 }
