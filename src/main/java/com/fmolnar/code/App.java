@@ -2,6 +2,8 @@ package com.fmolnar.code;
 
 import com.fmolnar.code.year2021.day04.Day04Challenge01;
 import com.fmolnar.code.year2021.day04.Day04Challenge02;
+import com.fmolnar.code.year2021.day06.Day06Challenge01;
+import com.fmolnar.code.year2021.day06.Day06Challenge02;
 import com.fmolnar.code.year2021.day5.Day05Challenge01;
 import com.fmolnar.code.year2021.day5.Day05Challenge02;
 
@@ -40,11 +42,17 @@ public class App {
 //        day04B.calculate();
 
 //
-        Day05Challenge01 day05 = new Day05Challenge01();
-        day05.calculate();
+//        Day05Challenge01 day05 = new Day05Challenge01();
+//        day05.calculate();
+//
+//        Day05Challenge02 day05New = new Day05Challenge02();
+//        day05New.calculate();
 
-        Day05Challenge02 day05New = new Day05Challenge02();
-        day05New.calculate();
+        Day06Challenge01 day06Challenge01 = new Day06Challenge01();
+        day06Challenge01.calculate();
+
+        Day06Challenge02 day06Challenge02 = new Day06Challenge02();
+        day06Challenge02.calculate();
     }
 
 
