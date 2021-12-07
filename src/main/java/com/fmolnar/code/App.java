@@ -4,6 +4,9 @@ import com.fmolnar.code.year2021.day04.Day04Challenge01;
 import com.fmolnar.code.year2021.day04.Day04Challenge02;
 import com.fmolnar.code.year2021.day06.Day06Challenge01;
 import com.fmolnar.code.year2021.day06.Day06Challenge02;
+
+import com.fmolnar.code.year2021.day07.Day07Challenge01;
+import com.fmolnar.code.year2021.day07.Day07Challenge02;
 import com.fmolnar.code.year2021.day5.Day05Challenge01;
 import com.fmolnar.code.year2021.day5.Day05Challenge02;
 
@@ -48,11 +51,17 @@ public class App {
 //        Day05Challenge02 day05New = new Day05Challenge02();
 //        day05New.calculate();
 
-        Day06Challenge01 day06Challenge01 = new Day06Challenge01();
-        day06Challenge01.calculate();
+//        Day06Challenge01 day06Challenge01 = new Day06Challenge01();
+//        day06Challenge01.calculate();
+//
+//        Day06Challenge02 day06Challenge02 = new Day06Challenge02();
+//        day06Challenge02.calculate();
 
-        Day06Challenge02 day06Challenge02 = new Day06Challenge02();
-        day06Challenge02.calculate();
+        Day07Challenge01 day07Challenge01 = new Day07Challenge01();
+        day07Challenge01.calculate();
+
+        Day07Challenge02 day07Challenge02 = new Day07Challenge02();
+        day07Challenge02.calculate();
     }
 
 
