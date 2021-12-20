@@ -1,14 +1,11 @@
 package com.fmolnar.code;
 
-import com.fmolnar.code.year2021.day04.Day04Challenge01;
-import com.fmolnar.code.year2021.day04.Day04Challenge02;
-import com.fmolnar.code.year2021.day06.Day06Challenge01;
-import com.fmolnar.code.year2021.day06.Day06Challenge02;
 
-import com.fmolnar.code.year2021.day07.Day07Challenge01;
-import com.fmolnar.code.year2021.day07.Day07Challenge02;
-import com.fmolnar.code.year2021.day5.Day05Challenge01;
-import com.fmolnar.code.year2021.day5.Day05Challenge02;
+import com.fmolnar.code.year2021.day13.Day13Challenge01;
+import com.fmolnar.code.year2021.day13.Day13Challenge02;
+import com.fmolnar.code.year2021.day16.Day16Challenge01;
+import com.fmolnar.code.year2021.day16.Day16Challenge02;
+import com.fmolnar.code.year2021.day20.Day20challenge01;
 
 import java.io.IOException;
 
@@ -57,11 +54,75 @@ public class App {
 //        Day06Challenge02 day06Challenge02 = new Day06Challenge02();
 //        day06Challenge02.calculate();
 
-        Day07Challenge01 day07Challenge01 = new Day07Challenge01();
-        day07Challenge01.calculate();
+//        Day07Challenge01 day07Challenge01 = new Day07Challenge01();
+//        day07Challenge01.calculate();
+//
+//        Day07Challenge02 day07Challenge02 = new Day07Challenge02();
+//        day07Challenge02.calculate();
 
-        Day07Challenge02 day07Challenge02 = new Day07Challenge02();
-        day07Challenge02.calculate();
+//        Day08Challenge01 day08Challenge01  = new Day08Challenge01();
+//        day08Challenge01.calculate();
+//
+//        Day08Challenge02 day08Challenge02 = new Day08Challenge02();
+//        day08Challenge02.calculate();
+
+//        Day09Challenge01 day09Challenge01 = new Day09Challenge01();
+//        day09Challenge01.calculate();
+
+//        Day09Challenge02 day09Challenge02 = new Day09Challenge02();
+//        day09Challenge02.calculate();
+
+//        Day10Challenge01 day10Challenge01 = new Day10Challenge01();
+//        day10Challenge01.calculate();
+//
+//        Day10Challenge02 day10Challenge02 = new Day10Challenge02();
+//        day10Challenge02.calculate();
+
+//        BonusChallenge bonusChallenge = new BonusChallenge();
+//        bonusChallenge.calculate();
+
+//        BonusChallenge2 bonusChallenge2 = new BonusChallenge2();
+//        bonusChallenge2.calculate();
+
+//        Day11Challenge01 day11Challenge01 = new Day11Challenge01();
+//        day11Challenge01.calculate();
+
+//        Day12Challenge01 day12Challenge01 = new Day12Challenge01();
+//        day12Challenge01.calculate();
+
+//
+//        Day13Challenge01 day13Challenge01 = new Day13Challenge01();
+//        day13Challenge01.calculate();
+//
+//        Day13Challenge02 day13Challenge02 = new Day13Challenge02();
+//        day13Challenge02.calculate();
+
+//        Day14Challenge01 day14Challenge01 = new Day14Challenge01();
+//        day14Challenge01.calculate();
+
+//        Day14Challenge02 day14Challenge02 = new Day14Challenge02();
+//        day14Challenge02.calculate();
+
+//        Day15Challenge01 day15Challenge01 = new Day15Challenge01();
+//        day15Challenge01.calculate();
+//
+//        Day15Challenge02 day15Challenge02 = new Day15Challenge02();
+//        day15Challenge02.calculate();
+
+//        Day17Challenge01 day17Challenge01 = new Day17Challenge01();
+//        day17Challenge01.calculate();
+//
+//        Day17Challenge02 day17Challenge02 = new Day17Challenge02();
+//       day17Challenge02.calculate();
+
+//        Day16Challenge01 day16Challenge01 = new Day16Challenge01();
+//        day16Challenge01.calculate();
+
+        Day16Challenge02 day16Challenge02 = new Day16Challenge02();
+        day16Challenge02.calculate();
+
+//        Day20challenge01 day20challenge01 = new Day20challenge01();
+//        day20challenge01.calculate();
     }
 
 

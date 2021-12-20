@@ -43,6 +43,71 @@
            <td style="text-align: center;">&#10004;&#65039;</td>
            <td style="text-align: center;">&#10004;&#65039;</td>
         </tr>
+        <tr>
+        <td>2021/12/08</td>
+                   <td style="text-align: center;">&#10004;&#65039;</td>
+                   <td style="text-align: center;">&#10004;&#65039;</td>
+         </tr>
+         <tr>
+         <td>2021/12/09</td>
+               <td style="text-align: center;">&#10004;&#65039;</td>
+               <td style="text-align: center;">&#10004;&#65039;</td>
+         </tr>
+         <tr>
+         <td>2021/12/10</td>
+              <td style="text-align: center;">&#10004;&#65039;</td>
+              <td style="text-align: center;">&#10004;&#65039;</td>
+         </tr>
+         <tr>
+         <td>2021/12/11</td>
+              <td style="text-align: center;">&#10004;&#65039;</td>
+              <td style="text-align: center;">&#10004;&#65039;</td>
+         </tr>
+         <tr>
+          <td>2021/12/12</td>
+                       <td style="text-align: center;">&#10004;&#65039;</td>
+                       <td style="text-align: center;">&#10004;&#65039;</td>
+           </tr>
+           <tr>
+         <td>2021/12/13</td>                       
+         <td style="text-align: center;">&#10004;&#65039;</td>
+         <td style="text-align: center;">&#10004;&#65039;</td>
+         </tr>
+         <tr>
+         <td>2021/12/14</td>
+              <td style="text-align: center;">&#10004;&#65039;</td>
+              <td style="text-align: center;">&#10004;&#65039;</td>
+         </tr>
+         <tr>
+         <td>2021/12/15</td>
+               <td style="text-align: center;">&#10004;&#65039;</td>
+               <td style="text-align: center;">&#10004;&#65039;</td>
+         </tr>
+         <tr>
+         <td>2021/12/16</td>
+               <td style="text-align: center;">&#10004;&#65039;</td>
+               <td style="text-align: center;">-</td>
+         </tr>
+         <tr>
+          <td>2021/12/17</td>
+               <td style="text-align: center;">&#10004;&#65039;</td>
+               <td style="text-align: center;">&#10004;&#65039;</td>
+         </tr>
+         <tr>
+         <td>2021/12/18</td>
+               <td style="text-align: center;">-</td>
+            <td style="text-align: center;">-</td>
+         </tr>
+         <tr>
+          <td>2021/12/19</td>
+               <td style="text-align: center;">-</td>
+               <td style="text-align: center;">-</td>
+          </tr>
+          <tr>
+          <td>2021/12/20</td>
+             <td style="text-align: center;">&#10004;&#65039;</td>
+            <td style="text-align: center;">&#10004;&#65039;</td>
+          </tr>
     </table>
  </div>
 <h1>My solutions to the competition of AdventOfCode 2020</h1>
