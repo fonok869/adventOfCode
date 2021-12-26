@@ -50,13 +50,17 @@ public class Day16Challenge02 {
         transformToBinary();
         String binary = binaries.get(0);
 
-        List<Long> sum = calculateNumbers(binary);
+        Long longs = findSum2(binary);
+
+        List<Long> sum = calculateNumbers(binary, Integer.MAX_VALUE);
 
 
         System.out.println("Elem: " + findPackets(binary));
 
-        System.out.println("Sum: " + sum.stream().mapToLong(s -> s).sum());
+        System.out.println("Sum: " + sum.get(0));
     }
+
+
 
     private long findPackets(String in) {
         long sum = 0;
@@ -95,10 +99,13 @@ public class Day16Challenge02 {
         return Integer.parseInt(new BigInteger(s, 2).toString(10));
     }
 
-    private List<Long> calculateNumbers(String binary) {
+    private List<Long> calculateNumbers(String binary, int toParse) {
         List<Long> sums = new ArrayList<>();
-
-        for (int i = 0; i < binary.length(); ) {
+        int prevI = 0;
+        for (int i = 0, parsed = 0; i < binary.length(); parsed++) {
+            if(parsed >= toParse){
+                break;
+            }
             if (binary.substring(i).chars().allMatch(c -> c == '0')) {
                 break;
             }
@@ -138,17 +145,61 @@ public class Day16Challenge02 {
                 i += lengthNow;
                 List<Long> numbers = new ArrayList<>();
                 if (lengthNow == 15) {
-                    numbers = calculateNumbers(binary.substring(i, i + realLength));
+                    numbers = calculateNumbers(binary.substring(i, i + realLength), Integer.MAX_VALUE);
                     i += realLength;
                 } else if(lengthNow == 11){
-                       numbers =  calculateNumbers(binary.substring(i, (i + (lengthNow * realLength))));
-                    i += (lengthNow * realLength);
+                    numbers = calculateNumbers(binary.substring(i), realLength);
+                    i += prevI;
                 }
                 sums.add(getOperators(typeIDVersion, numbers));
-
             }
+            prevI = i;
         }
         return sums;
+    }
+
+    private long findSum2(String hex) {
+        String in = hex;
+        return findPackets2(in, Integer.MAX_VALUE).get(0);
+    }
+
+    int prevI = 0;
+    private List<Long> findPackets2(String in, int toParse) {
+        List<Long> res = new ArrayList<>();
+        long sum = 0;
+        for(int i = 0, parsed = 0; i< in.length();parsed++){
+            if(parsed >= toParse){
+                break;
+            }
+            if(in.substring(i).chars().allMatch(e -> e == '0')) break;
+            int id = binToDec(in.substring(i+3, i+6));
+            i+=6;
+            if(id == 4){
+                String s = "";
+                for(;;i+=5){
+                    s+=in.substring(i+1, i+5);
+                    if(in.charAt(i) == '0'){
+                        i+=5;
+                        break;
+                    }
+                }
+                res.add(Long.parseLong(s, BINARY));
+            } else {
+                int lengthLength = 15;
+                boolean b = in.charAt(i) == '1';
+                if(b){
+                    lengthLength = 11;
+                }
+                i++;
+                int length = binToDec(in.substring(i, i+lengthLength));
+                i+=lengthLength;
+                List<Long> op = findPackets2(in.substring(i, b ? in.length() : (i + length)), b ? length : Integer.MAX_VALUE);
+                res.add(getOperators(id, op));
+                i += b ? prevI : length;
+            }
+            prevI = i;
+        }
+        return res;
     }
 
 

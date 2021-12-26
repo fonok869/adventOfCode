@@ -5,12 +5,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Stream;
 
 public class Day20challenge02 {
 
@@ -59,56 +61,22 @@ public class Day20challenge02 {
             step(i);
         }
 
-        System.out.println("Sum: " + inputs1.size());
+        System.out.println("Day20Challenge02: " + inputs1.size());
     }
 
     private void step(int step) {
-        Set<Point> newInput1 = new HashSet<>();
-        Set<Point> newInput0 = new HashSet<>();
-        int xMin = 5000;
-        int xMax = 0;
-        int yMin = 5000;
-        int yMax = 0;
-        for (Point point : inputs1) {
-            if (point.x <= xMin) {
-                xMin = point.x;
-            }
-
-            if (xMax <= point.x) {
-                xMax = point.x;
-            }
-
-            if (point.y <= yMin) {
-                yMin = point.y;
-            }
-
-            if (yMax <= point.y) {
-                yMax = point.y;
-            }
-        }
-
-        for (Point point : inputs0) {
-            if (point.x <= xMin) {
-                xMin = point.x;
-            }
-
-            if (xMax <= point.x) {
-                xMax = point.x;
-            }
-
-            if (point.y <= yMin) {
-                yMin = point.y;
-            }
-
-            if (yMax <= point.y) {
-                yMax = point.y;
-            }
-        }
+        int xMin = Stream.of(inputs0, inputs1).flatMap(Collection::stream).mapToInt(p->p.x()).min().getAsInt();
+        int xMax = Stream.of(inputs0, inputs1).flatMap(Collection::stream).mapToInt(p->p.x()).max().getAsInt();
+        int yMin = Stream.of(inputs0, inputs1).flatMap(Collection::stream).mapToInt(p->p.y()).min().getAsInt();
+        int yMax = Stream.of(inputs0, inputs1).flatMap(Collection::stream).mapToInt(p->p.y()).max().getAsInt();
 
         xMax = xMax + 1;
         yMax = yMax + 1;
         xMin = xMin - 1;
         yMin = yMin - 1;
+
+        Set<Point> newInput1 = new HashSet<>();
+        Set<Point> newInput0 = new HashSet<>();
 
         // Because of the input Data
         String actual = "0";
@@ -124,7 +92,6 @@ public class Day20challenge02 {
                     for(int i=x-1; i<x+2; i++){
                         if(inputs1.contains(new Point(i,j))){
                             line=line + "1";
-
                         } else if(inputs0.contains(new Point(i,j))) {
                             line=line + "0";
                         } else{
@@ -143,30 +110,10 @@ public class Day20challenge02 {
             }
         }
         inputs0 = new HashSet<>(newInput0);
-        inputs1 = new HashSet<Point>(newInput1);
+        inputs1 = new HashSet<>(newInput1);
     }
 
-    class Point {
-        int x;
-        int y;
+    public static record Point(int x, int y){
 
-        public Point(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof Point)) return false;
-            Point point = (Point) o;
-            return x == point.x &&
-                    y == point.y;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(x, y);
-        }
     }
 }
