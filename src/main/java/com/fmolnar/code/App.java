@@ -8,6 +8,7 @@ import com.fmolnar.code.year2021.day21.Day21Challenge02;
 import com.fmolnar.code.year2021.day21.Day21Challenge02Beauty;
 import com.fmolnar.code.year2021.day22.Day22Challenge01;
 import com.fmolnar.code.year2021.day22.Day22Challenge02;
+import com.fmolnar.code.year2021.day25.Day25Challenge01;
 
 import java.io.IOException;
 
@@ -123,23 +124,23 @@ public class App {
 //        Day16Challenge02 day16Challenge02 = new Day16Challenge02();
 //        day16Challenge02.calculate();
 
-        Day20challenge01 day20challenge01 = new Day20challenge01();
-        day20challenge01.calculate();
-
-        Day20challenge02 day20challenge02 = new Day20challenge02();
-        day20challenge02.calculate();
-
-        Day21Challenge01 day21Challenge01 = new Day21Challenge01();
-        day21Challenge01.calculate();
-
-        Day21Challenge02 day21Challenge02 = new Day21Challenge02();
-        day21Challenge02.calculate();
-
-        Day22Challenge01 challenge01 = new Day22Challenge01();
-        challenge01.calculate();
-
-        Day22Challenge02 day22Challenge02 = new Day22Challenge02();
-        day22Challenge02.calculate();
+//        Day20challenge01 day20challenge01 = new Day20challenge01();
+//        day20challenge01.calculate();
+//
+//        Day20challenge02 day20challenge02 = new Day20challenge02();
+//        day20challenge02.calculate();
+//
+//        Day21Challenge01 day21Challenge01 = new Day21Challenge01();
+//        day21Challenge01.calculate();
+//
+//        Day21Challenge02 day21Challenge02 = new Day21Challenge02();
+//        day21Challenge02.calculate();
+//
+//        Day22Challenge01 challenge01 = new Day22Challenge01();
+//        challenge01.calculate();
+//
+//        Day22Challenge02 day22Challenge02 = new Day22Challenge02();
+//        day22Challenge02.calculate();
 
 //        Day21Challenge02Beauty day21Challenge02Beauty = new Day21Challenge02Beauty(9,10);
 //        day21Challenge02Beauty.play();
@@ -154,6 +155,8 @@ public class App {
 //        System.out.println("SecondPlayer: " + quantomDiracDiceOriginal.wonGamesForPlayer2());
 
 
+        Day25Challenge01 day25Challenge01 = new Day25Challenge01();
+        day25Challenge01.calculate();
     }
 
 
