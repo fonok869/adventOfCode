@@ -38,7 +38,7 @@ public class Day16Challenge02 {
     }
 
     public void calculate() throws IOException {
-        InputStream reader = getClass().getResourceAsStream("/2021/day16/input.txt");
+        InputStream reader = getClass().getResourceAsStream("/2021/day18/input.txt");
         try (BufferedReader file = new BufferedReader(new InputStreamReader(reader));) {
             String line;
             while ((line = file.readLine()) != null) {
@@ -50,14 +50,12 @@ public class Day16Challenge02 {
         transformToBinary();
         String binary = binaries.get(0);
 
-        Long longs = findSum2(binary);
-
-        List<Long> sum = calculateNumbers(binary, Integer.MAX_VALUE);
+        calculateNumbers(binary, Integer.MAX_VALUE, -1);
 
 
         System.out.println("Elem: " + findPackets(binary));
 
-        System.out.println("Sum: " + sum.get(0));
+        System.out.println("Sum: " + packetsVersion.stream().mapToInt(s -> s).sum());
     }
 
 
@@ -99,24 +97,20 @@ public class Day16Challenge02 {
         return Integer.parseInt(new BigInteger(s, 2).toString(10));
     }
 
-    private List<Long> calculateNumbers(String binary, int toParse) {
-        List<Long> sums = new ArrayList<>();
-        int prevI = 0;
-        for (int i = 0, parsed = 0; i < binary.length(); parsed++) {
-            if(parsed >= toParse){
-                break;
-            }
+    private long calculateNumbers(String binary, int toParse, int typeIDVersionPrev) {
+        long sum = 0L;
+        for (int i = 0; i < binary.length(); ) {
             if (binary.substring(i).chars().allMatch(c -> c == '0')) {
                 break;
             }
 
             // PacketVersion
-            String packet = binary.substring(i, i + 3);
+            String packet = binary.substring(i, i+3);
             int packetVersion = binToDec(packet);
             packetsVersion.add(packetVersion);
 
             // PacketType
-            String typeID = binary.substring(i + 3, i + 6);
+            String typeID = binary.substring(i+3, i+6);
             int typeIDVersion = binToDec(typeID);
 
             i += 6;
@@ -133,9 +127,7 @@ public class Day16Challenge02 {
                         break;
                     }
                 }
-                sums.add(Long.parseLong(actual, BINARY));
             } else {
-
                 int lengthNow = 15;
                 if (binary.charAt(i) == '1') {
                     lengthNow = 11;
@@ -143,19 +135,14 @@ public class Day16Challenge02 {
                 i++;
                 int realLength = binToDec(binary.substring(i, i + lengthNow));
                 i += lengthNow;
-                List<Long> numbers = new ArrayList<>();
                 if (lengthNow == 15) {
-                    numbers = calculateNumbers(binary.substring(i, i + realLength), Integer.MAX_VALUE);
+                    sum += calculateNumbers(binary.substring(i, i + realLength), realLength, typeIDVersion);
                     i += realLength;
-                } else if(lengthNow == 11){
-                    numbers = calculateNumbers(binary.substring(i), realLength);
-                    i += prevI;
                 }
-                sums.add(getOperators(typeIDVersion, numbers));
+
             }
-            prevI = i;
         }
-        return sums;
+        return sum;
     }
 
     private long findSum2(String hex) {

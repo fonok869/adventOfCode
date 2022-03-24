@@ -1,4 +1,4 @@
-package com.fmolnar.code.year2021
+package com.fmolnar.code.year2021.day22OtherSolution;
 
 public class Coordinate {
     int x,y,z;

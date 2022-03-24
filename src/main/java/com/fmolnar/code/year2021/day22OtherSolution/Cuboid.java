@@ -1,4 +1,4 @@
-package com.fmolnar.code.year2021
+package com.fmolnar.code.year2021.day22OtherSolution;
 
 public class Cuboid {
     int x1,x2,y1,y2,z1,z2;

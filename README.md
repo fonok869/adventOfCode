@@ -86,7 +86,7 @@
          <tr>
          <td>2021/12/16</td>
                <td style="text-align: center;">&#10004;&#65039;</td>
-               <td style="text-align: center;">-</td>
+               <td style="text-align: center;">&#10004;&#65039;</td>
          </tr>
          <tr>
           <td>2021/12/17</td>
@@ -95,8 +95,8 @@
          </tr>
          <tr>
          <td>2021/12/18</td>
-               <td style="text-align: center;">-</td>
-            <td style="text-align: center;">-</td>
+               <td style="text-align: center;">&#10004;&#65039;</td>
+            <td style="text-align: center;">&#10004;&#65039;</td>
          </tr>
          <tr>
           <td>2021/12/19</td>

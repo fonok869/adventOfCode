@@ -38,7 +38,7 @@ public class Day16Challenge01 {
     }
 
     public void calculate() throws IOException {
-        InputStream reader = getClass().getResourceAsStream("/2021/day16/input.txt");
+        InputStream reader = getClass().getResourceAsStream("/2021/day18/input.txt");
         try (BufferedReader file = new BufferedReader(new InputStreamReader(reader));) {
             String line;
             while ((line = file.readLine()) != null) {
@@ -125,9 +125,6 @@ public class Day16Challenge01 {
                         break;
                     }
                 }
-                int decimalValue = Integer.parseInt(actual, BINARY);
-                packetsValues.add(decimalValue);
-                System.out.println("actual: " + decimalValue);
             } else {
                 int lengthNow = 15;
                 if (binary.charAt(i) == '1') {

@@ -1,6 +1,13 @@
 package com.fmolnar.code;
 
 
+import com.fmolnar.code.year2021.day14.Day14Challenge02;
+import com.fmolnar.code.year2021.day16.Day16Challenge01;
+import com.fmolnar.code.year2021.day16.Day16Challenge01New;
+import com.fmolnar.code.year2021.day16.Day16Challenge02;
+import com.fmolnar.code.year2021.day16.Day16Challenge02New;
+import com.fmolnar.code.year2021.day18.Day18Challenge01;
+import com.fmolnar.code.year2021.day18.Day18Challenge02;
 import com.fmolnar.code.year2021.day20.Day20challenge01;
 import com.fmolnar.code.year2021.day20.Day20challenge02;
 import com.fmolnar.code.year2021.day21.Day21Challenge01;
@@ -8,6 +15,8 @@ import com.fmolnar.code.year2021.day21.Day21Challenge02;
 import com.fmolnar.code.year2021.day21.Day21Challenge02Beauty;
 import com.fmolnar.code.year2021.day22.Day22Challenge01;
 import com.fmolnar.code.year2021.day22.Day22Challenge02;
+import com.fmolnar.code.year2021.day22.Day22Challenge02Beauty;
+import com.fmolnar.code.year2021.day22.Day22Challenge02Beauty02;
 import com.fmolnar.code.year2021.day25.Day25Challenge01;
 
 import java.io.IOException;
@@ -112,6 +121,15 @@ public class App {
 //        Day15Challenge02 day15Challenge02 = new Day15Challenge02();
 //        day15Challenge02.calculate();
 
+//        Day16Challenge02New day16Challenge02New = new Day16Challenge02New();
+//        day16Challenge02New.calculate();
+
+//        Day18Challenge01 day18Challenge01 = new Day18Challenge01();
+//        day18Challenge01.calculate();
+
+        Day18Challenge02 day18Challenge02 = new Day18Challenge02();
+        day18Challenge02.calculate();
+
 //        Day17Challenge01 day17Challenge01 = new Day17Challenge01();
 //        day17Challenge01.calculate();
 //
@@ -120,7 +138,7 @@ public class App {
 
 //        Day16Challenge01 day16Challenge01 = new Day16Challenge01();
 //        day16Challenge01.calculate();
-
+//
 //        Day16Challenge02 day16Challenge02 = new Day16Challenge02();
 //        day16Challenge02.calculate();
 
@@ -135,10 +153,15 @@ public class App {
 //
 //        Day21Challenge02 day21Challenge02 = new Day21Challenge02();
 //        day21Challenge02.calculate();
+//        Day22Challenge02Beauty day22Challenge02Beauty = new Day22Challenge02Beauty();
+//        day22Challenge02Beauty.calculate();
+
+//        Day22Challenge02Beauty02 day22Challenge02Beauty02 = new Day22Challenge02Beauty02();
+//        day22Challenge02Beauty02.calculate();
 //
 //        Day22Challenge01 challenge01 = new Day22Challenge01();
 //        challenge01.calculate();
-//
+////
 //        Day22Challenge02 day22Challenge02 = new Day22Challenge02();
 //        day22Challenge02.calculate();
 
@@ -155,8 +178,8 @@ public class App {
 //        System.out.println("SecondPlayer: " + quantomDiracDiceOriginal.wonGamesForPlayer2());
 
 
-        Day25Challenge01 day25Challenge01 = new Day25Challenge01();
-        day25Challenge01.calculate();
+//        Day25Challenge01 day25Challenge01 = new Day25Challenge01();
+//        day25Challenge01.calculate();
     }
 
 

@@ -1,5 +1,7 @@
 package com.fmolnar.code.year2021.day21;
 
+import com.fmolnar.code.basic.AbstractLspBean;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -50,13 +52,13 @@ public class Day21Challenge02 {
                     Integer diceOccurence = diceValue.getValue();
                     Long multiplication = stepOccurence * (Long.valueOf(diceOccurence));
                     if (i % 2 == 1) {
-                        long s1 = (stepIterationActual.p1Position() + diceValueActual - 1) % 10 + 1;
-                        long sTotal = s1 + stepIterationActual.p1TotalScore();
-                        newSteps.merge(new StepIteration(s1, sTotal, stepIterationActual.p2Position(), stepIterationActual.p2TotalScore()), multiplication, (l1,l2) -> l1+l2);
+                        long s1 = (stepIterationActual.p1Position + diceValueActual - 1) % 10 + 1;
+                        long sTotal = s1 + stepIterationActual.p1TotalScore;
+                        newSteps.merge(new StepIteration(s1, sTotal, stepIterationActual.p2Position, stepIterationActual.p2TotalScore), multiplication, (l1,l2) -> l1+l2);
                     } else {
-                        long s1 = (stepIterationActual.p2Position() + diceValueActual - 1) % 10 + 1;
-                        long sTotal = s1 + stepIterationActual.p2TotalScore();
-                        newSteps.merge(new StepIteration(stepIterationActual.p1Position(), stepIterationActual.p1TotalScore(), s1, sTotal), multiplication, (l1,l2) -> l1+l2);
+                        long s1 = (stepIterationActual.p2Position + diceValueActual - 1) % 10 + 1;
+                        long sTotal = s1 + stepIterationActual.p2TotalScore;
+                        newSteps.merge(new StepIteration(stepIterationActual.p1Position, stepIterationActual.p1TotalScore, s1, sTotal), multiplication, (l1,l2) -> l1+l2);
                     }
                 }
             }
@@ -67,15 +69,57 @@ public class Day21Challenge02 {
             steps = new HashMap(newSteps);
         }
 
-        Long firstUniverse = steps.entrySet().stream().filter(s -> s.getKey().p1TotalScore() >= maxPoint).mapToLong(s -> s.getValue().longValue()).sum();
-        Long secondUniverse = steps.entrySet().stream().filter(s -> s.getKey().p2TotalScore() >= maxPoint).mapToLong(s -> s.getValue().longValue()).sum();
+        Long firstUniverse = steps.entrySet().stream().filter(s -> s.getKey().p1TotalScore >= maxPoint).mapToLong(s -> s.getValue().longValue()).sum();
+        Long secondUniverse = steps.entrySet().stream().filter(s -> s.getKey().p2TotalScore >= maxPoint).mapToLong(s -> s.getValue().longValue()).sum();
         System.out.println("Day21Challenge02: " + (firstUniverse > secondUniverse ? firstUniverse : secondUniverse));
     }
 
-    public static record StepIteration(long p1Position, long p1TotalScore, long p2Position, long p2TotalScore) {
+//    public static record StepIteration(long p1Position, long p1TotalScore, long p2Position, long p2TotalScore) {
+//
+//        public boolean isFinished() {
+//            return maxPoint <= p1TotalScore() || maxPoint <= p2TotalScore();
+//        }
+//
+//    }
+
+    public static class StepIteration extends AbstractLspBean {
+
+        public long p1Position;
+        public long p1TotalScore;
+        public long p2Position;
+        public long p2TotalScore;
+
+        public long getP1Position() {
+            return p1Position;
+        }
+
+        public long getP1TotalScore() {
+            return p1TotalScore;
+        }
+
+        public long getP2Position() {
+            return p2Position;
+        }
+
+        public long getP2TotalScore() {
+            return p2TotalScore;
+        }
+
+        public StepIteration(long p1Position, long p1TotalScore, long p2Position, long p2TotalScore) {
+            this.p1Position = p1Position;
+            this.p1TotalScore = p1TotalScore;
+            this.p2Position = p2Position;
+            this.p2TotalScore = p2TotalScore;
+        }
+
+
+        @Override
+        public Object[] getFunctionalPropertiesForObjectEquality() {
+            return new Object[]{p1Position, p1TotalScore, p2Position, p2TotalScore};
+        }
 
         public boolean isFinished() {
-            return maxPoint <= p1TotalScore() || maxPoint <= p2TotalScore();
+            return maxPoint <= p1TotalScore || maxPoint <= p2TotalScore;
         }
 
     }
