@@ -1,6 +1,19 @@
 # adventOfCode
 <body>
 <div style="text-align: center;">
+<h1>My solutions to the competition of AdventOfCode 2022</h1>
+<table border="1" style="margin: 0px auto;">
+<tr>
+    <th>Day</th>
+    <th>Challenge1</th> 
+    <th>Challenge2</th>
+  </tr>
+    <tr>
+        <td>2022/12/01</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+    </tr>
+</table>
 <h1>My solutions to the competition of AdventOfCode 2021</h1>
 <table border="1" style="margin: 0px auto;">
 <tr>
