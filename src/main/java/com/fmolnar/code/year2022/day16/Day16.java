@@ -6,13 +6,15 @@ import org.paukov.combinatorics3.Generator;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+
+import static java.util.function.Predicate.not;
 
 public class Day16 {
 
@@ -56,37 +58,56 @@ public class Day16 {
         });
 
 
-        List<Integer> maxValues = new ArrayList<>();
+        Set<Integer> maxValues = new HashSet<>();
 
         String startLetter = "AA";
-        int sum = 0;
-        int harminc = 30;
-        List<String> alreadyVisited = new ArrayList<>();
-        alreadyVisited.add(startLetter);
-        calculateMaxValue(startLetter, harminc, sum, maxValues, alreadyVisited);
+        System.out.println("Beginning");
+        final long init= System.currentTimeMillis();
+        int i=1;
+
+        for(int firstBulk = 6; firstBulk<8; firstBulk++){
+            maxValues.add(Generator.combination(notZeroRates)
+                    .simple(firstBulk)
+                    .stream()
+                    .mapToInt(valvesToVisit -> {
+                        Set<String> otherValvesToVisit = notZeroRates.stream().filter(not(valvesToVisit::contains)).collect(Collectors.toSet());
+
+                        System.out.println("Finished: " + i);
+
+                        Set<Integer> maxValues1 = new HashSet<>();
+                        Set<String> alreadyVisited1 = new HashSet<>();
+                        alreadyVisited1.add(startLetter);
+                        alreadyVisited1.addAll(otherValvesToVisit);
+                        calculateMaxValue("AA", 26, 0, maxValues1, alreadyVisited1);
+
+                        System.out.println("Finished: " + i);
+
+                        Set<Integer> maxValues2 = new HashSet<>();
+                        Set<String> alreadyVisited2 = new HashSet<>();
+                        alreadyVisited2.add(startLetter);
+                        alreadyVisited2.addAll(valvesToVisit);
+                        calculateMaxValue("AA", 26, 0, maxValues2, alreadyVisited2);
 
 
-//
-//        for (List<String> permutate : permutated) {
-//            int harminc = 30;
-//            int sum = 0;
-//            String startLetter = "AA";
-//            sum = getSum(permutate, harminc, sum, startLetter);
-//            maxValues.add(sum);
-//        }
-//
-//
+                       return maxValues1.stream().mapToInt(s->s).max().getAsInt() + maxValues2.stream().mapToInt(s->s).max().getAsInt();
+
+                    }).max().orElse(0));
+
+            System.out.println("Finished: " + i + " " + (System.currentTimeMillis() - init)/1000L);
+        }
+
+
         System.out.println("Totot: " + maxValues.stream().mapToInt(s->s).max().getAsInt());
     }
 
-    public void calculateMaxValue(String startLetter, int harminc, int sum, List<Integer> maxValues, List<String> alreadyVisited){
-        Map<String, Integer> newPotentiels = notNullDistance.get(startLetter);
+    public void calculateMaxValue(String startLetter, int harminc, int sum, Set<Integer> maxValues, Set<String> alreadyVisited){
+        Map<String, Integer> newPotentiels = notNullDistance.get(startLetter).entrySet().stream().filter(s->!alreadyVisited.contains(s.getKey())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         for(Map.Entry<String, Integer> potentiel : newPotentiels.entrySet()){
             String nextLetter = potentiel.getKey();
             Integer lepes = potentiel.getValue();
-            if(lepes<5) {
+            if(lepes<6) {
                 if (!alreadyVisited.contains(nextLetter)) {
-                    List<String> alVisited = new ArrayList<>(alreadyVisited);
+                    Set<String> alVisited = new HashSet<>(alreadyVisited);
                     alVisited.add(nextLetter);
                     int hamrminc1 = harminc - lepes - 1;
                     int rate = rates.get(nextLetter);
@@ -108,22 +129,6 @@ public class Day16 {
         }
     }
 
-
-
-    private int getSum(List<String> permutate, int harminc, int sum, String startLetter) {
-        for (int i = 0; i < permutate.size(); i++) {
-            String nextLetter = permutate.get(i);
-            Integer lepes = notNullDistance.get(startLetter).get(nextLetter);
-            harminc = harminc - lepes -1;
-            int rate = rates.get(nextLetter);
-            sum += rate * harminc;
-            startLetter = nextLetter;
-            if(harminc<=0){
-                break;
-            }
-        }
-        return sum;
-    }
 
     private void dijkstra(String start, String destination) {
         Map<String, Integer> distances = new HashMap<>();
@@ -165,7 +170,5 @@ public class Day16 {
     }
 
     record Ins(String start, int rate, List<String>destinations) {
-    }
-
-    ;
+    } ;
 }
