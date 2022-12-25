@@ -12,4 +12,15 @@ public class PrintUtils {
         System.out.println();
         System.out.println("---------------------------------------------");
     }
+
+    public static void showMatrixT(int[][] matrix) {
+        for (int y = 0; y < matrix.length; y++) {
+            System.out.println();
+            for (int x = 0; x < matrix[0].length; x++) {
+                System.out.print(matrix[y][x]);
+            }
+        }
+        System.out.println();
+        System.out.println("---------------------------------------------");
+    }
 }

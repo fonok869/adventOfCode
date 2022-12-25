@@ -1,7 +1,6 @@
 package com.fmolnar.code.year2022.day22;
 
 import com.fmolnar.code.FileReaderUtils;
-import com.fmolnar.code.year2021.day21.Day21Challenge02;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
@@ -10,15 +9,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Day22 {
+public class Day22Challenge01 {
 
     Map<Integer, Integer> xDataMin = new HashMap<>();
     Map<Integer, Integer> xDataMax = new HashMap<>();
     Map<Integer, Integer> yDataMin = new HashMap<>();
     Map<Integer, Integer> yDataMax = new HashMap<>();
     List<Instruction> ins = new ArrayList<>();
-
-    public static final int fifty = 50;
 
     public void calculate() throws IOException {
         List<String> lines = FileReaderUtils.readFile("/2022/day22/input.txt");
@@ -112,95 +109,81 @@ public class Day22 {
 
     private Stop calculateNextStopDistance(Stop init, int[][] matrix) {
 
-        Position positionActuel = init.position;
-        Position positionBefore = init.position;
+        Stop actualStop = new Stop(init.facingManip, init.position);
+        Stop stopBefore = new Stop(init.facingManip, init.position);
         for (int i = 0; i < 1000; i++) {
-            //positionActuel = addTwoPosition(positionBefore, init.facingManip.direction);
+            actualStop = moveStop(stopBefore);
 
             // WALL
-            if (matrix[positionActuel.y][positionActuel.x] == 2) {
-                positionActuel = positionBefore;
-
-                return new Stop(init.facingManip, positionActuel);
+            if (matrix[actualStop.position.y][actualStop.position.x] == 2) {
+                actualStop = stopBefore;
+                return actualStop;
             }
-            positionBefore = positionActuel;
+            stopBefore = actualStop;
         }
-        return new Stop(init.facingManip, positionActuel);
+        return actualStop;
     }
 
     private Stop calculateNextStop(Stop init, Instruction instruction, int[][] matrix) {
 
-        Position positionActuel = init.position;
-        Position positionBefore = init.position;
-        Position direction = init.facingManip.direction;
-        Stop stopAcutal = new Stop(init.facingManip, init.position);
+        Stop actualStop = new Stop(init.facingManip, init.position);
+        Stop stopBefore = new Stop(init.facingManip, init.position);
         for (int i = 0; i < instruction.distance; i++) {
-            //positionActuel = addTwoPosition(positionBefore, direction);
+            actualStop =  moveStop(stopBefore);
 
             // WALL
-            if (matrix[positionActuel.y][positionActuel.x] == 2) {
-                positionActuel = positionBefore;
+            if (matrix[actualStop.position.y][actualStop.position.x] == 2) {
+                actualStop = stopBefore;
                 break;
             }
-
-
-            positionBefore = positionActuel;
+            stopBefore = actualStop;
         }
 
-        FacingManip newFacing = init.facingManip;
+        FacingManip newFacing = actualStop.facingManip;
         // Iranyvaltas
         if (instruction.direction == 'L') {
-            newFacing = FacingManip.fromFacing(init.facingManip.getLeft());
+            newFacing = FacingManip.fromFacing(actualStop.facingManip.getLeft());
         } else if (instruction.direction == 'R') {
-            newFacing = FacingManip.fromFacing(init.facingManip.getRight());
+            newFacing = FacingManip.fromFacing(actualStop.facingManip.getRight());
         } else if (instruction.direction == 'E') {
             // Nem csinalunk semmit
         } else {
             System.out.println("Gond Van");
         }
 
-        return new Stop(newFacing, positionActuel);
+        return new Stop(newFacing, actualStop.position);
     }
 
-    private Position addStop(Position positionActuel, Position instruction) {
-        Position newPoisition;
+    private Stop moveStop(Stop stopActuel) {
+        Position positionActuel = stopActuel.position;
+        Position instruction = stopActuel.facingManip.direction;
         if (FacingManip.UP.getDirection().equals(instruction)) {
             int ymin = positionActuel.y + instruction.y;
             if (ymin < yDataMin.get(positionActuel.x)) {
-                // 1 eset
-                if(positionActuel.x<fifty){
-                    int yPosition = fifty+positionActuel.x;
-                    return new Position(yPosition, xDataMin.get(yPosition));
-                }
-                // 2 eset
-
-
-                //3 eset
                 ymin = yDataMax.get(positionActuel.x);
-                return new Position(ymin, positionActuel.x);
+                return new Stop(stopActuel.facingManip, new Position(ymin, positionActuel.x));
             }
         } else if (FacingManip.DOWN.getDirection().equals(instruction)) {
             int ymax = positionActuel.y + instruction.y;
             if (yDataMax.get(positionActuel.x) < ymax) {
                 ymax = yDataMin.get(positionActuel.x);
-                return new Position(ymax, positionActuel.x);
+                return new Stop(stopActuel.facingManip, new Position(ymax, positionActuel.x));
             }
         } else if (FacingManip.LEFT.getDirection().equals(instruction)) {
             int xmin = positionActuel.x + instruction.x;
             if (xmin < xDataMin.get(positionActuel.y)) {
                 xmin = xDataMax.get(positionActuel.y);
-                return new Position(positionActuel.y, xmin);
+                return new Stop(stopActuel.facingManip, new Position(positionActuel.y, xmin));
             }
         } else if (FacingManip.RIGHT.getDirection().equals(instruction)) {
             int xmax = positionActuel.x + instruction.x;
             if (xDataMax.get(positionActuel.y) < xmax) {
                 xmax = xDataMin.get(positionActuel.y);
-                return new Position(positionActuel.y, xmax);
+                return new Stop(stopActuel.facingManip, new Position(positionActuel.y, xmax));
             }
         }
 
-
-        return new Position(positionActuel.y + instruction.y, positionActuel.x + instruction.x);
+        return new Stop(stopActuel.facingManip,new Position(positionActuel.y + instruction.y, positionActuel.x + instruction.x));
     }
 
     record Instruction(int distance, char direction) {

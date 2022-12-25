@@ -1,7 +1,7 @@
 package com.fmolnar.code.year2022.day22;
 
 import com.fmolnar.code.FileReaderUtils;
-import com.fmolnar.code.year2021.day21.Day21Challenge02;
+import com.fmolnar.code.year2021.day22.Day22Challenge02Beauty;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
@@ -10,14 +10,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Day22 {
+public class Day22Challenge02 {
 
     Map<Integer, Integer> xDataMin = new HashMap<>();
     Map<Integer, Integer> xDataMax = new HashMap<>();
     Map<Integer, Integer> yDataMin = new HashMap<>();
     Map<Integer, Integer> yDataMax = new HashMap<>();
     List<Instruction> ins = new ArrayList<>();
-
     public static final int fifty = 50;
 
     public void calculate() throws IOException {
@@ -93,114 +92,158 @@ public class Day22 {
             init = calculateNextStop(init, instruction, matrix);
         }
 
-        init  = calculateNextStopDistance(init, matrix);
         int step = 0;
         System.out.println(init);
-        if(init.facingManip == FacingManip.UP){
+        if (init.facingManip == FacingManip.UP) {
             step = 3;
-        } if(init.facingManip == FacingManip.LEFT){
+        }
+        if (init.facingManip == FacingManip.LEFT) {
             step = 2;
-        } if(init.facingManip == FacingManip.DOWN){
+        }
+        if (init.facingManip == FacingManip.DOWN) {
             step = 1;
         }
 
-        long password = Long.valueOf(init.position.x+1)*4l+1000l*Long.valueOf(init.position.y+1)+Long.valueOf(step);
+        long password = Long.valueOf(init.position.x + 1) * 4l + 1000l * Long.valueOf(init.position.y + 1) + Long.valueOf(step);
         System.out.println("Password: " + password);
 
 
     }
 
-    private Stop calculateNextStopDistance(Stop init, int[][] matrix) {
-
-        Position positionActuel = init.position;
-        Position positionBefore = init.position;
-        for (int i = 0; i < 1000; i++) {
-            //positionActuel = addTwoPosition(positionBefore, init.facingManip.direction);
-
-            // WALL
-            if (matrix[positionActuel.y][positionActuel.x] == 2) {
-                positionActuel = positionBefore;
-
-                return new Stop(init.facingManip, positionActuel);
-            }
-            positionBefore = positionActuel;
-        }
-        return new Stop(init.facingManip, positionActuel);
-    }
-
     private Stop calculateNextStop(Stop init, Instruction instruction, int[][] matrix) {
 
-        Position positionActuel = init.position;
-        Position positionBefore = init.position;
-        Position direction = init.facingManip.direction;
-        Stop stopAcutal = new Stop(init.facingManip, init.position);
+        Stop actualStop = new Stop(init.facingManip, init.position);
+        Stop stopBefore = new Stop(init.facingManip, init.position);
         for (int i = 0; i < instruction.distance; i++) {
-            //positionActuel = addTwoPosition(positionBefore, direction);
+            actualStop = moveStop(stopBefore);
 
             // WALL
-            if (matrix[positionActuel.y][positionActuel.x] == 2) {
-                positionActuel = positionBefore;
+            if (matrix[actualStop.position.y][actualStop.position.x] == 2) {
+                actualStop = stopBefore;
                 break;
             }
-
-
-            positionBefore = positionActuel;
+            stopBefore = actualStop;
         }
 
-        FacingManip newFacing = init.facingManip;
+        FacingManip newFacing = actualStop.facingManip;
         // Iranyvaltas
         if (instruction.direction == 'L') {
-            newFacing = FacingManip.fromFacing(init.facingManip.getLeft());
+            newFacing = FacingManip.fromFacing(actualStop.facingManip.getLeft());
         } else if (instruction.direction == 'R') {
-            newFacing = FacingManip.fromFacing(init.facingManip.getRight());
+            newFacing = FacingManip.fromFacing(actualStop.facingManip.getRight());
         } else if (instruction.direction == 'E') {
             // Nem csinalunk semmit
+            System.out.println("Itt van: " + instruction.direction);
         } else {
             System.out.println("Gond Van");
         }
 
-        return new Stop(newFacing, positionActuel);
+        return new Stop(newFacing, actualStop.position);
     }
 
-    private Position addStop(Position positionActuel, Position instruction) {
-        Position newPoisition;
+    private Stop moveStop(Stop stopActuel) {
+        Position positionActuel = stopActuel.position;
+        Position instruction = stopActuel.facingManip.direction;
         if (FacingManip.UP.getDirection().equals(instruction)) {
             int ymin = positionActuel.y + instruction.y;
             if (ymin < yDataMin.get(positionActuel.x)) {
                 // 1 eset
-                if(positionActuel.x<fifty){
-                    int yPosition = fifty+positionActuel.x;
-                    return new Position(yPosition, xDataMin.get(yPosition));
+                if (positionActuel.x < fifty) {
+                    int yPosition = fifty + positionActuel.x;
+                    return new Stop(FacingManip.RIGHT, new Position(yPosition, xDataMin.get(yPosition)));
                 }
                 // 2 eset
+                if (positionActuel.x < 2 * fifty) {
+                    int yPosition = 2 * fifty + positionActuel.x;
+                    return new Stop(FacingManip.RIGHT, new Position(yPosition, xDataMin.get(yPosition)));
+                }
+                // 3 eset
+                if (positionActuel.x < 3 * fifty) {
+                    int xPoisiton = positionActuel.x - (2 * fifty);
+                    return new Stop(FacingManip.UP, new Position(yDataMax.get(xPoisiton), xPoisiton));
+                }
 
-
-                //3 eset
-                ymin = yDataMax.get(positionActuel.x);
-                return new Position(ymin, positionActuel.x);
+                System.out.println("Nem kell itt lennie 1");
             }
         } else if (FacingManip.DOWN.getDirection().equals(instruction)) {
             int ymax = positionActuel.y + instruction.y;
             if (yDataMax.get(positionActuel.x) < ymax) {
-                ymax = yDataMin.get(positionActuel.x);
-                return new Position(ymax, positionActuel.x);
+                // 1 eset
+                if (positionActuel.x < fifty) {
+                    int xPosition = positionActuel.x + 2 * fifty;
+                    return new Stop(FacingManip.DOWN, new Position(yDataMin.get(xPosition), xPosition));
+                }
+
+                // 2 eset
+                if (positionActuel.x < 2 * fifty) {
+                    int yPosition = positionActuel.x + 2*fifty;
+                    return new Stop(FacingManip.LEFT, new Position(yPosition, xDataMax.get(yPosition)));
+                }
+
+
+                // 3 eset
+                if (positionActuel.x < 3 * fifty) {
+                    int yPosition = positionActuel.x - (fifty);
+                    return new Stop(FacingManip.LEFT, new Position(yPosition, xDataMax.get(yPosition)));
+                }
+                System.out.println("Nem kell itt lennie 2");
             }
         } else if (FacingManip.LEFT.getDirection().equals(instruction)) {
             int xmin = positionActuel.x + instruction.x;
             if (xmin < xDataMin.get(positionActuel.y)) {
-                xmin = xDataMax.get(positionActuel.y);
-                return new Position(positionActuel.y, xmin);
+
+                // 1 eset
+                if (positionActuel.y < fifty) {
+                    int yPosition = (fifty - 1  - positionActuel.y) + 2 * fifty;
+                    return new Stop(FacingManip.RIGHT, new Position(yPosition, xDataMin.get(yPosition)));
+                }
+
+                if (positionActuel.y < 2 * fifty) {
+                    int xPosition = positionActuel.y - (fifty) ;
+                    return new Stop(FacingManip.DOWN, new Position(yDataMin.get(xPosition), xPosition));
+                }
+
+                if (positionActuel.y < 3 * fifty) {
+                    int yPoisition = (3 * fifty -1) - positionActuel.y;
+                    return new Stop(FacingManip.RIGHT, new Position(yPoisition, xDataMin.get(yPoisition)));
+                }
+
+                if (positionActuel.y < 4 * fifty) {
+                    int xPoisition = positionActuel.y - (3 * fifty) + fifty;
+                    return new Stop(FacingManip.DOWN, new Position(yDataMin.get(xPoisition), xPoisition));
+                }
+
+                System.out.println("Nem kell itt lennie 3");
             }
         } else if (FacingManip.RIGHT.getDirection().equals(instruction)) {
             int xmax = positionActuel.x + instruction.x;
             if (xDataMax.get(positionActuel.y) < xmax) {
-                xmax = xDataMin.get(positionActuel.y);
-                return new Position(positionActuel.y, xmax);
+                // 1 eset
+                if (positionActuel.y < fifty) {
+                    int yPoisition = (fifty - 1  - positionActuel.y) + 2 * fifty;
+                    return new Stop(FacingManip.LEFT, new Position(yPoisition, xDataMax.get(yPoisition)));
+                }
+
+                if (positionActuel.y < 2 * fifty) {
+                    int xPosition = fifty + positionActuel.y;
+                    return new Stop(FacingManip.UP, new Position(yDataMax.get(xPosition), xPosition));
+                }
+
+                if (positionActuel.y < 3 * fifty) {
+                    int yPosition = (3 * fifty -1 ) - positionActuel.y;
+                    return new Stop(FacingManip.LEFT, new Position(yPosition, xDataMax.get(yPosition)));
+                }
+
+                if (positionActuel.y < 4 * fifty) {
+                    int xPosition = positionActuel.y - 2 * fifty;
+                    return new Stop(FacingManip.UP, new Position(yDataMax.get(xPosition), xPosition));
+                }
+
+                System.out.println("Nem kell itt lennie 3");
             }
         }
 
-
-        return new Position(positionActuel.y + instruction.y, positionActuel.x + instruction.x);
+        return new Stop(stopActuel.facingManip, new Position(positionActuel.y + instruction.y, positionActuel.x + instruction.x));
     }
 
     record Instruction(int distance, char direction) {
