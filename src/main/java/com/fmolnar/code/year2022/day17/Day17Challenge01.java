@@ -33,7 +33,7 @@ public class Day17Challenge01 {
             actualGas = stepForm(forms.get(i % 5), actualGas);
             calculYMax();
         }
-        System.out.println("MaxHeight: " + (maxY - (maxHeight + 4)));
+        System.out.println("Result (1): " + (maxY - (maxHeight + 4)));
     }
 
     private void calculYMax() {

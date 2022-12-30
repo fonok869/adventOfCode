@@ -71,16 +71,6 @@ public class Day23 {
                 continue;
             }
         }
-        //plotAll(new HashSet<>(allActualPointsBefore));
-
-        int minX = allActualPointsBefore.stream().mapToInt(Point::x).min().getAsInt();
-        int maxX = allActualPointsBefore.stream().mapToInt(Point::x).max().getAsInt();
-        int minY = allActualPointsBefore.stream().mapToInt(Point::y).min().getAsInt();
-        int maxY = allActualPointsBefore.stream().mapToInt(Point::y).max().getAsInt();
-
-        //System.out.println("Result : " + (((maxX - minX+1) * (maxY - minY+1)) - allActualPointsBefore.size()));
-
-
     }
 
     private List<Point> onlyRemoveOnce(List<Point> allNextPointsList, Set<Point> allNextPointsSet) {
