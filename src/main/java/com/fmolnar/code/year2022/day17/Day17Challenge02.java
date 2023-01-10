@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Day17 {
+public class Day17Challenge02 {
 
     String instructions;
     int maxX = 7;
@@ -19,6 +19,7 @@ public class Day17 {
     List<Long> dueReorganisation = new ArrayList<>();
     List<Long> actualGasList = new ArrayList<>();
     final int limit = 20;
+    final int geosNumber = 5;
 
     public void calculate() throws IOException {
         List<String> lines = FileReaderUtils.readFile("/2022/day17/input.txt");
@@ -33,54 +34,56 @@ public class Day17 {
             instructions = line;
         }
 
-        System.out.println("Length: " + instructions.length());
-        int cardinality = instructions.length() * 5;
+        int cardinality = instructions.length() * geosNumber;
         long actualGas = 0;
         for (int i = 0; i < 4 * cardinality; i++) {
-            actualGas = stepForm(forms.get(i % 5), actualGas);
+            actualGas = stepForm(forms.get(i % geosNumber), actualGas);
             calculYMax(actualGas);
             if (maxHeight <= limit) {
                 reorganisation();
             }
-//            if (i % 100 == 0) {
-//                System.out.println("i: " + i + " MAxHeight: " + (maxY - (maxHeight + 4)));
-//            }
         }
 
-//        System.out.println("MAxHeight: " + (maxY - (maxHeight + 4)));
-//        long values = Long.valueOf((maxY - (maxHeight + 4))) + dueReorganisation.stream().mapToLong(s -> Long.valueOf(s)).sum();
-//        System.out.println("Height: " + values);
+        int init = 1071;
+        long diffMax = 65170l;
+        long diffHeight = 97812;
+        long diffGasUnit = 383458l;
 
-
-        List<Integer> diffs = new ArrayList<>();
-        List<Long> heightDiffs = new ArrayList<>();
+        loop:
         for (int i = 0; i < cardinality; i++) {
             List<Integer> l1 = roundsUp.get(i);
             for (int j = cardinality; j < 2 * cardinality; j++) {
                 List<Integer> l2 = roundsUp.get(j);
                 if (l1.equals(l2)) {
-                    int diff = j - i;
-                    diffs.add(diff);
-                    long maxHeightJ = maxHeights.get(j);
-                    long maxHeightI = maxHeights.get(i);
-                    heightDiffs.add(maxHeightJ - maxHeightI);
+                    int diff = (j - i);
+                    for (int k = 2 * cardinality; k < 3 * cardinality; k++) {
+                        List<Integer> l3 = roundsUp.get(j);
+                        if (l1.equals(l3)) {
+                            int diff2 = (k - j);
+                            if (diff == diff2 && diff > cardinality) {
+                                if((maxHeights.get(k) - maxHeights.get(j))==(maxHeights.get(j) - maxHeights.get(i))) {
+                                    if((actualGasList.get(k) - actualGasList.get(j))==(actualGasList.get(j) - actualGasList.get(i)))
+                                    diffMax = k - j;
+                                    diffHeight = maxHeights.get(k) - maxHeights.get(j);
+                                    diffGasUnit = actualGasList.get(k) - actualGasList.get(j);
+                                    init = i;
+                                    break loop;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
 
-        //i : 1071
-        long diffMax = 65170l ;
-        long diffHeight = 97812;
-        long diffGasUnit = 383458l;
-//
-//
         long numberRocks = 1000000000000L;
         long stepped = numberRocks / Long.valueOf(diffMax);
         long rested = numberRocks - (stepped * diffMax);
         long diffGasAll = stepped * diffGasUnit;
         long heightStepped = stepped * diffHeight;
-//
-//        // Minden init
+
+
+        // Init Everything
         matrix = new int[maxX][maxY];
         maxHeight = maxY - 4;
         maxHeights = new ArrayList<>();
@@ -89,59 +92,17 @@ public class Day17 {
 
         long actualGas2 = 0;
         for (int i = 0; i < rested; i++) {
-            if(i == 1071){
+            if (i == init) {
                 actualGas2 = (actualGas2 + diffGasAll) % instructions.length();
             }
-
-            actualGas2 = stepForm(forms.get(i % 5), actualGas2);
-            //show();
+            actualGas2 = stepForm(forms.get(i % geosNumber), actualGas2);
             calculYMax(actualGas2);
             if (maxHeight <= limit) {
                 reorganisation();
             }
         }
 //
-        System.out.println("MAxHeight: " + (maxY - (maxHeight + 4) + heightStepped + dueReorganisation.stream().mapToLong(s->s).sum()));
-        int counter = 0;
-
-        List<Integer> cycles = new ArrayList<>();
-        loop: for(int i =0; i<cardinality; i++){
-            List<Integer> l1 = roundsUp.get(i);
-            for(int j=cardinality; j<2*cardinality; j++){
-                List<Integer> l2 = roundsUp.get(j);
-                if(l1.equals(l2)){
-                    int diff = (j-i);
-                    //System.out.println(l1);
-                    //System.out.println(l2);
-                    for(int k=2*cardinality; k<3*cardinality; k++) {
-                        List<Integer> l3 = roundsUp.get(j);
-                        if (l1.equals(l3)) {
-                            int diff2 = (k - j);
-                            if(diff == diff2 && diff>cardinality) {
-                                //System.out.println("i : " + i + " j: " + j + " k: " + k + " diff1: " + diff + " diff2: " + (k - j) + " diff3: " + (k - i));
-
-
-                                if(roundsUp.get(k+diff2).equals(l3)){
-                                    counter++;
-                                    cycles.add(diff);
-                                    System.out.println("Heights: (1)" + maxHeights.get(i) + " (j) " + maxHeights.get(j) + " (k): " + maxHeights.get(k) + " (z): " + maxHeights.get(k+diff2));
-                                    System.out.println("i : " + i + " j: " + j + " k: " + k + " diff1: " + diff + " diff2: " + (k - j) + " diff3: " + (k - i));
-                                    System.out.println("Actal gas (i) : " + actualGasList.get(i) + " j: " + actualGasList.get(j) + " k: " + actualGasList.get(k) + " diff k-j: " + (actualGasList.get(k) - actualGasList.get(j)) + " diff j-i: " + (actualGasList.get(j) - actualGasList.get(i)));
-
-                                }
-                            }
-                        }
-                    }
-
-
-                }
-            }
-        }
-        System.out.println("Gas Actual: " + actualGas);
-        System.out.println("Nombre: " + counter);
-        System.out.println("Max: " + cycles.stream().mapToInt(s->s).max().getAsInt());
-
-        System.out.println("MAxHeight: " + (maxY - (maxHeight + 4)));
+        System.out.println("MAxHeight: " + (maxY - (maxHeight + 4) + heightStepped + dueReorganisation.stream().mapToLong(s -> s).sum()));
     }
 
     private void reorganisation() {
@@ -158,11 +119,10 @@ public class Day17 {
             maxs.add(yMax);
         }
         final int max = maxs.stream().mapToInt(s -> s).max().getAsInt();
-        //show();
         int diff = maxY - max - limit;
 
-        if(diff<0){
-            throw new RuntimeException("Nem lehet kisebb 0-nal");
+        if (diff < 0) {
+            throw new RuntimeException("Can not be negative");
         }
         int[][] newMatrix = new int[maxX][maxY];
         for (int y = maxY - 1; diff <= y; y--) {
@@ -170,7 +130,6 @@ public class Day17 {
                 newMatrix[x][y] = matrix[x][y - (diff)];
             }
         }
-        //show2(newMatrix);
         dueReorganisation.add(Long.valueOf(diff));
         maxHeight += diff;
         matrix = newMatrix;
@@ -198,88 +157,61 @@ public class Day17 {
             relatives.add(Math.abs(max - maxValue));
         }
 
-        maxHeights.add((Long.valueOf(maxY - min)) + dueReorganisation.stream().mapToLong(s->s).sum());
+        maxHeights.add((Long.valueOf(maxY - min)) + dueReorganisation.stream().mapToLong(s -> s).sum());
         actualGasList.add(actualGas);
 
         roundsUp.add(relatives);
     }
 
-    private void show2(int[][] matrix) {
-        for (int y = 0; y < maxY; y++) {
-            System.out.println();
-            for (int x = 0; x < maxX; x++) {
-                System.out.print(matrix[x][y]);
-            }
-        }
-        System.out.println();
-        System.out.println("---------------------------------------------");
-    }
-
-    private void show() {
-        for (int y = 0; y < maxY; y++) {
-            System.out.println();
-            for (int x = 0; x < maxX; x++) {
-                System.out.print(matrix[x][y]);
-            }
-        }
-        System.out.println();
-        System.out.println("---------------------------------------------");
-    }
-
     private long stepForm(List<Point> alakzat, long actualGas) {
         Point actualPoint = new Point(2, maxHeight);
         for (int i = 0; i < 100; i++) {
-            //System.out.println("i: " + i);
             int[][] vierge = matrix;
             if (i != 0) {
                 vierge = calculateVierge(actualPoint, alakzat);
             }
-            // Oldalra lepes
+            // Lateral Step
             if ((i % 2) == 0) {
 
-                // Balra lepes
+                // Left Step
                 if (instructions.charAt((int) (actualGas % ((long) instructions.length()))) == '<') {
                     Point step = new Point(-1, 0);
                     if (canGoToDirection(alakzat, actualPoint, vierge, step)) {
                         actualPoint = addTwoPoint(actualPoint, step);
                         matrix = draw(actualPoint, alakzat, vierge);
-                        //show();
-                    } // Vege nem tud lepni
+                    } // Finished stucked
                     else {
 
                     }
                     actualGas += 1;
                 }
-                // Jobbra lepes
-                else if (instructions.charAt((int) (actualGas % (long)instructions.length())) == '>') {
+                // Step Right
+                else if (instructions.charAt((int) (actualGas % (long) instructions.length())) == '>') {
                     Point step = new Point(1, 0);
                     if (canGoToDirection(alakzat, actualPoint, vierge, step)) {
                         actualPoint = addTwoPoint(actualPoint, step);
                         matrix = draw(actualPoint, alakzat, vierge);
-                        //show();
-                    } // Vege nem tud lepni
+                    } // Finished stucked
                     else {
 
                     }
                     actualGas += 1;
                 } else {
-                    System.out.println("Nem kellene itt lennie 1");
+                    System.out.println("Can not be here 1");
                 }
-            }// Lefele lepes
+            }// Downwards Step
             else {
                 Point step = new Point(0, 1);
                 if (canGoToDirection(alakzat, actualPoint, vierge, step)) {
                     actualPoint = addTwoPoint(actualPoint, step);
                     matrix = draw(actualPoint, alakzat, vierge);
-                    //show();
-                } // Vege nem tud lepni
+                } // Finished stucked
                 else {
                     return actualGas;
                 }
             }
 
         }
-        // aktualis Gas limit
         return actualGas;
 
     }

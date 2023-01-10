@@ -32,14 +32,14 @@ public class Day19Challenge01 {
         List<BluePrint> bluesPrint = new ArrayList<>();
         for (String line : lines) {
 
-            int bluePrintNumber = Integer.valueOf(line.substring(line.indexOf(BLUEPRINT) + BLUEPRINT.length(), line.indexOf(TWO_POINTS)));
+            short bluePrintNumber = Short.valueOf(line.substring(line.indexOf(BLUEPRINT) + BLUEPRINT.length(), line.indexOf(TWO_POINTS)));
 
-            int oreRobot = getNumber(line, patternOre);
-            int clayRobot = getNumber(line, patternClay);
-            int obsidianOre = getNumber(line, patternObsidianOre);
-            int obsidianClay = getNumber(line, patternObsidianClay);
-            int geodeOre = getNumber(line, patternGeodeOre);
-            int geodeObsidian = getNumber(line, patternGeodeObsidian);
+            short oreRobot = getNumber(line, patternOre);
+            short clayRobot = getNumber(line, patternClay);
+            short obsidianOre = getNumber(line, patternObsidianOre);
+            short obsidianClay = getNumber(line, patternObsidianClay);
+            short geodeOre = getNumber(line, patternGeodeOre);
+            short geodeObsidian = getNumber(line, patternGeodeObsidian);
 
             bluesPrint.add(new BluePrint(bluePrintNumber, oreRobot, clayRobot, obsidianOre, obsidianClay, geodeOre, geodeObsidian));
         }
@@ -58,8 +58,11 @@ public class Day19Challenge01 {
                     newSteps.addAll(step.calculateAllNewSteps(maxValues));
                 }
                 firstStep = new HashSet<>(newSteps);
+                System.out.println("Minutes: " + profondeur);
             }
             maxes.add((i + 1) * maxValues.stream().mapToInt(s -> s).max().getAsInt());
+            System.out.println("Round: " + (i + 1));
+            System.out.println("Max: " + maxValues.stream().mapToInt(s -> s).max().getAsInt());
             System.gc();
         }
 
@@ -149,16 +152,16 @@ public class Day19Challenge01 {
         ;
     }
 
-    private int getNumber(String line, String pattern) {
+    private short getNumber(String line, String pattern) {
         Matcher matcher1 = Pattern.compile(pattern).matcher(line);
         if (matcher1.find()) {
-            return Integer.valueOf(matcher1.group(2));
+            return Short.valueOf(matcher1.group(2));
         }
         return 0;
     }
 
-    record BluePrint(int number, int oreRobots, int clayRobots, int obsidanOre, int obsidanClay, int geodeOre,
-                     int geodeObsidian) {
+    record BluePrint(short number, short oreRobots, short clayRobots, short obsidanOre, short obsidanClay, short geodeOre,
+                     short geodeObsidian) {
 
     };
 }

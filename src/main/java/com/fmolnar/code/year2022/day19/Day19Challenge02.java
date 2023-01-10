@@ -21,7 +21,7 @@ public class Day19Challenge02 {
     private static final String patternGeodeOre = "^(.*)Each geode robot costs (\\d*) ore";
     private static final String patternGeodeObsidian = "^(.*)and (\\d*) obsidian";
 
-    private static final int maxMinutes = 32;
+    private static final short maxMinutes = 32;
     private static final int limitMinutes = 18;
     private static final int limitGeode = 0;
     private static final int limitObsidian = 1;
@@ -34,14 +34,14 @@ public class Day19Challenge02 {
         List<BluePrint> bluesPrint = new ArrayList<>();
         for (String line : lines) {
 
-            int bluePrintNumber = Integer.valueOf(line.substring(line.indexOf(BLUEPRINT) + BLUEPRINT.length(), line.indexOf(TWO_POINTS)));
+            short bluePrintNumber = Byte.valueOf(line.substring(line.indexOf(BLUEPRINT) + BLUEPRINT.length(), line.indexOf(TWO_POINTS)));
 
-            int oreRobot = getNumber(line, patternOre);
-            int clayRobot = getNumber(line, patternClay);
-            int obsidianOre = getNumber(line, patternObsidianOre);
-            int obsidianClay = getNumber(line, patternObsidianClay);
-            int geodeOre = getNumber(line, patternGeodeOre);
-            int geodeObsidian = getNumber(line, patternGeodeObsidian);
+            short oreRobot = getNumber(line, patternOre);
+            short clayRobot = getNumber(line, patternClay);
+            short obsidianOre = getNumber(line, patternObsidianOre);
+            short obsidianClay = getNumber(line, patternObsidianClay);
+            short geodeOre = getNumber(line, patternGeodeOre);
+            short geodeObsidian = getNumber(line, patternGeodeObsidian);
 
             bluesPrint.add(new BluePrint(bluePrintNumber, oreRobot, clayRobot, obsidianOre, obsidianClay, geodeOre, geodeObsidian));
         }
@@ -49,17 +49,19 @@ public class Day19Challenge02 {
 
         long init = System.currentTimeMillis();
         List<Integer> maxes = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            List<Integer> maxValues = new ArrayList<>();
+        short zero = (short) 0;
+        short zeroByte = (short) 0;
+        for (short i = 0; i < 3; i++) {
+            List<Short> maxValues = new ArrayList<>();
             BluePrint bluePrint = bluesPrint.get(i);
             Set<Step> firstStep = new HashSet<>();
-            firstStep.add(new Step(bluePrint, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-            for (int profondeur = 0; profondeur < maxMinutes; profondeur++) {
+            firstStep.add(new Step(zero, zero, zeroByte, zero, zeroByte, zero, zeroByte, zero, zeroByte));
+            for (short profondeur = 0; profondeur < maxMinutes; profondeur++) {
                 Set<Step> newSteps = new HashSet<>();
                 for (Step step : firstStep) {
-                    newSteps.addAll(step.calculateAllNewSteps(maxValues));
+                    newSteps.addAll(step.calculateAllNewSteps(i, maxValues, bluePrint));
                 }
-                System.out.println("Minutes: " + profondeur);
+                System.out.println("Minutes: " + profondeur + " size: " + newSteps.size());
                 firstStep = new HashSet<>(newSteps);
             }
             System.out.println("Round: " + (i + 1));
@@ -72,81 +74,125 @@ public class Day19Challenge02 {
 
         System.out.println("Max Value: " + maxAll);
         long end = System.currentTimeMillis();
-        System.out.println("Time: " + ((end - init) / 1000L / 60L) + " [minutes]");
+        System.out.println("Time: " + ((end - init) / 1000L) + " [sec]");
 
 
     }
 
 
-    record Step(BluePrint bluePrint, int minute, int ore, int oreRobot, int clay, int clayRobot, int obsidian,
-                int obsidianRobot, int geode, int geodeRobot) {
-        List<Step> calculateAllNewSteps(List<Integer> maxValues) {
+    record Step(short minute, short ore, short oreRobot, short clay, short clayRobot,
+                short obsidian, short obsidianRobot, short geode, short geodeRobot) {
+        List<Step> calculateAllNewSteps(short line, List<Short> maxValues, BluePrint bluePrint) {
             List<Step> allPossibleStep = new ArrayList<>();
-            if (minute == maxMinutes - 1) {
-                maxValues.add(geodeRobot + geode);
-                //System.out.println("Level: " + minute + " geode: " + geode + " GeodeRobot: " + geodeRobot);
+            if (minute == (short) (maxMinutes - 1)) {
+                maxValues.add((short) (geodeRobot + geode));
                 return allPossibleStep;
             }
 
-            if (maxMinutes - 6 < minute && (geodeRobot) < 2) {
+            short maxLimit = (short) 25;
+            short maxLimit2 = (short) 26;
+            short maxLimit3 = (short) 27;
+            short maxLimit31 = (short) 20;
+            short kicsiLimit = (short) 21;
+
+
+            if (maxLimit < minute && (obsidianRobot < 1 || clayRobot < 3)) {
+                return allPossibleStep;
+            }
+
+            if (maxLimit31 < minute && (obsidianRobot < 2 || clayRobot < 4)) {
                 return allPossibleStep;
             }
 
 
-            if (minute < 25 && (bluePrint.oreRobots + bluePrint.clayRobots + bluePrint.obsidanOre + bluePrint.geodeOre) < ore) {
+            if (maxLimit < minute && (geodeRobot) < 1) {
                 return allPossibleStep;
             }
 
-
-            if (minute < 25 && (bluePrint.geodeObsidian <= obsidian)) {
+            if (maxLimit2 < minute && (geodeRobot + geode) < 3) {
                 return allPossibleStep;
             }
 
-            if (25 < minute && (obsidianRobot + obsidian) < (bluePrint.geodeObsidian / 2)) {
+            if (maxLimit2 < minute && (obsidianRobot < 3 || clayRobot < 6)) {
                 return allPossibleStep;
             }
 
-            if (25 < minute && (obsidianRobot + obsidian) < (bluePrint.geodeObsidian / 4)) {
+            if (line == 2 && maxLimit3 < minute && (obsidianRobot < 5 || clayRobot < 10)) {
                 return allPossibleStep;
             }
 
-            if (25 < minute && (obsidianRobot + obsidian) < (bluePrint.geodeObsidian / 8)) {
+            if (line == 2 && maxLimit31 < minute && (geodeRobot) < 1) {
                 return allPossibleStep;
             }
 
-            if (25 < minute && (clayRobot + clay) < (bluePrint.obsidanClay / 2)) {
+            if (line == 2 && maxLimit < minute && (geodeRobot+geode) < 16) {
                 return allPossibleStep;
             }
 
-            if (25 < minute && (clayRobot + clay) < (bluePrint.obsidanClay / 4)) {
+            //0 sor
+            if (line == 0 && (maxLimit3 < minute) && (geode < 8)) {
                 return allPossibleStep;
             }
 
-            if (25 < minute && (clayRobot + clay) < (bluePrint.obsidanClay / 8)) {
+            // 1 sor
+            if (line == 1 && (maxLimit3 < minute) && (geode < 4)) {
                 return allPossibleStep;
             }
 
-            if (maxMinutes - 8 < minute && (clayRobot + clay) < (bluePrint.obsidanClay / 16)) {
+            if (((2 * bluePrint.obsidanClay) < clay) && minute < kicsiLimit) {
                 return allPossibleStep;
             }
+
+            if (((2 * bluePrint.geodeObsidian) < obsidian) && minute < kicsiLimit) {
+                return allPossibleStep;
+            }
+
+            if (minute == (maxMinutes - 1) && (obsidianRobot + obsidian) < (bluePrint.geodeObsidian / 2)) {
+                return allPossibleStep;
+            }
+
+            if (minute == (maxMinutes - 2) && (obsidianRobot + obsidian) < (bluePrint.geodeObsidian / 4)) {
+                return allPossibleStep;
+            }
+
+            if ((minute == (maxMinutes - 3)) && (obsidianRobot + obsidian) < (bluePrint.geodeObsidian / 8)) {
+                return allPossibleStep;
+            }
+
+            if ((minute == (maxMinutes - 4)) && (clayRobot + clay) < (bluePrint.obsidanClay / 2)) {
+                return allPossibleStep;
+            }
+
+            if ((minute == (maxMinutes - 5)) && (clayRobot + clay) < (bluePrint.obsidanClay / 4)) {
+                return allPossibleStep;
+            }
+
+            if ((minute == (maxMinutes - 6)) && (clayRobot + clay) < (bluePrint.obsidanClay / 8)) {
+                return allPossibleStep;
+            }
+
+            if ((minute == (maxMinutes - 7)) && (clayRobot + clay) < (bluePrint.obsidanClay / 16)) {
+                return allPossibleStep;
+            }
+
 
             // only default ore-collecting
-            allPossibleStep.add(new Step(bluePrint, minute + 1, ore + oreRobot + 1, oreRobot, clay + clayRobot, clayRobot, obsidian + obsidianRobot, obsidianRobot, geode + geodeRobot, geodeRobot));
+            allPossibleStep.add(new Step((short) (minute + 1), (short) (ore + oreRobot + 1), oreRobot, (short) (clay + clayRobot), (clayRobot), (short) (obsidian + obsidianRobot), (obsidianRobot), (short) (geode + geodeRobot), (geodeRobot)));
 
             if (bluePrint.oreRobots <= ore) {
-                allPossibleStep.add(new Step(bluePrint, minute + 1, ore + oreRobot + 1 - bluePrint.oreRobots, oreRobot + 1, clay + clayRobot, clayRobot, obsidian + obsidianRobot, obsidianRobot, geode + geodeRobot, geodeRobot));
+                allPossibleStep.add(new Step(((short) (minute + 1)), (short) (ore + oreRobot + 1 - bluePrint.oreRobots), (short) (oreRobot + (short) 1), (short) (clay + clayRobot), clayRobot, (short) (obsidian + obsidianRobot), obsidianRobot, (short) (geode + geodeRobot), geodeRobot));
             }
 
             if (bluePrint.clayRobots <= ore) {
-                allPossibleStep.add(new Step(bluePrint, minute + 1, ore + oreRobot + 1 - bluePrint.clayRobots, oreRobot, clay + clayRobot, clayRobot + 1, obsidian + obsidianRobot, obsidianRobot, geode + geodeRobot, geodeRobot));
+                allPossibleStep.add(new Step(((short) (minute + 1)), (short) (ore + oreRobot + 1 - bluePrint.clayRobots), oreRobot, (short) (clay + clayRobot), (short) (clayRobot + 1), (short) (obsidian + obsidianRobot), (obsidianRobot), (short) (geode + geodeRobot), (geodeRobot)));
             }
 
             if (bluePrint.obsidanOre <= ore && bluePrint.obsidanClay <= clay) {
-                allPossibleStep.add(new Step(bluePrint, minute + 1, ore + oreRobot + 1 - bluePrint.obsidanOre, oreRobot, clay + clayRobot - bluePrint.obsidanClay, clayRobot, obsidian + obsidianRobot, obsidianRobot + 1, geode + geodeRobot, geodeRobot));
+                allPossibleStep.add(new Step(((short) (minute + 1)), (short) (ore + oreRobot + 1 - bluePrint.obsidanOre), (oreRobot), (short) (clay + clayRobot - bluePrint.obsidanClay), (clayRobot), (short) (obsidian + obsidianRobot), (short) (obsidianRobot + 1), (short) (geode + geodeRobot), (geodeRobot)));
             }
 
             if (bluePrint.geodeOre <= ore && bluePrint.geodeObsidian <= obsidian) {
-                allPossibleStep.add(new Step(bluePrint, minute + 1, ore + oreRobot + 1 - bluePrint.geodeOre, oreRobot, clay + clayRobot, clayRobot, obsidian + obsidianRobot - bluePrint.geodeObsidian, obsidianRobot, geode + geodeRobot, geodeRobot + 1));
+                allPossibleStep.add(new Step(((short) (minute + 1)), (short) (ore + oreRobot + 1 - bluePrint.geodeOre), (oreRobot), (short) (clay + clayRobot), (clayRobot), (short) (obsidian + obsidianRobot - bluePrint.geodeObsidian), (obsidianRobot), (short) (geode + geodeRobot), (short) (geodeRobot + 1)));
             }
             return allPossibleStep;
         }
@@ -154,16 +200,16 @@ public class Day19Challenge02 {
         ;
     }
 
-    private int getNumber(String line, String pattern) {
+    private short getNumber(String line, String pattern) {
         Matcher matcher1 = Pattern.compile(pattern).matcher(line);
         if (matcher1.find()) {
-            return Integer.valueOf(matcher1.group(2));
+            return Short.valueOf(matcher1.group(2));
         }
         return 0;
     }
 
-    record BluePrint(int number, int oreRobots, int clayRobots, int obsidanOre, int obsidanClay, int geodeOre,
-                     int geodeObsidian) {
+    record BluePrint(short number, short oreRobots, short clayRobots, short obsidanOre, short obsidanClay,
+                     short geodeOre, short geodeObsidian) {
 
     }
 
