@@ -140,7 +140,7 @@ public class Day22Challenge01 {
         }
 
         FacingManip newFacing = actualStop.facingManip;
-        // Iranyvaltas
+        // Changing direction
         if (instruction.direction == 'L') {
             newFacing = FacingManip.fromFacing(actualStop.facingManip.getLeft());
         } else if (instruction.direction == 'R') {
@@ -148,7 +148,7 @@ public class Day22Challenge01 {
         } else if (instruction.direction == 'E') {
             // Nem csinalunk semmit
         } else {
-            System.out.println("Gond Van");
+            System.out.println("Should noot be here");
         }
 
         return new Stop(newFacing, actualStop.position);
@@ -251,6 +251,4 @@ public class Day22Challenge01 {
             return null;
         }
     }
-
-
 }

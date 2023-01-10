@@ -25,7 +25,6 @@ public class Day22Challenge02 {
         int xMax = lines.stream().mapToInt(s -> s.length()).max().getAsInt();
         int yMax = lines.size();
         int[][] matrix = new int[yMax][xMax];
-        String commands = "";
 
         boolean command = false;
         for (int j = 0; j < yMax; j++) {
@@ -126,16 +125,15 @@ public class Day22Challenge02 {
         }
 
         FacingManip newFacing = actualStop.facingManip;
-        // Iranyvaltas
+        // Changing direction
         if (instruction.direction == 'L') {
             newFacing = FacingManip.fromFacing(actualStop.facingManip.getLeft());
         } else if (instruction.direction == 'R') {
             newFacing = FacingManip.fromFacing(actualStop.facingManip.getRight());
         } else if (instruction.direction == 'E') {
-            // Nem csinalunk semmit
-            System.out.println("Itt van: " + instruction.direction);
+            // Do not do anything
         } else {
-            System.out.println("Gond Van");
+            System.out.println("Problem!!!");
         }
 
         return new Stop(newFacing, actualStop.position);
@@ -163,7 +161,7 @@ public class Day22Challenge02 {
                     return new Stop(FacingManip.UP, new Position(yDataMax.get(xPoisiton), xPoisiton));
                 }
 
-                System.out.println("Nem kell itt lennie 1");
+                System.out.println("Should not be here 1");
             }
         } else if (FacingManip.DOWN.getDirection().equals(instruction)) {
             int ymax = positionActuel.y + instruction.y;
@@ -186,7 +184,7 @@ public class Day22Challenge02 {
                     int yPosition = positionActuel.x - (fifty);
                     return new Stop(FacingManip.LEFT, new Position(yPosition, xDataMax.get(yPosition)));
                 }
-                System.out.println("Nem kell itt lennie 2");
+                System.out.println("Should not be here 2");
             }
         } else if (FacingManip.LEFT.getDirection().equals(instruction)) {
             int xmin = positionActuel.x + instruction.x;
@@ -213,7 +211,7 @@ public class Day22Challenge02 {
                     return new Stop(FacingManip.DOWN, new Position(yDataMin.get(xPoisition), xPoisition));
                 }
 
-                System.out.println("Nem kell itt lennie 3");
+                System.out.println("Should not be here 3");
             }
         } else if (FacingManip.RIGHT.getDirection().equals(instruction)) {
             int xmax = positionActuel.x + instruction.x;
@@ -239,7 +237,7 @@ public class Day22Challenge02 {
                     return new Stop(FacingManip.UP, new Position(yDataMax.get(xPosition), xPosition));
                 }
 
-                System.out.println("Nem kell itt lennie 3");
+                System.out.println("Should not be here 4");
             }
         }
 
