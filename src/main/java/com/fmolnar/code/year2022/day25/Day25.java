@@ -1,6 +1,7 @@
 package com.fmolnar.code.year2022.day25;
 
 import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.year2022.aoc.NumberUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,11 +22,9 @@ public class Day25 {
         dict.put("-", -1l);
         dict.put("=", -2l);
         List<Long> sums = new ArrayList<>();
-        long five = 5;
-        for (String line : lines) {
 
+        for (String line : lines) {
             long szam = 0;
-            int counter = 0;
             long init = 1;
             for (int j = line.length() - 1; 0 <= j; j--) {
                 String letter = "";
@@ -37,66 +36,44 @@ public class Day25 {
                 szam += init * dict.get(letter);
                 init *= 5;
             }
-            System.out.println(szam);
             sums.add(szam);
-            System.out.println("Lines: " + line);
         }
 
         long sumTotal = sums.stream().mapToLong(s -> s).sum();
-        System.out.println("Total: "+ sumTotal);
-        Map<Integer, Long> longers = new HashMap<>();
-        Map<Integer, Long> maxValues = new HashMap<>();
-
-        long szam = 1L;
-        long maxValue = 0;
-        int imax = 0;
-        for (int i = 0; i < 30; i++) {
-            if (sumTotal < szam) {
-                break;
-            }
-            if (i == 0) {
-                maxValues.put(0, 2L);
-                maxValue = 2L;
-            } else {
-                szam *= 5l;
-                maxValue += 2L * szam;
-            }
-            longers.put(i, szam);
-            if (0 < i) {
-                maxValues.put(i, maxValue);
-            }
-            imax = i;
-        }
-
-        //
-        List<Long> longs = new ArrayList<>();
-
-        longs.add(1L);
-        longs.add(2L);
-        longs.add(3L);
-        longs.add(4L);
-        longs.add(5L);
-        longs.add(6L);
-        longs.add(7L);
-        longs.add(8L);
-        longs.add(9L);
-        longs.add(10L);
-        longs.add(15L);
-
-
-        Map<Long, String> dictInverse = new HashMap<>();
-        dictInverse.put(2L, "2");
-        dictInverse.put(1L, "1");
-        dictInverse.put(0L, "0");
-        dictInverse.put(-1L, "-");
-        dictInverse.put(-2L, "=");
-
-
-        System.out.println("sumTotal: " + sumTotal);
+        System.out.println("Result (1): " + transformBase5(NumberUtils.printInBase(sumTotal, 5)));
     }
 
-    void calculate2() {
 
+    public String transformBase5(String input) {
+        Map<Long, String> unDict = new HashMap<>();
+        unDict.put(2l, "2");
+        unDict.put(1l, "1");
+        unDict.put(0l, "0");
+        unDict.put(-1l, "-");
+        unDict.put(-2l, "=");
 
+        String newNumber = "";
+        int rest = 0;
+        for (int i = input.length() - 1; 0 <= i; i--) {
+            String value = input.substring(i, i + 1);
+            int intValue = Integer.valueOf(value) + rest;
+            String valueToPut = "";
+            if (intValue < 3) {
+                valueToPut = unDict.get(Long.valueOf(intValue));
+                rest = 0;
+            } else {
+                rest = 1;
+                intValue -= 5;
+                valueToPut = unDict.get(Long.valueOf(intValue));
+            }
+            newNumber = valueToPut + newNumber;
+
+            // Check last element
+            if (rest != 0 && i == 0) {
+                newNumber = rest + newNumber;
+            }
+        }
+
+        return newNumber;
     }
 }

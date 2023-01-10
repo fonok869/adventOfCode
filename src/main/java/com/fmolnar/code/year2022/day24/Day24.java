@@ -170,6 +170,5 @@ public class Day24 {
         return xNew;
     }
 
-    record Point(int y, int x) {
-    };
+    record Point(int y, int x) { };
 }
