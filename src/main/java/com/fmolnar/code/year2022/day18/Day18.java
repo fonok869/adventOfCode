@@ -34,6 +34,7 @@ public class Day18 {
         int maxZ = allZ.stream().mapToInt(s -> s).max().getAsInt();
         int minZ = allZ.stream().mapToInt(s -> s).min().getAsInt();
 
+        // making a 3D matrix which is 1 unit larger in every direction
         int[][][] matrix = new int[maxX - minX + 1 + 2][maxY - minY + 1 + 2][maxZ - minZ + 1 + 2];
 
         List<Point> allDirections = getAllDirections();
@@ -43,14 +44,15 @@ public class Day18 {
         }
 
 
+        // Start to flood the outer side by 2
         for (int y = 0; y < matrix[0].length; y++) {
             for (int z = 0; z < matrix[0][0].length; z++) {
                 matrix[0][y][z] = 2;
             }
         }
 
-
-        for (int szmaszor = 0; szmaszor < 20; szmaszor++) {
+        // Has to iterate as many as the length to ensure to fill all forms like potate as well
+        for (int iteration = 0; iteration < matrix[0][0].length; iteration++) {
             for (int x = 0; x < matrix.length; x++) {
                 for (int y = 0; y < matrix[0].length; y++) {
                     for (int z = 0; z < matrix[0][0].length; z++) {
@@ -70,12 +72,8 @@ public class Day18 {
                 }
             }
         }
-        for (int x = 0; x < matrix.length; x++) {
-            System.out.println("i: " + x);
-            PrintUtils.showMatrix(matrix[x]);
-        }
 
-        int i=0;
+        int surfacesContactWithWater=0;
         for (int x = 0; x < matrix.length; x++) {
             for (int y = 0; y < matrix[0].length; y++) {
                 for (int z = 0; z < matrix[0][0].length; z++) {
@@ -85,7 +83,7 @@ public class Day18 {
                             Point tocheck = addTwoPoint(actual, direction);
                             if (isInsideMatrix(matrix, tocheck)) {
                                 if (matrix[tocheck.x][tocheck.y][tocheck.z] == 2) {
-                                    i++;
+                                    surfacesContactWithWater++;
                                 }
                             }
                         }
@@ -95,15 +93,8 @@ public class Day18 {
             }
         }
 
-        System.out.println("Max X: " + allX.stream().mapToInt(s -> s).max().getAsInt());
-        System.out.println("Min X: " + allX.stream().mapToInt(s -> s).min().getAsInt());
-        System.out.println("Max Y: " + allY.stream().mapToInt(s -> s).max().getAsInt());
-        System.out.println("Min Y: " + allY.stream().mapToInt(s -> s).min().getAsInt());
-        System.out.println("Max Z: " + allZ.stream().mapToInt(s -> s).max().getAsInt());
-        System.out.println("Min Z: " + allZ.stream().mapToInt(s -> s).min().getAsInt());
-
-        long all = calculateAllsurface(points);
-        System.out.println("Totot: " + i);
+        System.out.println("First: " + calculateAllsurface(points));
+        System.out.println("Second: " + surfacesContactWithWater);
     }
 
     private boolean isInsideMatrix(int[][][] matrix, Point tocheck) {
@@ -146,6 +137,4 @@ public class Day18 {
             return (Math.abs(pointToCheck.x - x) + Math.abs(pointToCheck.y - y) + Math.abs(pointToCheck.z - z)) == 1;
         }
     }
-
-    ;
 }

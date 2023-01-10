@@ -22,9 +22,7 @@ public class Day19Challenge01 {
 
     private static final int maxMinutes = 23;
     private static final int limitMinutes = 18;
-    private static final int limitGeode = 0;
     private static final int limitObsidian = 1;
-    private static final int limitGeodeRobot = 1;
 
     public void calculate() throws IOException {
         List<String> lines = FileReaderUtils.readFile("/2022/day19/input.txt");
@@ -58,11 +56,8 @@ public class Day19Challenge01 {
                     newSteps.addAll(step.calculateAllNewSteps(maxValues));
                 }
                 firstStep = new HashSet<>(newSteps);
-                System.out.println("Minutes: " + profondeur);
             }
             maxes.add((i + 1) * maxValues.stream().mapToInt(s -> s).max().getAsInt());
-            System.out.println("Round: " + (i + 1));
-            System.out.println("Max: " + maxValues.stream().mapToInt(s -> s).max().getAsInt());
             System.gc();
         }
 
@@ -79,7 +74,6 @@ public class Day19Challenge01 {
             List<Step> allPossibleStep = new ArrayList<>();
             if (minute == maxMinutes) {
                 maxValues.add(geodeRobot + geode);
-                //System.out.println("Level: " + minute + " geode: " + geode + " GeodeRobot: " + geodeRobot);
                 return allPossibleStep;
             }
 

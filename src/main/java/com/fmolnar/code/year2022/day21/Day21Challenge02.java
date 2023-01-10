@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Day21 {
+public class Day21Challenge02 {
 
     public static final String ROOT = "root";
     public static final String HUMN = "humn";
@@ -21,8 +21,6 @@ public class Day21 {
 
     public void calculate() throws IOException {
         List<String> lines = FileReaderUtils.readFile("/2022/day21/input.txt");
-        String PATTERN_NUMBER = "^.*(\\((\\d+)(-|\\+|\\*|/)(\\d+)\\))";
-        Pattern matcher = Pattern.compile(PATTERN_NUMBER);
 
         for (String line : lines) {
             String root = line.substring(0, line.indexOf(TWO_POINTS));
@@ -36,20 +34,20 @@ public class Day21 {
                 }
             } else {
                 long value = Long.valueOf(line.substring(line.indexOf(TWO_POINTS) + 1).trim());
-
-
                 dictionnaire.put(root, new Notion(root, value));
 
             }
         }
 
         Notion root = dictionnaire.get(ROOT);
+
         for (int i = 0; i < 80; i++) {
             root.remplace();
-            System.out.println(root);
             root.simplification();
-            System.out.println(root);
         }
+
+        System.out.println("Put this equation to : https://www.wolframalpha.com/calculators/equation-solver-calculator");
+        System.out.println(root.toString().replaceAll(HUMN, "x"));
 
 
     }
@@ -94,11 +92,7 @@ public class Day21 {
 
         @Override
         public String toString() {
-            return "Notion{" +
-                    "leftSide='" + leftSide + '\'' +
-                    ", operator='" + operator + '\'' +
-                    ", rightSide='" + rightSide + '\'' +
-                    '}';
+            return " " + leftSide + "=" + rightSide;
         }
 
         void simplification() {

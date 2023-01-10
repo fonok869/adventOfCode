@@ -105,7 +105,7 @@ public class Day20 {
                 nextLeft = nextRight.before;
 
             }
-            // Beragasztjuk
+            // Remplacement
             this.before.setAfter(this.after);
             this.after.setBefore(this.before);
 

@@ -13,7 +13,6 @@ public class Day21Challenge01 {
     public static final String ROOT = "root";
     Map<String, Ins> dictionnaire = new HashMap<>();
     private static String TWO_POINTS = ":";
-    public static final String HUMN = "humn";
 
     public void calculate() throws IOException {
         List<String> lines = FileReaderUtils.readFile("/2022/day21/input.txt");
@@ -26,9 +25,7 @@ public class Day21Challenge01 {
                 dictionnaire.put(root, new Ins(root, ins1[0], ins1[1], ins1[2]));
             } else {
                 long value = Long.valueOf(line.substring(line.indexOf(TWO_POINTS) + 1).trim());
-                if(!root.equals(HUMN)){
-                    dictionnaire.put(root, new Ins(root, value));
-                }
+                dictionnaire.put(root, new Ins(root, value));
             }
         }
 
@@ -58,21 +55,6 @@ public class Day21Challenge01 {
                 }
             }
         }
-
-        Ins root = dictionnaire.get(ROOT);
-        String leftPartie = "";
-        String rightPartie = "";
-
-        Ins left = dictionnaire.get(root.leftIns);
-        Ins right = dictionnaire.get(root.rightIns);
-        leftPartie = left.root;
-        rightPartie = right.root;
-        System.out.println(1 + " " + leftPartie + " " + root.operation + " " + rightPartie);
-
-        Ins left2 = dictionnaire.get(leftPartie);
-        Ins right2 = dictionnaire.get(rightPartie);
-        System.out.println(2 + " " + left2.leftIns + " " +left2.operation+" "+ left2.rightIns+ " "+ root.operation +" "+ right2.leftIns + " "+ right2.operation+" "+ right2.rightIns);
-
     }
 
     class Ins {
@@ -131,9 +113,7 @@ public class Day21Challenge01 {
                         } else if (ins.rightIns.equals(root)) {
                             ins.rightValue = this.value;
                         }
-
                         ins.hasAllValues();
-
                     }
             );
         }

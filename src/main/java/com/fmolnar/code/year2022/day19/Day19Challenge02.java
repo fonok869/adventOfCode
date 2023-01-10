@@ -22,10 +22,6 @@ public class Day19Challenge02 {
     private static final String patternGeodeObsidian = "^(.*)and (\\d*) obsidian";
 
     private static final short maxMinutes = 32;
-    private static final int limitMinutes = 18;
-    private static final int limitGeode = 0;
-    private static final int limitObsidian = 1;
-    private static final int limitGeodeRobot = 1;
 
     public void calculate() throws IOException {
         List<String> lines = FileReaderUtils.readFile("/2022/day19/input.txt");
@@ -34,7 +30,7 @@ public class Day19Challenge02 {
         List<BluePrint> bluesPrint = new ArrayList<>();
         for (String line : lines) {
 
-            short bluePrintNumber = Byte.valueOf(line.substring(line.indexOf(BLUEPRINT) + BLUEPRINT.length(), line.indexOf(TWO_POINTS)));
+            short bluePrintNumber = Short.valueOf(line.substring(line.indexOf(BLUEPRINT) + BLUEPRINT.length(), line.indexOf(TWO_POINTS)));
 
             short oreRobot = getNumber(line, patternOre);
             short clayRobot = getNumber(line, patternClay);
@@ -50,18 +46,16 @@ public class Day19Challenge02 {
         long init = System.currentTimeMillis();
         List<Integer> maxes = new ArrayList<>();
         short zero = (short) 0;
-        short zeroByte = (short) 0;
         for (short i = 0; i < 3; i++) {
             List<Short> maxValues = new ArrayList<>();
             BluePrint bluePrint = bluesPrint.get(i);
             Set<Step> firstStep = new HashSet<>();
-            firstStep.add(new Step(zero, zero, zeroByte, zero, zeroByte, zero, zeroByte, zero, zeroByte));
+            firstStep.add(new Step(zero, zero, zero, zero, zero, zero, zero, zero, zero));
             for (short profondeur = 0; profondeur < maxMinutes; profondeur++) {
                 Set<Step> newSteps = new HashSet<>();
                 for (Step step : firstStep) {
                     newSteps.addAll(step.calculateAllNewSteps(i, maxValues, bluePrint));
                 }
-                System.out.println("Minutes: " + profondeur + " size: " + newSteps.size());
                 firstStep = new HashSet<>(newSteps);
             }
             System.out.println("Round: " + (i + 1));
@@ -93,7 +87,7 @@ public class Day19Challenge02 {
             short maxLimit2 = (short) 26;
             short maxLimit3 = (short) 27;
             short maxLimit31 = (short) 20;
-            short kicsiLimit = (short) 21;
+            short smallLimit = (short) 21;
 
 
             if (maxLimit < minute && (obsidianRobot < 1 || clayRobot < 3)) {
@@ -129,21 +123,21 @@ public class Day19Challenge02 {
                 return allPossibleStep;
             }
 
-            //0 sor
+            // 0 row
             if (line == 0 && (maxLimit3 < minute) && (geode < 8)) {
                 return allPossibleStep;
             }
 
-            // 1 sor
+            // 1 row
             if (line == 1 && (maxLimit3 < minute) && (geode < 4)) {
                 return allPossibleStep;
             }
 
-            if (((2 * bluePrint.obsidanClay) < clay) && minute < kicsiLimit) {
+            if (((2 * bluePrint.obsidanClay) < clay) && minute < smallLimit) {
                 return allPossibleStep;
             }
 
-            if (((2 * bluePrint.geodeObsidian) < obsidian) && minute < kicsiLimit) {
+            if (((2 * bluePrint.geodeObsidian) < obsidian) && minute < smallLimit) {
                 return allPossibleStep;
             }
 
