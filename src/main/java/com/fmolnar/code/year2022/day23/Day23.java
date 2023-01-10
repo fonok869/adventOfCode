@@ -5,7 +5,6 @@ import com.fmolnar.code.FileReaderUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,7 +13,6 @@ import java.util.stream.Collectors;
 public class Day23 {
 
     Set<Point> allPoints = new HashSet<Point>();
-    int roundNumber = 0;
     List<Point> allNeighborsPoints = new ArrayList<>();
     List<List<Point>> directions = new ArrayList<>();
 
@@ -34,41 +32,44 @@ public class Day23 {
 
         int lepes = 20000;
 
-        List<Point> allActualPointsToDestroy = new ArrayList<>(allPoints);
         List<Point> allNextPointsList;
         Set<Point> allNextPointsSet;
         List<Point> allActualPointsBefore = new ArrayList<>(allPoints);
         for (int i = 0; i < lepes; i++) {
             final Set<Point> allActualPoints = new HashSet<>(allActualPointsBefore);
-            //plotAll(allActualPoints);
             final int round = i;
             allNextPointsList = allActualPoints.stream().map(p -> new Step(p, allNeighborsPoints, allActualPoints, round, directions).nextStep()).collect(Collectors.toList());
-//            plotAll(new HashSet<>(allNextPointsList));
             allNextPointsSet = new HashSet<>(allNextPointsList);
 
-            if(allNextPointsSet.containsAll(allActualPoints)){
-                System.out.println("Round: " + (round+1));
+            if (allNextPointsSet.containsAll(allActualPoints)) {
+                System.out.println("Second: " + (round + 1));
                 break;
             }
 
             if (allNextPointsSet.size() == allActualPoints.size() && allNextPointsSet.containsAll(allActualPoints)) {
                 allActualPointsBefore = new ArrayList<>(allNextPointsList);
-                continue;
             } else {
                 // Only remove one
                 allNextPointsList = onlyRemoveOnce(allNextPointsList, allNextPointsSet);
                 final List<Point> allNextPointsListToKeep = new ArrayList<>(allNextPointsList);
 
                 List<Point> doNotMoved = allActualPoints.stream().filter(p -> allNextPointsListToKeep.contains(new Step(p, allNeighborsPoints, allActualPoints, round, directions).nextStep())).collect(Collectors.toList());
-                List<Point> doMoved = allActualPoints.stream().filter(p -> !allNextPointsListToKeep.contains(new Step(p, allNeighborsPoints, allActualPoints, round, directions).nextStep())).map(p->new Step(p, allNeighborsPoints, allActualPoints, round, directions).nextStep()).collect(Collectors.toList());
+                List<Point> doMoved = allActualPoints.stream().filter(p -> !allNextPointsListToKeep.contains(new Step(p, allNeighborsPoints, allActualPoints, round, directions).nextStep())).map(p -> new Step(p, allNeighborsPoints, allActualPoints, round, directions).nextStep()).collect(Collectors.toList());
                 allActualPointsBefore = new ArrayList<>();
-                if(doMoved.size()==0){
-                    System.out.println("Round: " + round);
+                if (doMoved.size() == 0) {
                     break;
                 }
                 allActualPointsBefore.addAll(doNotMoved);
                 allActualPointsBefore.addAll(doMoved);
-                continue;
+            }
+
+            if(i==9) {
+                int minX = allActualPointsBefore.stream().mapToInt(Point::x).min().getAsInt();
+                int maxX = allActualPointsBefore.stream().mapToInt(Point::x).max().getAsInt();
+                int minY = allActualPointsBefore.stream().mapToInt(Point::y).min().getAsInt();
+                int maxY = allActualPointsBefore.stream().mapToInt(Point::y).max().getAsInt();
+
+                System.out.println("First : " + (((maxX - minX + 1) * (maxY - minY + 1)) - allActualPointsBefore.size()));
             }
         }
     }
@@ -85,27 +86,6 @@ public class Day23 {
             }
         }
         return notRemoved;
-    }
-
-    private void plotAll(Set<Point> allActualPoints) {
-        int minX = allActualPoints.stream().mapToInt(Point::x).min().getAsInt();
-        int maxX = allActualPoints.stream().mapToInt(Point::x).max().getAsInt();
-        int minY = allActualPoints.stream().mapToInt(Point::y).min().getAsInt();
-        int maxY = allActualPoints.stream().mapToInt(Point::y).max().getAsInt();
-
-        System.out.println("------------------------------------");
-        for (int j = 0; j <= 12; j++) {
-            System.out.println();
-            for (int i = 0; i <= 14; i++) {
-                if (allActualPoints.contains(new Point(j, i))) {
-                    System.out.print("#");
-                } else {
-                    System.out.print(".");
-                }
-            }
-        }
-        System.out.println();
-        System.out.println("------------------------------------");
     }
 
     private void getDirections() {
@@ -143,13 +123,9 @@ public class Day23 {
         }
     }
 
-    record Point(int y, int x) {
-    }
+    record Point(int y, int x) { }
 
-    ;
-
-    record Step(Point before, List<Point>allNeighbours, Set<Point>allPointsNow, int roundNumber,
-                List<List<Point>>directions) {
+    record Step(Point before, List<Point>allNeighbours, Set<Point>allPointsNow, int roundNumber, List<List<Point>>directions) {
         Point nextStep() {
 
             // AllNeighbors
@@ -166,11 +142,7 @@ public class Day23 {
                 }
             }
 
-
-            //System.out.println("Nem kellene itt lennie");
             return before;
         }
-    }
-
-    ;
+    };
 }
