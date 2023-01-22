@@ -86,7 +86,7 @@
 <tr>
     <td>2022/12/16</td>
     <td style="text-align: center;">&#10004;&#65039;</td>
-    <td style="text-align: center;"></td>
+    <td style="text-align: center;">&#10004;&#65039;</td>
 </tr>
 <tr>
     <td>2022/12/17</td>
@@ -233,8 +233,8 @@
          </tr>
          <tr>
           <td>2021/12/19</td>
-               <td style="text-align: center;">-</td>
-               <td style="text-align: center;">-</td>
+               <td style="text-align: center;">&#10004;&#65039;</td>
+               <td style="text-align: center;">&#10004;&#65039;</td>
           </tr>
           <tr>
           <td>2021/12/20</td>
@@ -247,8 +247,20 @@
           </tr>
           <td>2021/12/22</td>
                 <td style="text-align: center;">&#10004;&#65039;</td>
-                <td style="text-align: center;">-</td>
+                <td style="text-align: center;">&#10004;&#65039;</td>
           </tr>
+           <td>2021/12/23</td>
+             <td style="text-align: center;">&#10004;&#65039;</td>
+             <td style="text-align: center;">-</td>
+           </tr>
+           <td>2021/12/24</td>
+            <td style="text-align: center;">&#10004;&#65039;</td>
+            <td style="text-align: center;">&#10004;&#65039;</td>
+           </tr>
+           <td>2021/12/25</td>
+             <td style="text-align: center;">&#10004;&#65039;</td>
+             <td style="text-align: center;">-</td>
+           </tr>
     </table>
  </div>
 <h1>My solutions to the competition of AdventOfCode 2020</h1>
