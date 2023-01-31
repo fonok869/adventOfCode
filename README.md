@@ -251,7 +251,7 @@
           </tr>
            <td>2021/12/23</td>
              <td style="text-align: center;">&#10004;&#65039;</td>
-             <td style="text-align: center;">-</td>
+             <td style="text-align: center;">&#10004;&#65039;</td>
            </tr>
            <td>2021/12/24</td>
             <td style="text-align: center;">&#10004;&#65039;</td>
@@ -259,7 +259,7 @@
            </tr>
            <td>2021/12/25</td>
              <td style="text-align: center;">&#10004;&#65039;</td>
-             <td style="text-align: center;">-</td>
+             <td style="text-align: center;">&#10004;&#65039;</td>
            </tr>
     </table>
  </div>
