@@ -12,9 +12,9 @@ public class StringFunctions {
     }
 
     public static ResultOrError toUpperCase(String string) {
-        if (!string.matches("[a-zA-Z\s]+")) {
-            return new ResultOrError(new SimpleError("String must contains only letters and spaces"));
-        }
+//        if (!string.matches("[a-zA-Z\s]+")) {
+//            return new ResultOrError(new SimpleError("String must contains only letters and spaces"));
+//        }
         return new ResultOrError(string.toUpperCase());
     }
 
