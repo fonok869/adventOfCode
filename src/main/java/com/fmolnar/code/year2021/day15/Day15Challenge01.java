@@ -114,6 +114,15 @@ public class Day15Challenge01 {
 
             algo_dijkstra(adjacentList, 0);
 
+            for(int i=0; i<adjacentList.size(); i++){
+                if(i%xMaxAct==0){
+                    System.out.println();
+                }
+                int nodeMin  =dist[i];
+                System.out.print(" "+ nodeMin);
+
+            }
+
             System.out.println("Shortest route: " + dist[vHalmaz - 1]);
 
         }

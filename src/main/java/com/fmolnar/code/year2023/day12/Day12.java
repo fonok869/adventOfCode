@@ -10,15 +10,26 @@ import java.util.stream.Collectors;
 
 public class Day12 {
     public static void main(String[] args) throws IOException {
-        calculate();
+        List<Integer> eredmenyek = calculate();
+        List<Integer> eredmenyek2 = new Day12v2().calculate();
+
+
+        System.out.println("Hossz1: " + eredmenyek.size());
+        System.out.println("Hossz2: " + eredmenyek2.size());
+        for(int i=0;i<eredmenyek2.size(); i++){
+            if(!eredmenyek.get(i).equals(eredmenyek2.get(i))){
+                System.out.println("i: " + i + " Jo: " + eredmenyek.get(i) + ": Rossz " + eredmenyek2.get(i));
+            }
+        }
     }
 
 
-    public static void calculate() throws IOException {
+    public static List<Integer> calculate() throws IOException {
 
         List<String> lines = FileReaderUtils.readFile("/2023/day12/input.txt");
         List<Integer> counterSzamok = new ArrayList<>();
-
+        List<Integer> counterEredmenyek = new ArrayList<>();
+        int i =1;
         for (String line : lines) {
             String firstPart = line.substring(0, line.indexOf(' '));
             String secondPart = line.substring(line.indexOf(' ') + 1);
@@ -38,7 +49,6 @@ public class Day12 {
                     newOptions.add(actDiez);
                     // .
                     String actPoint = transformJel(kerdojelIndex, actualFirstPart, '.');
-                    ;
                     newOptions.add(actPoint);
                 }
                 allOptions.clear();
@@ -52,10 +62,15 @@ public class Day12 {
                     counterSzamok.add(1);
                 }
             });
+            //System.out.println("i: " + i++ + " " + counterSzamok.size());
+
+            counterEredmenyek.add(counterSzamok.size());
+            counterSzamok.clear();
 
         }
 
         System.out.println("Sum: " + counterSzamok.size());
+        return counterEredmenyek;
     }
 
     private static String transformJel(Integer kerdojelIndex, String actualFirstPart, char c) {
