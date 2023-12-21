@@ -6,14 +6,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.LongStream;
 
 public class Day05v2 {
 
@@ -80,8 +78,10 @@ public class Day05v2 {
         public List<SeedRange> calculatenewRanges(SeedRange seedRange) {
             List<SeedRange> newSeedRanges = new ArrayList<>();
             Set<Long> beginning = ranges.stream().map(range -> range.from.from).collect(Collectors.toSet());
+            List<Long> beginList = ranges.stream().map(range -> range.from.from).collect(Collectors.toList());
             Map<Long, SeedRange> beginningSeedRange = ranges.stream().map(SolLineRange::from).collect(Collectors.toMap(SeedRange::from, Function.identity()));
             Set<Long> ending = ranges.stream().map(range -> range.from.to).collect(Collectors.toSet());
+            List<Long> endingList = ranges.stream().map(range -> range.from.to).collect(Collectors.toList());
             Map<Long, SeedRange> endingSeedRange = ranges.stream().map(SolLineRange::from).collect(Collectors.toMap(SeedRange::to, Function.identity()));
             Map<SeedRange, SeedRange> transformer = ranges.stream().collect(Collectors.toMap(SolLineRange::from, SolLineRange::to));
 
@@ -99,29 +99,48 @@ public class Day05v2 {
             Collections.sort(limitsWithRange);
 
             int beginIndex = limitsWithRange.indexOf(seedRange.from);
-            int endIndex = limitsWithRange.indexOf(seedRange.to);
+            int endIndex = limitsWithRange.lastIndexOf(seedRange.to);
 
-            for (int i = beginIndex + 1; i <= endIndex; i++) {
-                long iNumber = limitsWithRange.get(i);
-                // eleje vagy vege
-                if (i == endIndex && (i == 0 || endIndex == limitsWithRange.size() - 1)) {
+
+            for (int index = beginIndex + 1; index <= endIndex; index++) {
+                long numberActual = limitsWithRange.get(index);
+                // Eleje nincs benne sehol
+                if(index == endIndex && numberActual <limits.stream().mapToLong(szam->szam).min().getAsLong()){
                     newSeedRanges.add(seedRange);
-                } else if (i == endIndex) {
-                    // koztes
-                    SeedRange seedRangeInside = endingSeedRange.get(limitsWithRange.get(i + 1));
-                    long beginActual = (limitsWithRange.get(i - 1) - seedRangeInside.from);
-                    long endActual = (iNumber - seedRangeInside.from);
-                    SeedRange transformerTo = transformer.get(seedRangeInside);
-                    newSeedRanges.add(new SeedRange(transformerTo.from + beginActual, transformerTo.from + endActual));
-                } else if (beginning.contains(iNumber)) {
-                    // From SeedRange // Sima szam
-                    newSeedRanges.add(new SeedRange(limitsWithRange.get(i - 1), iNumber - 1));
-                } else if (ending.contains(iNumber)) {
-                    // transformaltSzam
-                    newSeedRanges.add(new SeedRange(limitsWithRange.get(i - 1), iNumber - 1));
-                    //TODO
-                } else {
-                    System.out.println("Nemm kellene itt lennie");
+                    // Ninncs tovabbi treatment
+//                } else if (index == endIndex && (index == 0 || endIndex == limitsWithRange.size() - 1)) {
+//                    // eleje es atmegy
+//                    newSeedRanges.add(seedRange);
+//                } else if (index == endIndex) {
+//                    // koztes
+//                    SeedRange seedRangeInside = endingSeedRange.get(limitsWithRange.get(index + 1));
+//                    long beginActual = (limitsWithRange.get(index - 1) - seedRangeInside.from);
+//                    long endActual = (numberActual - seedRangeInside.from);
+//                    SeedRange transformerTo = transformer.get(seedRangeInside);
+//                    newSeedRanges.add(new SeedRange(transformerTo.from + beginActual, transformerTo.from + endActual));
+//                    System.out.println("Koztes : new SeedRange(transformerTo.from + beginActual, transformerTo.from + endActual)" + new SeedRange(transformerTo.from + beginActual, transformerTo.from + endActual));
+                } else if (beginning.contains(numberActual)) {
+                    // Eleje -1 SeedRange
+
+                    SeedRange actual = new SeedRange(limitsWithRange.get(index - 1), numberActual - 1);
+                    if(numberActual== seedRange.to){
+                        actual = new SeedRange(limitsWithRange.get(index - 1), numberActual );
+                    }
+                    newSeedRanges.add(actual);
+                    System.out.println("// From new SeedRange(limitsWithRange.get(index - 1), numberActual - 1)" + actual);
+                    seedRange=new SeedRange(numberActual, seedRange.to);
+//                } else if (ending.contains(numberActual)) {
+//                    // transformaltSzam
+//                    SeedRange seedEndRange = endingSeedRange.get(numberActual);
+//                    long beginActual = (limitsWithRange.get(index - 1) - seedEndRange.from);
+//                    long endActual = (numberActual - seedEndRange.from);
+//                    SeedRange transformerTo = transformer.get(seedEndRange);
+//                    newSeedRanges.add(new SeedRange(transformerTo.from + beginActual, transformerTo.from + endActual));
+//                    seedRange = new SeedRange(numberActual+1 , seedRange.to);
+//                    //TODO
+//                } else {
+//                    System.out.println("Nemm kellene itt lennie");
+//                }
                 }
 
             }
@@ -134,6 +153,7 @@ public class Day05v2 {
             limits.forEach(s -> System.out.print(s + " "));
             System.out.println("\nLimits with range");
             limitsWithRange.forEach(s -> System.out.print(s + " "));
+
             System.out.println(" ");
             return newSeedRanges;
         }
