@@ -14,7 +14,7 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 
-public class Day17WithDijkstraSimple {
+public class Day17WithDijkstraFirst {
 
     static int xMax = 0;
     static int yMax = 0;
@@ -64,19 +64,16 @@ public class Day17WithDijkstraSimple {
 
         Set<Node> alreadyVisited = new HashSet<>();
         Queue<Node> pqueue = new PriorityQueue<>(nodeComparator);
-        pqueue.add(new Node(new Point(0, 0), 0, Direction.E, 0));
-        pqueue.add(new Node(new Point(0, 0), 0, Direction.S, 0));
+        pqueue.add(initNode);
         distances.get(initNode.pointActual).add(initNode);
 
-        int i=1;
         while (!pqueue.isEmpty()) {
 
             // Remove U node legkisebb cost
             Node nodeActualToExamine = pqueue.remove();
-            //System.out.println(" " + i++ + " " + nodeActualToExamine);
 
-            if (nodeActualToExamine.isFinished()) {
-                System.out.println("Dijkstra: " + nodeActualToExamine.costUntilNow);
+            if (nodeActualToExamine.pointActual.equals(new Point(yMax - 1, xMax - 1))) {
+                System.out.println("Dijkstra: " + distances.get(nodeActualToExamine.pointActual).stream().mapToInt(Node::costUntilNow).min().getAsInt());
                 break;
             }
 
@@ -106,7 +103,7 @@ public class Day17WithDijkstraSimple {
 
                 if (ancien != null && newDistance < ancien.costUntilNow) {
                     distances.get(node.pointActual).add(node);
-                } else if (ancien == null) {
+                } else if(ancien == null){
                     distances.get(node.pointActual).add(node);
                 }
                 pqueue.add(node);
@@ -189,7 +186,7 @@ public class Day17WithDijkstraSimple {
         }
 
         boolean isFinished() {
-            if (pointActual.x == xMax - 1 && pointActual.y == yMax - 1 && 4 <= dirMove && dirMove <= 10) {
+            if (pointActual.x == xMax - 1 && pointActual.y == yMax - 1 && dirMove <= 3) {
                 return true;
             }
             return false;
@@ -198,12 +195,12 @@ public class Day17WithDijkstraSimple {
         List<Node> next() {
             List<Node> links = new LinkedList<>();
 
-            if (10 < dirMove) {
+            if (3 < dirMove) {
                 return links;
             }
 
             // forward
-            if (dirMove <= 9) {
+            if (dirMove <= 2) {
                 Point nextPoint = direction.addPoint(pointActual);
                 int newCost = getCost(nextPoint);
                 if (0 <= newCost) {
@@ -211,22 +208,20 @@ public class Day17WithDijkstraSimple {
                 }
             }
 
-            if (4 <= dirMove) {
-                // LEFT
-                Direction directionLeft = direction.getLeft();
-                Point nextPointLeft = directionLeft.addPoint(pointActual);
-                int newCostLeft = getCost(nextPointLeft);
-                if (0 <= newCostLeft) {
-                    links.add(new Node(nextPointLeft, costUntilNow + newCostLeft, directionLeft, 1));
-                }
+            // LEFT
+            Direction directionLeft = direction.getLeft();
+            Point nextPointLeft = directionLeft.addPoint(pointActual);
+            int newCostLeft = getCost(nextPointLeft);
+            if (0 <= newCostLeft) {
+                links.add(new Node(nextPointLeft, costUntilNow + newCostLeft, directionLeft, 1));
+            }
 
-                // RIGHT
-                Direction directionRight = direction.getRight();
-                Point nextRightPoint = directionRight.addPoint(pointActual);
-                int newRightCost = getCost(nextRightPoint);
-                if (0 <= newRightCost) {
-                    links.add(new Node(nextRightPoint, costUntilNow + newRightCost, directionRight, 1));
-                }
+            // RIGHT
+            Direction directionRight = direction.getRight();
+            Point nextRightPoint = directionRight.addPoint(pointActual);
+            int newRightCost = getCost(nextRightPoint);
+            if (0 <= newRightCost) {
+                links.add(new Node(nextRightPoint, costUntilNow + newRightCost, directionRight, 1));
             }
             return links;
         }

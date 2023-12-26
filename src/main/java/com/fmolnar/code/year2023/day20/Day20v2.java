@@ -48,6 +48,15 @@ public class Day20v2 {
 
         initAllAllConjModule(conjs, flips);
 
+        for (Map.Entry<String, ConjModule> entryConj : conjs.entrySet()) {
+            Arrays.stream(entryConj.getValue().outputs).forEach(s -> System.out.println(entryConj.getKey() + " "+s));
+        }
+
+        for (Map.Entry<String, FlipFlopModule> entryFlip : flips.entrySet()) {
+            Arrays.stream(entryFlip.getValue().outputs).forEach(s -> System.out.println(entryFlip.getKey() + " "+s));
+
+        }
+
 
         List<NewStep> touched = new ArrayList<>();
 
@@ -129,9 +138,9 @@ public class Day20v2 {
                 newTouched.clear();
             }
 
-
             touched.clear();
         }
+
 
         System.out.println("Sum : " + lowPulse*highPulse);
 

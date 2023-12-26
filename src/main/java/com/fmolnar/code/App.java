@@ -18,6 +18,7 @@ import com.fmolnar.code.year2021.day22.Day22Challenge02;
 import com.fmolnar.code.year2021.day22.Day22Challenge02Beauty;
 import com.fmolnar.code.year2021.day22.Day22Challenge02Beauty02;
 import com.fmolnar.code.year2021.day25.Day25Challenge01;
+import com.fmolnar.code.year2023.day23.Day23;
 
 import java.io.IOException;
 
@@ -127,8 +128,8 @@ public class App {
 //        Day18Challenge01 day18Challenge01 = new Day18Challenge01();
 //        day18Challenge01.calculate();
 
-        Day18Challenge02 day18Challenge02 = new Day18Challenge02();
-        day18Challenge02.calculate();
+//        Day18Challenge02 day18Challenge02 = new Day18Challenge02();
+//        day18Challenge02.calculate();
 
 //        Day17Challenge01 day17Challenge01 = new Day17Challenge01();
 //        day17Challenge01.calculate();
@@ -180,6 +181,9 @@ public class App {
 
 //        Day25Challenge01 day25Challenge01 = new Day25Challenge01();
 //        day25Challenge01.calculate();
+
+        Day23 day23 = new Day23();
+        day23.calculate();
     }
 
 
