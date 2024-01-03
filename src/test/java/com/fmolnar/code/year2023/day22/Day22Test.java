@@ -13,11 +13,11 @@ public class Day22Test {
         Day22.PointXYZ end = new Day22.PointXYZ(2,1,5);
         Day22.PointXYZ endTo = new Day22.PointXYZ(2,1,4);
 
-        Day22.TeglaTest teglaTest = new Day22.TeglaTest(beginning, end, Day22.Direction.X);
+        Day22.TeglaTest teglaTest = new Day22.TeglaTest(1,beginning, end, Day22.Direction.X);
 
         Day22.TeglaTest result = teglaTest.newZ(4);
 
-        assertThat(result).isEqualTo(new Day22.TeglaTest(beginningTo, endTo, Day22.Direction.X));
+        assertThat(result).isEqualTo(new Day22.TeglaTest(1,beginningTo, endTo, Day22.Direction.X));
     }
 
     @Test
@@ -27,11 +27,11 @@ public class Day22Test {
         Day22.PointXYZ end = new Day22.PointXYZ(1,2,5);
         Day22.PointXYZ endTo = new Day22.PointXYZ(1,2,4);
 
-        Day22.TeglaTest teglaTest = new Day22.TeglaTest(beginning, end, Day22.Direction.Y);
+        Day22.TeglaTest teglaTest = new Day22.TeglaTest(1,beginning, end, Day22.Direction.Y);
 
         Day22.TeglaTest result = teglaTest.newZ(4);
 
-        assertThat(result).isEqualTo(new Day22.TeglaTest(beginningTo, endTo, Day22.Direction.Y));
+        assertThat(result).isEqualTo(new Day22.TeglaTest(1,beginningTo, endTo, Day22.Direction.Y));
     }
 
     @Test
@@ -41,10 +41,10 @@ public class Day22Test {
         Day22.PointXYZ end = new Day22.PointXYZ(1,0,6);
         Day22.PointXYZ endTo = new Day22.PointXYZ(1,0,4);
 
-        Day22.TeglaTest teglaTest = new Day22.TeglaTest(beginning, end, Day22.Direction.Z);
+        Day22.TeglaTest teglaTest = new Day22.TeglaTest(1,beginning, end, Day22.Direction.Z);
 
         Day22.TeglaTest result = teglaTest.newZ(2);
 
-        assertThat(result).isEqualTo(new Day22.TeglaTest(beginningTo, endTo, Day22.Direction.Z));
+        assertThat(result).isEqualTo(new Day22.TeglaTest(1,beginningTo, endTo, Day22.Direction.Z));
     }
 }

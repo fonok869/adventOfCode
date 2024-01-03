@@ -16,6 +16,10 @@ import java.util.stream.LongStream;
 
 public class Day05 {
 
+    public static void main(String[] args) throws IOException {
+        calculate();
+    }
+
     public static void calculate() throws IOException {
         List<String> lines = FileReaderUtils.readFile("/2023/day05/input.txt");
 
@@ -26,11 +30,8 @@ public class Day05 {
         for (String line : lines) {
             if (line.startsWith("seeds")) {
                 String[] ranges = line.substring(line.indexOf(":") + 1).trim().split(" ");
-                for(int i=0; i<2; i = i+2){
-                    long init = Long.valueOf(ranges[i].trim());
-                    long end = init + Long.valueOf(ranges[i+1].trim());
-                    LongStream.rangeClosed(init, end).forEach(s->seedsByDefault.add(s));
-                    System.out.println("toto");
+                for(int i=0; i< ranges.length; i++){
+                    seedsByDefault.add(Long.valueOf(ranges[i]));
                 }
             } else if (line.contains("map:")) {
                 if (!solLines.isEmpty()) {
@@ -77,7 +78,7 @@ public class Day05 {
 
         }
 
-        System.out.println("Toto" + seedsByDefault.stream().mapToLong(s -> s).min());
+        System.out.println("Solution: " + seedsByDefault.stream().mapToLong(s -> s).min().getAsLong());
     }
 
     public record SolMap(List<SolLine> seeds) {

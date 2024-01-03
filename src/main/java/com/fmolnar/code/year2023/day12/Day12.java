@@ -10,31 +10,24 @@ import java.util.stream.Collectors;
 
 public class Day12 {
     public static void main(String[] args) throws IOException {
-        List<Integer> eredmenyek = calculate();
-        List<Integer> eredmenyek2 = new Day12v2().calculate();
-
+        List<String> lines = new ArrayList<>();
+        List<Integer> eredmenyek = calculate(lines);
 
         System.out.println("Hossz1: " + eredmenyek.size());
-        System.out.println("Hossz2: " + eredmenyek2.size());
-        for(int i=0;i<eredmenyek2.size(); i++){
-            if(!eredmenyek.get(i).equals(eredmenyek2.get(i))){
-                System.out.println("i: " + i + " Jo: " + eredmenyek.get(i) + ": Rossz " + eredmenyek2.get(i));
-            }
-        }
     }
 
 
-    public static List<Integer> calculate() throws IOException {
+    public static List<Integer> calculate(List<String> linesToString) throws IOException {
 
         List<String> lines = FileReaderUtils.readFile("/2023/day12/input.txt");
         List<Integer> counterSzamok = new ArrayList<>();
         List<Integer> counterEredmenyek = new ArrayList<>();
         int i =1;
         for (String line : lines) {
+            linesToString.add(line);
             String firstPart = line.substring(0, line.indexOf(' '));
             String secondPart = line.substring(line.indexOf(' ') + 1);
             List<Integer> kerdojelPosition = new ArrayList<>();
-            int counterkerdojel = countKerdojel(firstPart, kerdojelPosition);
             String[] numbers = secondPart.split(",");
             List<String> strings = Arrays.asList(secondPart.split(","));
 

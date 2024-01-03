@@ -5,149 +5,134 @@ import com.fmolnar.code.FileReaderUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Day12v2 {
 
 
-    public List<Integer> calculate() throws IOException {
+    public void calculate() throws IOException {
         List<String> lines = FileReaderUtils.readFile("/2023/day12/input.txt");
-        List<Integer> eredmenyek = new ArrayList<>();
-        long sum = calculateFor1(lines, eredmenyek);
+        long sum = calculateFor1(lines, false);
         System.out.println("Sum: " + sum);
-        return eredmenyek;
     }
 
-    public long calculateFor1(List<String> lines, List<Integer> eredmenyek) {
+    private AtomicLong atomicLong = new AtomicLong(0l);
 
-        List<Short> counterSzamok = new ArrayList<>();
-        int i = 1;
+    public long calculateFor1(List<String> lines, boolean first) {
+
+        int j = 0;
+        long startDate = new Date().getTime();
+        List<Long> szummak = new ArrayList<>();
         for (String line : lines) {
-            String firstPart = line.substring(0, line.indexOf(' ')) + ".";
-            String secondPart = line.substring(line.indexOf(' ') + 1);
-            List<Integer> kerdojelPosition = new ArrayList<>();
-            int counterkerdojel = countKerdojel(firstPart, kerdojelPosition);
-            List<Integer> numbers = Arrays.stream(secondPart.split(",")).mapToInt(s -> Integer.valueOf(s)).boxed().toList();
-            List<GroupSearchFor> groups = IntStream.range(0, numbers.size()).mapToObj(index -> new GroupSearchFor(index, numbers.get(index))).toList();
+            String firstPartSlow = line.substring(0, line.indexOf(' '));
+            String secondPartSlow = line.substring(line.indexOf(' ') + 1);
+            String firstPart = "";
+            String secondPart = "";
+            int max = first ? 1 : 5;
+            for (int i = 0; i < max; i++) {
+                if (i == 0) {
+                    firstPart = firstPartSlow;
+                    secondPart = secondPartSlow;
+                } else {
+                    firstPart = firstPart + "?" + firstPartSlow;
+                    secondPart = secondPart + "," + secondPartSlow;
+                }
+            }
+            firstPart = firstPart + ".";
+            String[] bitesString = secondPart.split(",");
+            byte[] groups = new byte[bitesString.length];
+            for (int k = 0; k < bitesString.length; k++) {
+                groups[k] = Byte.valueOf(bitesString[k]);
+            }
+            int sumAllLine = Stream.of(secondPart.split(",")).mapToInt(Integer::parseInt).sum();
             List<String> allOptions = new ArrayList<>();
             allOptions.add(firstPart);
 
-            solutionFinder(0, groups.get(0), 0, firstPart, groups, counterSzamok);
-
-            //System.out.println("i: " + i++ + " " + counterSzamok.size());
-            eredmenyek.add(counterSzamok.size());
+            Map<State, Long> cachedValues = new HashMap<>();
+            szummak.add(solutionFinder(0, 0, 0, firstPart, groups, (byte) (sumAllLine + (groups.length - 1)), cachedValues));
         }
-        return counterSzamok.size();
+        long endDate = new Date().getTime();
+
+        System.out.println("Time: " + ((endDate-startDate)));
+
+        return szummak.stream().mapToLong(s -> s).sum();
+
     }
 
-    private static void solutionFinder(int index, GroupSearchFor groupSearchFor, int actualLength, String firstPart, List<GroupSearchFor> groups, List<Short> counter) {
+    private long solutionFinder(int index, int groupIndex, int actualLength, String firstPart, byte[] groups, byte sumUntilNow, Map<State, Long> cachedValues) {
+
+        State newState = new State(index, groupIndex, actualLength);
+        if (cachedValues.containsKey(newState)) {
+            return cachedValues.get(newState);
+        }
 
         if (firstPart.length() <= index) {
             // .  miatt ok
-            return;
+            return 0;
         }
+
+        // Melyen van akkor vege
+        if (actualLength == 0 && ((firstPart.length() - (index + 1)) < sumUntilNow)) {
+            return 0;
+        }
+
+        long valueToReturn = 0l;
         Character charActual = firstPart.charAt(index);
         if ('.' == charActual) {
-            // TODO beginning
-            pointTreat(index, groupSearchFor, actualLength, firstPart, groups, counter);
+            valueToReturn =  pointTreat(index, groupIndex, actualLength, firstPart, groups, sumUntilNow, cachedValues);
+            cachedValues.put(newState, valueToReturn);
+            return valueToReturn;
         } else if ('#' == charActual) {
-            hashtagTreat(index, groupSearchFor, actualLength, firstPart, groups, counter);
+            valueToReturn = hashtagTreat(index, groupIndex, actualLength, firstPart, groups, sumUntilNow, cachedValues);
+            cachedValues.put(newState, valueToReturn);
+            return valueToReturn;
         } else if ('?' == charActual) {
-            // TODO beginnin
-            pointTreat(index, groupSearchFor, actualLength, firstPart, groups, counter);
-            hashtagTreat(index, groupSearchFor, actualLength, firstPart, groups, counter);
-        }
-    }
-
-    private static void hashtagTreat(int index, GroupSearchFor groupSearchFor, int actualLength, String firstPart, List<GroupSearchFor> groups, List<Short> counter) {
-        solutionFinder(index + 1, groupSearchFor, actualLength + 1, firstPart, groups, counter);
-    }
-
-    private static void pointTreat(int index, GroupSearchFor groupSearchFor, int actualLength, String firstPart, List<GroupSearchFor> groups, List<Short> counter) {
-        // Beginning
-        if (actualLength == 0 && index < firstPart.indexOf('#')) {
-            solutionFinder(index + 1, groupSearchFor, actualLength, firstPart, groups, counter);
-        } else if (actualLength == groupSearchFor.value()) {
-            if (firstPart.length() <= index + 1 && groupSearchFor.index() + 1 == groups.size()) {
-                counter.add((short) 1);
-                return;
-            }
-            if (Math.max(firstPart.lastIndexOf('#'), firstPart.lastIndexOf('?')) <= (index + 1)) {
-                if (groupSearchFor.index() + 1 == groups.size()) {
-                    counter.add((short) 1);
-                    return;
-                }
-            }
-            if (groupSearchFor.index() + 1 == groups.size()) {
-                if (IntStream.range(index, firstPart.length()).allMatch(indexToCheck -> Arrays.asList('.', '?').contains(firstPart.charAt(indexToCheck)))) {
-                    counter.add((short) 1);
-                    return;
-                }
-                return;
-            }
-            GroupSearchFor nextGroup = groups.get(groupSearchFor.index() + 1);
-            solutionFinder(index + 1, nextGroup, 0, firstPart, groups, counter);
-        } else if (actualLength == 0) {
-            solutionFinder(index + 1, groupSearchFor, actualLength, firstPart, groups, counter);
-        }
-    }
-
-    record GroupSearchFor(int index, int value) {
-    }
-
-    ;
-
-    private static String transformJel(Integer kerdojelIndex, String actualFirstPart, char c) {
-        if (kerdojelIndex == 0) {
-            return c + actualFirstPart.substring(1);
-        } else if (kerdojelIndex == actualFirstPart.length() - 1) {
-            return actualFirstPart.substring(0, kerdojelIndex) + c;
+            valueToReturn += pointTreat(index, groupIndex, actualLength, firstPart, groups, sumUntilNow, cachedValues);
+            valueToReturn += hashtagTreat(index, groupIndex, actualLength, firstPart, groups, sumUntilNow, cachedValues);
+            cachedValues.put(newState, valueToReturn);
+            return valueToReturn;
         } else {
-            return actualFirstPart.substring(0, kerdojelIndex) + c + actualFirstPart.substring(kerdojelIndex + 1);
+            return 0;
         }
     }
 
-    private static int countKerdojel(String firstPart, List<Integer> kerdojelPoisition) {
-        int counterkerdojel = 0;
-        for (int i = 0; i < firstPart.length(); i++) {
-            if (firstPart.charAt(i) == '?') {
-                kerdojelPoisition.add(i);
-                counterkerdojel++;
-            }
+    private long hashtagTreat(int index, int groupIndex, int actualLength, String firstPart, byte[] groups, byte sumUntilNow, Map<State, Long> cachedValues) {
+        if (groups[groupIndex] < (actualLength + 1)) {
+            return 0;
         }
-        return counterkerdojel;
+        return solutionFinder(index + 1, groupIndex, actualLength + 1, firstPart, groups, sumUntilNow, cachedValues);
     }
 
-    record Config(String line) {
-        String calculateDiez() {
-            int counter = 0;
-            List<Integer> islands = new ArrayList<>();
-            for (int i = 0; i < line.length(); i++) {
-                if (line.charAt(i) == '#') {
-                    counter++;
-                    if (i == line.length() - 1) {
-                        islands.add(counter);
-                    }
-                } else {
-                    if (counter != 0) {
-                        islands.add(counter);
-                    }
-                    counter = 0;
+    private long pointTreat(int index, int groupIndex, int actualLength, String firstPart, byte[] groups, byte sumUntilNow, Map<State, Long> cachedValues) {
+        // Vagy pont van elotte Vagy kezdodik
+        if (actualLength == 0) {
+            return solutionFinder(index + 1, groupIndex, actualLength, firstPart, groups, sumUntilNow, cachedValues);
+        } else if (actualLength == groups[groupIndex]) {
+
+            if ((groupIndex + 1) == groups.length) {
+                // Vagy Group kesz --> utana csak . es ? lehet
+                if (IntStream.range(index, firstPart.length()).allMatch(indexToCheck -> Arrays.asList('?', '.').contains(firstPart.charAt(indexToCheck)))) {
+                    return 1l;
                 }
             }
-            String toReturn = "";
-            for (Integer island : islands) {
-                toReturn = toReturn + island + ",";
+            // Vagy Group es next group
+            if ((groupIndex + 1) < groups.length) {
+                return solutionFinder(index + 1, groupIndex + 1, 0, firstPart, groups, (byte) (sumUntilNow - groups[groupIndex] - 1), cachedValues);
             }
-
-            if (toReturn.equals("")) {
-                return toReturn;
-            }
-            return toReturn.substring(0, toReturn.length() - 1);
+            return 0;
+        } else {
+            return 0;
         }
     }
 
-    ;
+    record State(int index, int groupIndex, int actualLength) {
+    }
+
 }

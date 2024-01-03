@@ -6,6 +6,8 @@ import org.jgrapht.graph.DefaultUndirectedGraph;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -30,6 +32,8 @@ public class Day23 {
 
 
     public void calculate() throws IOException {
+
+        long startTime = System.currentTimeMillis();
         List<String> lines = FileReaderUtils.readFile("/2023/day23/input.txt");
 
         maxY = (short) lines.size();
@@ -50,7 +54,6 @@ public class Day23 {
         }
 
         List<Point> vertices = new ArrayList<>();
-        Map<Integer, Point> integerPoints = new HashMap<>();
 
         vertices.add(beginPoint);
         for (short y = 1; y < maxY - 1; y++) {
@@ -81,53 +84,6 @@ public class Day23 {
 
         calculateEdges(vertices, maxX, maxY, edges);
 
-
-        DefaultUndirectedGraph<Integer, Short> graph =
-                new DefaultUndirectedGraph<Integer, Short>(Short.class);
-
-        List<Integer> verticesIntegers = new ArrayList<>();
-        int index = 0;
-        for (Point point : vertices) {
-            integerPoints.put(index, point);
-            verticesIntegers.add(index++);
-        }
-
-
-        Graphs.addAllVertices(graph, verticesIntegers);
-        for (Map.Entry<Point, Set<Edge>> entry : edges.entrySet()) {
-            int indexEntry = vertices.indexOf(entry.getKey());
-            for (Edge edge : entry.getValue()) {
-                int indexEdge = vertices.indexOf(edge.toSource);
-                if (!endPoint.equals(entry.getKey())) {
-                    graph.addEdge(indexEntry, indexEdge, edge.value);
-                }
-            }
-        }
-
-//        Set<Edge> beginValue = edges.get(beginPoint);
-//        Iterator<Edge> edgeFirst = beginValue.iterator();
-//        Edge beginEdge = edgeFirst.next();
-//        Edge toPut = new Edge((short) (beginEdge.value - 1), beginEdge.toSource);
-//        beginValue.clear();
-//        beginValue.add(toPut);
-//
-//
-//        Set<Edge> endValue = edges.get(endPoint);
-//        Edge toEndEdge = null;
-//        Point pointBeforeEnd = endValue.iterator().next().toSource;
-//        Set<Edge> setsToModify = edges.get(pointBeforeEnd);
-//        for (Edge edgeActual : setsToModify) {
-//            if (edgeActual.toSource.equals(endPoint)) {
-//                toEndEdge = edgeActual;
-//            }
-//        }
-//        setsToModify.remove(toEndEdge);
-//        setsToModify.add(new Edge((short) (toEndEdge.value - 1), toEndEdge.toSource));
-//        edges.put(pointBeforeEnd, setsToModify);
-
-
-        // DFS(Step)
-
         // DFS --> List<Point> visited ++
         // neighbours
         // All neighbours
@@ -135,39 +91,16 @@ public class Day23 {
         dfs(beginPoint, maxs, edges);
 
         System.out.println("Max: " + maxs.stream().mapToInt(s -> s).max().getAsInt());
+        System.out.println("Max size: " + maxs.size());
 
+        long endTime = System.currentTimeMillis();
 
-//        GraphIterator<Integer, Short> iterator =
-//                new DepthFirstIterator<Integer, Short>(graph, 0);
-//        List<Integer> results = new ArrayList<>();
-//        while (iterator.hasNext()) {
-//            results.add(iterator.next());
-//        }
-//
-//        int sum = 0;
-//        System.out.println(results);
-//        for (int i = 0; i < results.size() - 2; i++) {
-//            Point pointFrom  = integerPoints.get(results.get(i));
-//            Point pointTo  = integerPoints.get(results.get(i+1));
-//
-//            Set<Edge> edges1 = edges.get(pointFrom);
-//
-//            List<Edge> edgesTo = edges1.stream().filter(edge -> edge.toSource.equals(pointTo)).collect(Collectors.toList());
-//            System.out.println(i);
-//            if(!edgesTo.isEmpty()){
-//                Edge edgeTo = edgesTo.get(0);
-//                sum+=edgeTo.value;
-//            }
-//        }
-//        System.out.println("Toto: " + sum);
-
-
-        //shortestPathWithInverseDijkstra(forests, maxX, maxY);
+        System.out.println("Time: " + (endTime-startTime)/1000L);
 
     }
 
 
-    private void dfs(Point beginPoint, Set<Integer> maxs, Map<Point, Set<Edge>> edges) {
+    private void dfs(Point beginPoint, Collection<Integer> maxs, Map<Point, Set<Edge>> edges) {
         List<Point> alreadyVisited = new ArrayList<>();
         alreadyVisited.add(beginPoint);
         for (Edge destinationEdge : edges.get(beginPoint)) {
@@ -177,7 +110,7 @@ public class Day23 {
         }
     }
 
-    private void doRecursiveDFS(Point beginPoint, List<Point> alreadyVisited, Set<Integer> maxs, Map<Point, Set<Edge>> edges) {
+    private void doRecursiveDFS(Point beginPoint, List<Point> alreadyVisited, Collection<Integer> maxs, Map<Point, Set<Edge>> edges) {
         if (beginPoint.equals(endPoint)) {
             alreadyVisited.add(beginPoint);
             int max = calculateDistance(alreadyVisited, edges);
@@ -256,9 +189,6 @@ public class Day23 {
                 nodesActual.addAll(nodesActualRestant);
                 nodesActualRestant.clear();
             }
-
-
-            ///////////////
 
         }
     }

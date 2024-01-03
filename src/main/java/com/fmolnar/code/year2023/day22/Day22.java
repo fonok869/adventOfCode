@@ -5,6 +5,7 @@ import com.fmolnar.code.FileReaderUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -19,17 +20,12 @@ public class Day22 {
         calculate();
     }
 
-    // List<String> strings = Arrays.stream(toto.split(",")).collect(Collectors.toList());
-    //        List<Character> chars = toto.chars().mapToObj(s->(char) s).collect(Collectors.toList());
-
-
     public static void calculate() throws IOException {
         List<String> lines = FileReaderUtils.readFile("/2023/day22/input.txt");
-        Map<PointXY, Integer> pointZMax = new HashMap<>();
-        Map<Integer, Set<TeglaTest>> zAndTeglatestek = new HashMap<>();
 
         Set<TeglaTest> initTestek = new HashSet<>();
-        for (String line : lines) {
+        for (int index = 0; index < lines.size(); index++) {
+            String line = lines.get(index);
             int indexOfTilde = line.indexOf('~');
             String firstPart = line.substring(0, indexOfTilde);
             String secondPart = line.substring(indexOfTilde + 1);
@@ -39,9 +35,49 @@ public class Day22 {
             PointXYZ beginPoint = new PointXYZ(Integer.valueOf(beginIndex[0]), Integer.valueOf(beginIndex[1]), Integer.valueOf(beginIndex[2]));
             PointXYZ endPoint = new PointXYZ(Integer.valueOf(endIndex[0]), Integer.valueOf(endIndex[1]), Integer.valueOf(endIndex[2]));
             Direction dir = getDirectionTest(endPoint, beginPoint);
-            TeglaTest teglaTestActual = new TeglaTest(beginPoint, endPoint, dir);
+            TeglaTest teglaTestActual = new TeglaTest(index, beginPoint, endPoint, dir);
             initTestek.add(teglaTestActual);
+        }
 
+
+        Set<TeglaTest> zStables = new HashSet<>();
+
+        executeFalling(initTestek, zStables);
+
+        List<TeglaTest> teglaTests = new ArrayList<>(zStables);
+        Collections.sort(teglaTests, (TeglaTest t1, TeglaTest t2) -> Integer.compare(t1.begin.z, t2.begin.z));
+
+        Map<Integer, Set<TeglaTest>> zAndTeglatestekDropedMin = new HashMap<>();
+        Map<Integer, Set<TeglaTest>> zAndTeglatestekDropedMax = new HashMap<>();
+
+        for (TeglaTest teglaTestActualDropped : teglaTests) {
+            // Megcsin 1 Sor
+            Set<TeglaTest> alreadyInside = zAndTeglatestekDropedMin.get(teglaTestActualDropped.getMinZ());
+            if (alreadyInside == null) {
+                alreadyInside = new HashSet<>();
+            }
+            alreadyInside.add(teglaTestActualDropped);
+            zAndTeglatestekDropedMin.put(teglaTestActualDropped.getMinZ(), alreadyInside);
+
+            // Megcsin 1 Sor
+            Set<TeglaTest> alreadyInsideMax = zAndTeglatestekDropedMax.get(teglaTestActualDropped.getMaxZ());
+            if (alreadyInsideMax == null) {
+                alreadyInsideMax = new HashSet<>();
+            }
+            alreadyInsideMax.add(teglaTestActualDropped);
+            zAndTeglatestekDropedMax.put(teglaTestActualDropped.getMaxZ(), alreadyInsideMax);
+        }
+
+        countAllTartas(lines.size(), zStables, zAndTeglatestekDropedMax, zAndTeglatestekDropedMin);
+        // -----------------------------
+
+
+    }
+
+    private static void executeFalling(Set<TeglaTest> initTestek, Set<TeglaTest> zStables) {
+
+        Map<Integer, Set<TeglaTest>> zAndTeglatestek = new HashMap<>();
+        for (TeglaTest teglaTestActual : initTestek) {
             // Megcsin 1 Sor
             Set<TeglaTest> alreadyInside = zAndTeglatestek.get(teglaTestActual.getMinZ());
             if (alreadyInside == null) {
@@ -49,13 +85,10 @@ public class Day22 {
             }
             alreadyInside.add(teglaTestActual);
             zAndTeglatestek.put(teglaTestActual.getMinZ(), alreadyInside);
-            // -----------------------------
-
         }
-
+        // -----------------------------
+        Map<PointXY, Integer> pointZMax = new HashMap<>();
         int maxFalling = initTestek.stream().mapToInt(TeglaTest::getMaxZ).max().getAsInt();
-
-        Set<TeglaTest> zStables = new HashSet<>();
 
         for (int zActual = 1; zActual <= maxFalling; zActual++) {
             Set<TeglaTest> zActuals = zAndTeglatestek.get(zActual);
@@ -130,40 +163,11 @@ public class Day22 {
             }
 
         }
-
-        List<TeglaTest> teglaTests = new ArrayList<>(zStables);
-        Collections.sort(teglaTests, (TeglaTest t1, TeglaTest t2) -> Integer.compare(t1.begin.z, t2.begin.z));
-
-        Map<Integer, Set<TeglaTest>> zAndTeglatestekDropedMin = new HashMap<>();
-        Map<Integer, Set<TeglaTest>> zAndTeglatestekDropedMax = new HashMap<>();
-
-        for (TeglaTest teglaTestActualDropped : teglaTests) {
-            // Megcsin 1 Sor
-            Set<TeglaTest> alreadyInside = zAndTeglatestekDropedMin.get(teglaTestActualDropped.getMinZ());
-            if (alreadyInside == null) {
-                alreadyInside = new HashSet<>();
-            }
-            alreadyInside.add(teglaTestActualDropped);
-            zAndTeglatestekDropedMin.put(teglaTestActualDropped.getMinZ(), alreadyInside);
-
-            // Megcsin 1 Sor
-            Set<TeglaTest> alreadyInsideMax = zAndTeglatestekDropedMax.get(teglaTestActualDropped.getMaxZ());
-            if (alreadyInsideMax == null) {
-                alreadyInsideMax = new HashSet<>();
-            }
-            alreadyInsideMax.add(teglaTestActualDropped);
-            zAndTeglatestekDropedMax.put(teglaTestActualDropped.getMaxZ(), alreadyInsideMax);
-        }
-
-        countAllTartas(lines.size(), zStables, zAndTeglatestekDropedMax, zAndTeglatestekDropedMin);
-        // -----------------------------
-
-
     }
 
     private static void countAllTartas(int maxSize, Set<TeglaTest> teglaTests, Map<Integer, Set<TeglaTest>> zAndTeglatestekDropedMax, Map<Integer, Set<TeglaTest>> zAndTeglatestekDropedMin) {
         Set<TeglaTest> secondBoucle = new HashSet<>(teglaTests);
-        Map<TeglaTest, Set<TeglaTest>> fugges = new HashMap<>();
+        Map<TeglaTest, Set<TeglaTest>> fuggesMin = new HashMap<>();
         Map<TeglaTest, Set<TeglaTest>> fuggesMax = new HashMap<>();
 
         for (TeglaTest teglatestRahelyezkedo : secondBoucle) {
@@ -184,17 +188,33 @@ public class Day22 {
                     }
                 });
             }
-            fugges.put(teglatestRahelyezkedo, minZTartja);
+            fuggesMin.put(teglatestRahelyezkedo, minZTartja);
         }
 
-        Set<TeglaTest> fuggesMin = fugges.entrySet().stream().filter(entry -> entry.getValue().size() == 1).map(entry2 -> entry2.getKey()).collect(Collectors.toSet());
-
-        Set<TeglaTest> disintegrable = fugges.entrySet().stream().filter(entry -> 1 == entry.getValue().size()).map(Map.Entry::getValue).flatMap(Set::stream).collect(Collectors.toSet());
+        Set<TeglaTest> nonDisintegrable = fuggesMin.entrySet().stream().filter(entry -> 1 == entry.getValue().size()).map(Map.Entry::getValue).flatMap(Set::stream).collect(Collectors.toSet());
         Set<TeglaTest> allTeglatestek = new HashSet<>(teglaTests);
-        allTeglatestek.removeAll(disintegrable);
+        allTeglatestek.removeAll(nonDisintegrable);
 
-        System.out.println("Non disintegrable: " + disintegrable.size());
+        System.out.println("Non nonDisintegrable: " + nonDisintegrable.size());
         System.out.println("Disintegrable: " + allTeglatestek.size());
+
+        // Part 2
+
+        int sum = 0;
+        for (TeglaTest teglaTestToDelete : nonDisintegrable) {
+            Set<TeglaTest> initTeglatest = new HashSet<>(teglaTests);
+            initTeglatest.remove(teglaTestToDelete);
+            Set<TeglaTest> zStables = new HashSet<>();
+            executeFalling(initTeglatest, zStables);
+            int moved = 0;
+            for (TeglaTest newZStable : zStables) {
+                if (!initTeglatest.contains(newZStable)) {
+                    sum++;
+                }
+            }
+        }
+
+        System.out.println("Moved sum: " + sum);
     }
 
     private static Direction getDirectionTest(PointXYZ endPoint, PointXYZ beginPoint) {
@@ -234,7 +254,7 @@ public class Day22 {
 
     ;
 
-    record TeglaTest(PointXYZ begin, PointXYZ end, Direction direction) {
+    record TeglaTest(int index, PointXYZ begin, PointXYZ end, Direction direction) {
 
         boolean isInside(PointXYZ pointXYZ) {
             return begin.x <= pointXYZ.x && pointXYZ.x <= end.x &&
@@ -300,10 +320,10 @@ public class Day22 {
 
         TeglaTest newZ(int newZSzint) {
             if (direction == Direction.X || direction == Direction.Y) {
-                return new TeglaTest(begin.newZ(newZSzint), end.newZ(newZSzint), direction);
+                return new TeglaTest(index, begin.newZ(newZSzint), end.newZ(newZSzint), direction);
             } else {
                 // Assume mindig jo sorrend
-                return new TeglaTest(begin.newZ(newZSzint), end.newZ(newZSzint + (end.z - begin.z)), direction);
+                return new TeglaTest(index, begin.newZ(newZSzint), end.newZ(newZSzint + (end.z - begin.z)), direction);
             }
         }
 
