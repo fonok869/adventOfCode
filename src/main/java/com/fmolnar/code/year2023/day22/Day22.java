@@ -17,7 +17,7 @@ import java.util.stream.IntStream;
 public class Day22 {
 
     public static void main(String[] args) throws IOException {
-        calculate();
+       calculate();
     }
 
     public static void calculate() throws IOException {
@@ -52,20 +52,10 @@ public class Day22 {
 
         for (TeglaTest teglaTestActualDropped : teglaTests) {
             // Megcsin 1 Sor
-            Set<TeglaTest> alreadyInside = zAndTeglatestekDropedMin.get(teglaTestActualDropped.getMinZ());
-            if (alreadyInside == null) {
-                alreadyInside = new HashSet<>();
-            }
-            alreadyInside.add(teglaTestActualDropped);
-            zAndTeglatestekDropedMin.put(teglaTestActualDropped.getMinZ(), alreadyInside);
+            zAndTeglatestekDropedMin.compute(teglaTestActualDropped.getMinZ(), (k,v) -> { return addTeglatest(v, teglaTestActualDropped);});
 
             // Megcsin 1 Sor
-            Set<TeglaTest> alreadyInsideMax = zAndTeglatestekDropedMax.get(teglaTestActualDropped.getMaxZ());
-            if (alreadyInsideMax == null) {
-                alreadyInsideMax = new HashSet<>();
-            }
-            alreadyInsideMax.add(teglaTestActualDropped);
-            zAndTeglatestekDropedMax.put(teglaTestActualDropped.getMaxZ(), alreadyInsideMax);
+            zAndTeglatestekDropedMax.compute(teglaTestActualDropped.getMaxZ(), (k,v) -> { return addTeglatest(v, teglaTestActualDropped);});
         }
 
         countAllTartas(lines.size(), zStables, zAndTeglatestekDropedMax, zAndTeglatestekDropedMin);
@@ -73,18 +63,18 @@ public class Day22 {
 
 
     }
+    private static Set<TeglaTest> addTeglatest(Set<TeglaTest> already, TeglaTest teglaTestActual){
+        Set<TeglaTest> testek = already == null ? new HashSet<>() : already;
+        testek.add(teglaTestActual);
+        return testek;
+    }
 
     private static void executeFalling(Set<TeglaTest> initTestek, Set<TeglaTest> zStables) {
 
         Map<Integer, Set<TeglaTest>> zAndTeglatestek = new HashMap<>();
         for (TeglaTest teglaTestActual : initTestek) {
             // Megcsin 1 Sor
-            Set<TeglaTest> alreadyInside = zAndTeglatestek.get(teglaTestActual.getMinZ());
-            if (alreadyInside == null) {
-                alreadyInside = new HashSet<>();
-            }
-            alreadyInside.add(teglaTestActual);
-            zAndTeglatestek.put(teglaTestActual.getMinZ(), alreadyInside);
+            zAndTeglatestek.compute(teglaTestActual.getMinZ(), (k, oldSet) -> {return addTeglatest(oldSet, teglaTestActual);});
         }
         // -----------------------------
         Map<PointXY, Integer> pointZMax = new HashMap<>();

@@ -48,18 +48,8 @@ public class Day23Solution2WithoutThreads {
     }
 
     private static void shortestPathWithInverseDijkstra(Set<Point> forests, int maxX, int maxY) {
-        Comparator<Node> nodeComparator = new Comparator<Node>() {
-            @Override
-            public int compare(Node o1, Node o2) {
-                if (o1.points.size() < o2.points.size())
-                    return 1;
-                if (o1.points.size() > o2.points.size())
-                    return -1;
-                return 0;
-            }
-        };
 
-        Queue<Node> pqueue = new PriorityBlockingQueue<>(10,nodeComparator);
+        Queue<Node> pqueue = new PriorityBlockingQueue<>(10, Comparator.comparingInt(n->-1*n.points.size()));
 
         pqueue.add(new Node(new Point(1, 0), Set.of(new Point(1, 0))));
 

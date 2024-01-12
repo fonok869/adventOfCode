@@ -23,47 +23,35 @@ public class Day12v2 {
         System.out.println("Sum: " + sum);
     }
 
-    private AtomicLong atomicLong = new AtomicLong(0l);
-
     public long calculateFor1(List<String> lines, boolean first) {
-
-        int j = 0;
         long startDate = new Date().getTime();
         List<Long> szummak = new ArrayList<>();
         for (String line : lines) {
-            String firstPartSlow = line.substring(0, line.indexOf(' '));
-            String secondPartSlow = line.substring(line.indexOf(' ') + 1);
-            String firstPart = "";
-            String secondPart = "";
-            int max = first ? 1 : 5;
-            for (int i = 0; i < max; i++) {
-                if (i == 0) {
-                    firstPart = firstPartSlow;
-                    secondPart = secondPartSlow;
-                } else {
-                    firstPart = firstPart + "?" + firstPartSlow;
-                    secondPart = secondPart + "," + secondPartSlow;
-                }
-            }
+            String firstPart = calculateStringFromExercise(line.substring(0, line.indexOf(' ')), first, "?");
             firstPart = firstPart + ".";
+            String secondPart = calculateStringFromExercise(line.substring(line.indexOf(' ') + 1), first, ",");
             String[] bitesString = secondPart.split(",");
+
             byte[] groups = new byte[bitesString.length];
             for (int k = 0; k < bitesString.length; k++) {
                 groups[k] = Byte.valueOf(bitesString[k]);
             }
-            int sumAllLine = Stream.of(secondPart.split(",")).mapToInt(Integer::parseInt).sum();
-            List<String> allOptions = new ArrayList<>();
-            allOptions.add(firstPart);
 
+            int sumAllLine = Stream.of(secondPart.split(",")).mapToInt(Integer::parseInt).sum();
             Map<State, Long> cachedValues = new HashMap<>();
             szummak.add(solutionFinder(0, 0, 0, firstPart, groups, (byte) (sumAllLine + (groups.length - 1)), cachedValues));
         }
         long endDate = new Date().getTime();
-
-        System.out.println("Time: " + ((endDate-startDate)));
-
+        System.out.println("Time: " + ((endDate - startDate)));
         return szummak.stream().mapToLong(s -> s).sum();
+    }
 
+    private String calculateStringFromExercise(String beforePart, boolean first, String splitter) {
+        String beforePartShort = beforePart;
+        for (int i = 0; i < (first ? 0 : 4); i++) {
+            beforePartShort = beforePartShort + splitter + beforePart;
+        }
+        return beforePartShort;
     }
 
     private long solutionFinder(int index, int groupIndex, int actualLength, String firstPart, byte[] groups, byte sumUntilNow, Map<State, Long> cachedValues) {
@@ -86,21 +74,17 @@ public class Day12v2 {
         long valueToReturn = 0l;
         Character charActual = firstPart.charAt(index);
         if ('.' == charActual) {
-            valueToReturn =  pointTreat(index, groupIndex, actualLength, firstPart, groups, sumUntilNow, cachedValues);
-            cachedValues.put(newState, valueToReturn);
-            return valueToReturn;
+            valueToReturn = pointTreat(index, groupIndex, actualLength, firstPart, groups, sumUntilNow, cachedValues);
         } else if ('#' == charActual) {
             valueToReturn = hashtagTreat(index, groupIndex, actualLength, firstPart, groups, sumUntilNow, cachedValues);
-            cachedValues.put(newState, valueToReturn);
-            return valueToReturn;
         } else if ('?' == charActual) {
             valueToReturn += pointTreat(index, groupIndex, actualLength, firstPart, groups, sumUntilNow, cachedValues);
             valueToReturn += hashtagTreat(index, groupIndex, actualLength, firstPart, groups, sumUntilNow, cachedValues);
-            cachedValues.put(newState, valueToReturn);
-            return valueToReturn;
         } else {
-            return 0;
+            valueToReturn = 0;
         }
+        cachedValues.put(newState, valueToReturn);
+        return valueToReturn;
     }
 
     private long hashtagTreat(int index, int groupIndex, int actualLength, String firstPart, byte[] groups, byte sumUntilNow, Map<State, Long> cachedValues) {

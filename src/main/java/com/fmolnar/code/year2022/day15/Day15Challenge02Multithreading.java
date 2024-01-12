@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Day15Challenge02Multithreading {
 
     AtomicInteger atomicInteger = new AtomicInteger();
+
     public void calculate() throws IOException {
         List<String> lines = FileReaderUtils.readFile("/2022/day15/input.txt");
 
@@ -21,7 +22,6 @@ public class Day15Challenge02Multithreading {
         final int maxValue = 4000000;
         final long init = System.currentTimeMillis();
         List<PointXY> points = new ArrayList<>();
-        int lineB = 0;
         for (String line : lines) {
             String[] instructions = line.split(":");
             sensor = pointSearch(instructions[0]);
@@ -30,27 +30,22 @@ public class Day15Challenge02Multithreading {
             points.add(new PointXY(sensor.x, sensor.y, manDist));
         }
 
-        Collections.sort(points, new Comparator<PointXY>() {
-            @Override
-            public int compare(PointXY o1, PointXY o2) {
-                return o1.manDist()>o2.manDist() ? 1 : 1;
-            }
-        });
+        Collections.sort(points, Comparator.comparingLong(pointXY -> -1 * pointXY.manDist()));
 
 
         final List<PointXY> finalPoints = new ArrayList<>(points);
 
         final int maxThreads = 50;
         Thread[] threads = new Thread[maxThreads];
-        for(int r=0; r<maxThreads; r++){
-            int minX = (int)(((r * (1.0)/(maxThreads*1.0))) * maxValue * 1.0);
-            int maxX = (int) ((((r+1)*1.0/(maxThreads*1.0))) * maxValue *1.0);
+        for (int r = 0; r < maxThreads; r++) {
+            int minX = (int) (((r * (1.0) / (maxThreads * 1.0))) * maxValue * 1.0);
+            int maxX = (int) ((((r + 1) * 1.0 / (maxThreads * 1.0))) * maxValue * 1.0);
             threads[r] = createThread(minX, maxX, maxValue, finalPoints, init);
             threads[r].start();
         }
     }
 
-    private Thread createThread(final int min, final int max, final int maxValue, List<PointXY> finalPoints, long init){
+    private Thread createThread(final int min, final int max, final int maxValue, List<PointXY> finalPoints, long init) {
         return new Thread(new Runnable() {
             @Override
             public void run() {
@@ -68,7 +63,7 @@ public class Day15Challenge02Multithreading {
                         }
                         if (!breaked) {
                             long result = i * 4000000l + j;
-                            System.out.println("Result: " +result+ " i: " +i+ " j: "+j);
+                            System.out.println("Result: " + result + " i: " + i + " j: " + j);
                             break looper;
                         }
                     }

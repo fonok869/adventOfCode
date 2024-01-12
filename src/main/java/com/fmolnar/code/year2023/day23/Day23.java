@@ -142,7 +142,6 @@ public class Day23 {
     }
 
     private void calculateEdges(List<Point> vertices, short maxX, short maxY, Map<Point, Set<Edge>> edges) {
-        Set<Point> vertices2 = new HashSet<>(vertices);
         for (Point vertice : vertices) {
 
             ////////////////////////////////

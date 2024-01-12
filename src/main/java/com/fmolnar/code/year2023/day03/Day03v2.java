@@ -54,7 +54,6 @@ public class Day03v2 {
 
     private static Long getDigitNumber(Point pointToCheck, List<String> lines) {
         int maxX = lines.get(0).length();
-        int maxY = lines.size();
         int begin = pointToCheck.x;
         int end = pointToCheck.x;
         // -1 X direction
