@@ -3,14 +3,24 @@ package com.fmolnar.code.kata;
 import org.assertj.core.util.Sets;
 import org.junit.Test;
 
+import java.lang.reflect.Array;
+import java.text.DateFormat;
+import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,6 +38,17 @@ public class MapComputeTest {
         }
 
         assertThat(stringMaps).containsEntry("0", 2).containsEntry("1", 17).containsEntry("2", 2);
+    }
+
+    @Test
+    public void testIdentityHashMap(){
+        Map<Node, Integer> identityHashMap = new IdentityHashMap<>();
+        identityHashMap.put(new Node(1,1), 2);
+        identityHashMap.put(new Node(1,3), 2);
+        identityHashMap.put(new Node(1,1), 10);
+
+        System.out.println(identityHashMap);
+
     }
 
     @Test
@@ -63,6 +84,41 @@ public class MapComputeTest {
 
         Collections.sort(nodes, Comparator.comparingInt(n-> -1*n.value));
         assertThat(nodes).containsSequence(node2, node3, node1);
+    }
+
+    @Test
+    public void testMapFlaten(){
+
+        Map<String, List<Integer>> maps  = new HashMap<>();
+        maps.put("toto", List.of(1,2,3));
+        maps.put("titi", List.of(10,11,12));
+
+        List<Integer> integs = maps.entrySet().stream().map(Map.Entry::getValue).flatMap(List::stream).collect(Collectors.toList());
+
+        assertThat(integs).containsExactly(1,2,3,10,11,12);
+    }
+
+    @Test
+    public void testOffsetDateTimeFromInstant(){
+        Instant instant = Instant.now();
+        OffsetDateTime toto = OffsetDateTime.parse("2019-06-12T00:00:00+02:00");
+
+        OffsetDateTime result = OffsetDateTime.ofInstant(instant, ZoneId.systemDefault());
+
+        System.out.println(DateTimeFormatter.ISO_DATE_TIME.format(toto));
+        System.out.println(toto);
+
+        System.out.println(DateTimeFormatter.ISO_DATE_TIME.format(result));
+        System.out.println(result);
+    }
+
+    @Test
+    public void testArray(){
+        List<String> toto = Arrays.asList("kaka");
+        toto.add("Kikik");
+
+        toto.forEach(System.out::println);
+
     }
 
     record Node(int value, int position){}
