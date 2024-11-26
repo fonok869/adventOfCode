@@ -1,23 +1,7 @@
 package com.fmolnar.code;
 
 
-import com.fmolnar.code.year2021.day14.Day14Challenge02;
-import com.fmolnar.code.year2021.day16.Day16Challenge01;
-import com.fmolnar.code.year2021.day16.Day16Challenge01New;
-import com.fmolnar.code.year2021.day16.Day16Challenge02;
-import com.fmolnar.code.year2021.day16.Day16Challenge02New;
-import com.fmolnar.code.year2021.day18.Day18Challenge01;
-import com.fmolnar.code.year2021.day18.Day18Challenge02;
-import com.fmolnar.code.year2021.day20.Day20challenge01;
-import com.fmolnar.code.year2021.day20.Day20challenge02;
-import com.fmolnar.code.year2021.day21.Day21Challenge01;
-import com.fmolnar.code.year2021.day21.Day21Challenge02;
-import com.fmolnar.code.year2021.day21.Day21Challenge02Beauty;
-import com.fmolnar.code.year2021.day22.Day22Challenge01;
-import com.fmolnar.code.year2021.day22.Day22Challenge02;
-import com.fmolnar.code.year2021.day22.Day22Challenge02Beauty;
-import com.fmolnar.code.year2021.day22.Day22Challenge02Beauty02;
-import com.fmolnar.code.year2021.day25.Day25Challenge01;
+import com.fmolnar.code.year2021.day15.Day15Challenge01;
 import com.fmolnar.code.year2023.day23.Day23;
 
 import java.io.IOException;
@@ -116,9 +100,9 @@ public class App {
 //        Day14Challenge02 day14Challenge02 = new Day14Challenge02();
 //        day14Challenge02.calculate();
 
-//        Day15Challenge01 day15Challenge01 = new Day15Challenge01();
-//        day15Challenge01.calculate();
-//
+        Day15Challenge01 day15Challenge01 = new Day15Challenge01();
+        day15Challenge01.calculate();
+
 //        Day15Challenge02 day15Challenge02 = new Day15Challenge02();
 //        day15Challenge02.calculate();
 

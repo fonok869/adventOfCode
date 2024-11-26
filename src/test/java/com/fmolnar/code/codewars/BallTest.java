@@ -1,12 +1,12 @@
 package com.fmolnar.code.codewars;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class BallTest {
     private static void testing(int actual, int expected) {
-        assertEquals(expected, actual);
+        assertThat(expected).isEqualTo(actual);
     }
     @Test
     public void test() {

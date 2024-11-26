@@ -1,6 +1,6 @@
 package com.fmolnar.code.year2023.day19;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 

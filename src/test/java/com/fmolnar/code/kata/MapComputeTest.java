@@ -1,15 +1,13 @@
 package com.fmolnar.code.kata;
 
 import org.assertj.core.util.Sets;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Array;
-import java.text.DateFormat;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,6 +17,7 @@ import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -41,11 +40,11 @@ public class MapComputeTest {
     }
 
     @Test
-    public void testIdentityHashMap(){
+    public void testIdentityHashMap() {
         Map<Node, Integer> identityHashMap = new IdentityHashMap<>();
-        identityHashMap.put(new Node(1,1), 2);
-        identityHashMap.put(new Node(1,3), 2);
-        identityHashMap.put(new Node(1,1), 10);
+        identityHashMap.put(new Node(1, 1), 2);
+        identityHashMap.put(new Node(1, 3), 2);
+        identityHashMap.put(new Node(1, 1), 10);
 
         System.out.println(identityHashMap);
 
@@ -69,37 +68,37 @@ public class MapComputeTest {
     }
 
     @Test
-    public void testComparator(){
-        Node node1 = new Node(1,1);
-        Node node2 = new Node(21,25);
-        Node node3 =new Node(15,300);
+    public void testComparator() {
+        Node node1 = new Node(1, 1);
+        Node node2 = new Node(21, 25);
+        Node node3 = new Node(15, 300);
 
         List<Node> nodes = new ArrayList<>();
         nodes.add(node1);
         nodes.add(node2);
         nodes.add(node3);
 
-        Collections.sort(nodes, Comparator.comparingInt(n-> n.value));
+        Collections.sort(nodes, Comparator.comparingInt(n -> n.value));
         assertThat(nodes).containsSequence(node1, node3, node2);
 
-        Collections.sort(nodes, Comparator.comparingInt(n-> -1*n.value));
+        Collections.sort(nodes, Comparator.comparingInt(n -> -1 * n.value));
         assertThat(nodes).containsSequence(node2, node3, node1);
     }
 
     @Test
-    public void testMapFlaten(){
+    public void testMapFlaten() {
 
-        Map<String, List<Integer>> maps  = new HashMap<>();
-        maps.put("toto", List.of(1,2,3));
-        maps.put("titi", List.of(10,11,12));
+        Map<String, List<Integer>> maps = new HashMap<>();
+        maps.put("toto", List.of(1, 2, 3));
+        maps.put("titi", List.of(10, 11, 12));
 
         List<Integer> integs = maps.entrySet().stream().map(Map.Entry::getValue).flatMap(List::stream).collect(Collectors.toList());
 
-        assertThat(integs).containsExactly(1,2,3,10,11,12);
+        assertThat(integs).containsExactly(1, 2, 3, 10, 11, 12);
     }
 
     @Test
-    public void testOffsetDateTimeFromInstant(){
+    public void testOffsetDateTimeFromInstant() {
         Instant instant = Instant.now();
         OffsetDateTime toto = OffsetDateTime.parse("2019-06-12T00:00:00+02:00");
 
@@ -113,13 +112,31 @@ public class MapComputeTest {
     }
 
     @Test
-    public void testArray(){
+    public void testArray() {
         List<String> toto = Arrays.asList("kaka");
         toto.add("Kikik");
 
         toto.forEach(System.out::println);
-
     }
 
-    record Node(int value, int position){}
+    @Test
+    public void testOptionalMap() {
+        Optional<String> toto = Optional.empty();
+        assertThat(makeMap(Optional.empty())).isEqualTo("Legkulsoben vagyunk");
+        assertThat(makeMap(Optional.ofNullable(null))).isEqualTo("Legkulsoben vagyunk");
+        assertThat(makeMap(Optional.of("Kaka"))).isEqualTo("Bement a kakaba");
+        assertThat(makeMap(Optional.of("fbsdhf"))).isEqualTo("Kiki");
+    }
+
+    String makeMap(Optional<String> optional){
+        return optional.map(s -> {
+            if (s.equals("Kaka")) {
+                return "Bement a kakaba";
+            }
+            return "Kiki";
+        }).orElse("Legkulsoben vagyunk");
+    }
+
+    record Node(int value, int position) {
+    }
 }

@@ -1,8 +1,9 @@
 package com.fmolnar.code.codewars.sudoku;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 public class SudokuValidatorTest {
 
@@ -20,14 +21,14 @@ public class SudokuValidatorTest {
                 {2, 8, 7, 4, 1, 9, 6, 3, 5},
                 {3, 4, 5, 2, 8, 6, 1, 7, 9}
         };
-        assertEquals(true, SudokuValidator.check(sudoku));
+        assertThat(SudokuValidator.check(sudoku)).isTrue();
 
         sudoku[0][0]++;
         sudoku[1][1]++;
         sudoku[0][1]--;
         sudoku[1][0]--;
 
-        assertEquals(false, SudokuValidator.check(sudoku));
+        assertThat(SudokuValidator.check(sudoku)).isFalse();
 
         sudoku[0][0]--;
         sudoku[1][1]--;
@@ -36,7 +37,7 @@ public class SudokuValidatorTest {
 
         sudoku[4][4] = 0;
 
-        assertEquals(false, SudokuValidator.check(sudoku));
+        assertThat(SudokuValidator.check(sudoku)).isFalse();
     }
 }
 

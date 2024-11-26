@@ -1,7 +1,7 @@
 package com.fmolnar.code.year2021.day19;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
