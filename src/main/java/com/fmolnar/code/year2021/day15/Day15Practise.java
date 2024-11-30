@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.stream.IntStream;
 
 public class Day15Practise {
 
@@ -23,7 +24,7 @@ public class Day15Practise {
     public static void main(String[] args) throws IOException {
 
         List<String> lines = FileReaderUtils.readFile("/2021/day15/input.txt");
-        //lines = enrichLines(lines);
+        lines = enrichLines(lines);
         maxX = lines.get(0).length();
         maxY = lines.size();
         int counterY = 0;
@@ -51,25 +52,24 @@ public class Day15Practise {
         // vizszintes
         List<String> newStrings = new ArrayList<>();
         int oldYMax = lines.size();
-        for (int y = 0; y < lines.size(); y++) {
+        IntStream.range(0, oldYMax).forEach(y -> {
             StringBuffer buffer = new StringBuffer();
             String line = lines.get(y);
             buffer.append(line);
-            for (int sum = 1; sum < 5; sum++) {
-                for (int x = 0; x < line.length(); x++) {
+            IntStream.range(1, 5).forEach(sum -> {
+                IntStream.range(0, line.length()).forEach(x -> {
                     Integer newDistance = (Integer.valueOf(String.valueOf(line.charAt(x))) + sum);
                     if (9 < newDistance) {
                         newDistance = newDistance % 10 + 1;
                     }
                     buffer.append(newDistance);
-                }
-            }
+                });
+            });
             newStrings.add(buffer.toString());
-        }
+        });
 
 
         for (int sum = 1; sum < 5; sum++) {
-            System.out.println();
             for (int y = 0; y < oldYMax; y++) {
                 StringBuffer buffer = new StringBuffer();
                 String line = newStrings.get(y);
@@ -107,7 +107,6 @@ public class Day15Practise {
             directionCheck(startingPoint, startingDistance, new Point(1, 0));
             // felfele
             directionCheck(startingPoint, startingDistance, new Point(-1, 0));
-
         }
         System.out.println("Atment rajta: " + mapMinDistance.entrySet().stream().map(s -> s.getValue()).filter(s -> s != Integer.MAX_VALUE).count());
 
