@@ -96,10 +96,10 @@ public class Day15Practise {
         int startingDistance;
 
         while (!startingPoint.equals(endPoint)) {
-            // balra
             Poids newPoids = priorityQueue.poll();
             startingPoint = newPoids.point();
             startingDistance = mapMinDistance.get(startingPoint);
+            // balra
             directionCheck(startingPoint, startingDistance, new Point(0, -1));
             // jobbra
             directionCheck(startingPoint, startingDistance, new Point(0, 1));

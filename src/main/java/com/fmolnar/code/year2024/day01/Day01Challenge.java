@@ -1,4 +1,4 @@
-package com.fmolnar.code.year2024;
+package com.fmolnar.code.year2024.day01;
 
 import com.fmolnar.code.FileReaderUtils;
 
