@@ -1,7 +1,7 @@
 package com.fmolnar.code;
 
 
-import com.fmolnar.code.year2024.day03.Day03;
+import com.fmolnar.code.year2023.day17.Day17WithDijkstraFirst;
 
 import java.io.IOException;
 
@@ -13,8 +13,8 @@ public class App {
 
     public static void main(String[] args) throws IOException {
 
-        Day03 day03 = new Day03();
-        day03.calculateDay03();
+        Day17WithDijkstraFirst firt = new Day17WithDijkstraFirst();
+        firt.calculate();
 
     }
 

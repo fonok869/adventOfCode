@@ -3,16 +3,16 @@ package com.fmolnar.code.year2023.day17;
 import com.fmolnar.code.FileReaderUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.PriorityQueue;
 import java.util.Set;
 
-public class Day17Practise {
+public class Day17Practisev2 {
 
     int xMax;
     int yMax;
@@ -32,7 +32,7 @@ public class Day17Practise {
     Node INIT2;
 
     public static void main(String[] args) throws IOException {
-        Day17Practise d = new Day17Practise();
+        Day17Practisev2 d = new Day17Practisev2();
         d.calculateDay17();
     }
 
@@ -62,7 +62,7 @@ public class Day17Practise {
         while (!priorityQueue.isEmpty()) {
             Node current = priorityQueue.remove();
 
-            if (current.point.equals(end)) {
+            if (current.point.equals(end) && 4 <= current.forwardStep && current.forwardStep <= 10) {
                 System.out.println("Dijkstra: " + current.costUntilNow);
                 break;
             }
@@ -90,7 +90,6 @@ public class Day17Practise {
                 }
 
                 if (ancien != null && newDistance < ancien.costUntilNow) {
-                    pointsWithDistance.get(node.point).remove(ancien);
                     pointsWithDistance.get(node.point).add(node);
                 } else if (ancien == null) {
                     pointsWithDistance.get(node.point).add(node);
@@ -166,13 +165,13 @@ public class Day17Practise {
         }
 
         public List<Node> next() {
-            List<Node> nodes = new LinkedList<>();
+            List<Node> nodes = new ArrayList<>();
 
-            if (3 < forwardStep) {
+            if (10 < forwardStep) {
                 return nodes;
             }
 
-            if (forwardStep <= 2) {
+            if (forwardStep <= 9) {
                 Point nextStep = direction.forward(point());
                 int nextValue = getCost(nextStep);
                 if (0 <= nextValue) {
@@ -180,21 +179,22 @@ public class Day17Practise {
                 }
             }
 
-            // LEFT
-            Direction directionLeft = direction.getLeft();
-            Point newLeftPoint = directionLeft.forward(point());
-            int nextLeftValue = getCost(newLeftPoint);
-            if (0 <= nextLeftValue) {
-                nodes.add(new Node(newLeftPoint, costUntilNow + nextLeftValue, directionLeft, 1));
-            }
+            if (4 <= forwardStep) {
+                // LEFT
+                Direction directionLeft = direction.getLeft();
+                Point newLeftPoint = directionLeft.forward(point());
+                int nextLeftValue = getCost(newLeftPoint);
+                if (0 <= nextLeftValue) {
+                    nodes.add(new Node(newLeftPoint, costUntilNow + nextLeftValue, directionLeft, 1));
+                }
 
-
-            // RIGHT
-            Direction directionRight = direction.getRight();
-            Point newRightPoint = directionRight.forward(point());
-            int nextRightValue = getCost(newRightPoint);
-            if (0 <= nextRightValue) {
-                nodes.add(new Node(newRightPoint, costUntilNow + nextRightValue, directionRight, 1));
+                // RIGHT
+                Direction directionRight = direction.getRight();
+                Point newRightPoint = directionRight.forward(point());
+                int nextRightValue = getCost(newRightPoint);
+                if (0 <= nextRightValue) {
+                    nodes.add(new Node(newRightPoint, costUntilNow + nextRightValue, directionRight, 1));
+                }
             }
             return nodes;
         }

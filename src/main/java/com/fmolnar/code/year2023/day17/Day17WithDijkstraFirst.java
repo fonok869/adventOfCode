@@ -169,12 +169,6 @@ public class Day17WithDijkstraFirst {
             return Objects.hash(pointActual, direction, dirMove);
         }
 
-        boolean isFinished() {
-            if (pointActual.x == xMax - 1 && pointActual.y == yMax - 1 && dirMove <= 3) {
-                return true;
-            }
-            return false;
-        }
 
         List<Node> next() {
             List<Node> links = new LinkedList<>();
