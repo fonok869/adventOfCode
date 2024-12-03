@@ -25,10 +25,10 @@ public class Day02 {
     }
 
     private static int getSafeTrajectories(String line, int safe, boolean firstPart) {
-        String[] totot2 = line.split(" ");
-        for (int index2 = -1; index2 < (firstPart ? 0 : totot2.length); index2++) {
+        String[] lineNumbers = line.split(" ");
+        for (int index2 = -1; index2 < (firstPart ? 0 : lineNumbers.length); index2++) {
 
-            List<String> strings = new ArrayList<>(Arrays.asList(totot2));
+            List<String> strings = new ArrayList<>(Arrays.asList(lineNumbers));
             if (index2 != -1) {
                 strings.remove(index2);
             }
@@ -60,13 +60,13 @@ public class Day02 {
         }
     }
 
-    private static boolean isIncreasing(List<Integer> differences, String[] totot) {
-        return differences.stream().mapToInt(s -> s).filter(s -> s < 0).count() == totot.length - 1 &&
+    private static boolean isIncreasing(List<Integer> differences, String[] lineNumbers) {
+        return differences.stream().mapToInt(s -> s).filter(s -> s < 0).count() == lineNumbers.length - 1 &&
                 differences.stream().mapToInt(s -> s).filter(s -> s < 0).min().getAsInt() >= -3;
     }
 
-    private static boolean isDecrasing(List<Integer> differences, String[] totot) {
-        return differences.stream().mapToInt(s -> s).filter(s -> 0 < s).count() == totot.length - 1 &&
+    private static boolean isDecrasing(List<Integer> differences, String[] lineNumbers) {
+        return differences.stream().mapToInt(s -> s).filter(s -> 0 < s).count() == lineNumbers.length - 1 &&
                 differences.stream().mapToInt(s -> s).filter(s -> 0 < s).max().getAsInt() <= 3;
     }
 }

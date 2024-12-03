@@ -103,7 +103,7 @@ public class Day17WithDijkstraFirst {
 
                 if (ancien != null && newDistance < ancien.costUntilNow) {
                     distances.get(node.pointActual).add(node);
-                } else if(ancien == null){
+                } else if (ancien == null) {
                     distances.get(node.pointActual).add(node);
                 }
                 pqueue.add(node);
@@ -128,39 +128,23 @@ public class Day17WithDijkstraFirst {
         }
 
         Direction getLeft() {
-            switch (this) {
-                case E -> {
-                    return N;
-                }
-                case N -> {
-                    return W;
-                }
-                case W -> {
-                    return S;
-                }
-                case S -> {
-                    return E;
-                }
-            }
-            throw new RuntimeException("Gond van");
+            return switch (this) {
+                case E -> N;
+                case N -> W;
+                case W -> S;
+                case S -> E;
+            };
         }
 
+        ;
+
         Direction getRight() {
-            switch (this) {
-                case W -> {
-                    return N;
-                }
-                case N -> {
-                    return E;
-                }
-                case E -> {
-                    return S;
-                }
-                case S -> {
-                    return W;
-                }
-            }
-            throw new RuntimeException("Gond van : Righttal");
+            return switch (this) {
+                case W -> N;
+                case N -> E;
+                case E -> S;
+                case S -> W;
+            };
         }
 
     }
