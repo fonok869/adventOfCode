@@ -1,6 +1,6 @@
 package com.fmolnar.code.year2022.day25;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 import com.fmolnar.code.year2022.aoc.NumberUtils;
 
 import java.io.IOException;
@@ -14,7 +14,7 @@ public class Day25 {
     Map<String, Long> dict = new HashMap<>();
 
     public void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2022/day25/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2022/day25/input.txt");
 
         dict.put("2", 2l);
         dict.put("1", 1l);

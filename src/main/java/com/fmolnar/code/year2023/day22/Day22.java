@@ -1,11 +1,10 @@
 package com.fmolnar.code.year2023.day22;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -21,7 +20,7 @@ public class Day22 {
     }
 
     public static void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2023/day22/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2023/day22/input.txt");
 
         Set<TeglaTest> initTestek = new HashSet<>();
         for (int index = 0; index < lines.size(); index++) {

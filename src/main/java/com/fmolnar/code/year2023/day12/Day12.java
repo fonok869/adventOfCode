@@ -1,12 +1,11 @@
 package com.fmolnar.code.year2023.day12;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Day12 {
     public static void main(String[] args) throws IOException {
@@ -19,7 +18,7 @@ public class Day12 {
 
     public static List<Integer> calculate(List<String> linesToString) throws IOException {
 
-        List<String> lines = FileReaderUtils.readFile("/2023/day12/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2023/day12/input.txt");
         List<Integer> counterSzamok = new ArrayList<>();
         List<Integer> counterEredmenyek = new ArrayList<>();
         int i =1;

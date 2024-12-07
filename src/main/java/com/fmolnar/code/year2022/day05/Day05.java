@@ -1,6 +1,6 @@
 package com.fmolnar.code.year2022.day05;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
@@ -17,7 +17,7 @@ public class Day05 {
     public static final String TO = "to";
 
     public void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2022/day05/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2022/day05/input.txt");
 
         List<String> linesTop = new ArrayList<>();
         List<LinkedList> priorities1 = new ArrayList<>();

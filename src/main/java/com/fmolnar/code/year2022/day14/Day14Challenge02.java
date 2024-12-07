@@ -1,6 +1,6 @@
 package com.fmolnar.code.year2022.day14;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class Day14Challenge02 {
     int maxY = 0;
 
     public void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2022/day14/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2022/day14/input.txt");
 
         List<List<Point>> pointers = new ArrayList<>();
         for (String line : lines) {

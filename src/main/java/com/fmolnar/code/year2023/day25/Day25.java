@@ -1,12 +1,11 @@
 package com.fmolnar.code.year2023.day25;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 import org.jgrapht.Graph;
 import org.jgrapht.Graphs;
 import org.jgrapht.alg.flow.EdmondsKarpMFImpl;
 import org.jgrapht.alg.interfaces.MinimumSTCutAlgorithm;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.DefaultUndirectedGraph;
 import org.jgrapht.graph.DefaultUndirectedWeightedGraph;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.WeightedMultigraph;
@@ -26,7 +25,7 @@ public class Day25 {
     }
 
     public static void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2023/day25/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2023/day25/input.txt");
         List<Node> nodes = new ArrayList<>();
 
         for (String line : lines) {

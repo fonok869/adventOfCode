@@ -1,6 +1,6 @@
 package com.fmolnar.code.year2022.day21;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ public class Day21Challenge01 {
     private static String TWO_POINTS = ":";
 
     public void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2022/day21/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2022/day21/input.txt");
 
         for (String line : lines) {
             String root = line.substring(0, line.indexOf(TWO_POINTS));

@@ -1,9 +1,7 @@
 package com.fmolnar.code.year2023.day16;
 
-import com.fmolnar.code.FileReaderUtils;
-import com.fmolnar.code.year2020.day24.Day24Challenge02;
+import com.fmolnar.code.AdventOfCodeUtils;
 
-import java.beans.beancontext.BeanContextMembershipEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,7 +20,7 @@ public class Day16 {
 
 
     public static void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2023/day16/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2023/day16/input.txt");
 
         int yMax = lines.size();
         int xMax = lines.get(0).length();

@@ -1,6 +1,6 @@
 package com.fmolnar.code.year2022.day06;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.Objects;
 public class Day06 {
 
     public void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2022/day06/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2022/day06/input.txt");
         int a = 0;
         int b = 0;
         boolean sameA = true;

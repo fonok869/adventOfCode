@@ -1,7 +1,6 @@
 package com.fmolnar.code.year2023.day05;
 
-import com.fmolnar.code.FileReaderUtils;
-import org.apache.commons.collections4.CollectionUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ public class Day05v2 {
     }
 
     public static void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2023/day05/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2023/day05/input.txt");
 
         Set<SeedRange> seedsByDefault = new HashSet<>();
         List<SolMapRange> solmapRanges = new ArrayList<>();

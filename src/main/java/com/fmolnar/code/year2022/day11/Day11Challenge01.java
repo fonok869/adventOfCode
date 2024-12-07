@@ -1,6 +1,5 @@
 package com.fmolnar.code.year2022.day11;
 
-import com.fmolnar.code.FileReaderUtils;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.io.IOException;

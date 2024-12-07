@@ -1,6 +1,6 @@
 package com.fmolnar.code.year2021.day15;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class Day15Practise {
 
     public static void main(String[] args) throws IOException {
 
-        List<String> lines = FileReaderUtils.readFile("/2021/day15/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2021/day15/input.txt");
         lines = enrichLines(lines);
         maxX = lines.get(0).length();
         maxY = lines.size();

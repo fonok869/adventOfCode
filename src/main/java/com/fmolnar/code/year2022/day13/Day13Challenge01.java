@@ -1,9 +1,8 @@
 package com.fmolnar.code.year2022.day13;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import java.util.List;
 public class Day13Challenge01 {
 
     public void calculate() throws IOException{
-        List<String> lines = FileReaderUtils.readFile("/2022/day13/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2022/day13/input.txt");
         List<Pairs> parises = new ArrayList<>();
         String s1 = "";
         String s2 = "";

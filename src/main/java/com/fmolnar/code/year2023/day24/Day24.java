@@ -1,8 +1,7 @@
 package com.fmolnar.code.year2023.day24;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
-import javax.swing.text.Position;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,7 +16,7 @@ public class Day24 {
     }
 
     public static void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2023/day24/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2023/day24/input.txt");
 
         Set<HailStone> hailStoneSet = new HashSet<>();
         for(String line: lines){

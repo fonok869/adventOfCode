@@ -1,6 +1,6 @@
 package com.fmolnar.code.year2022.day02;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
@@ -10,7 +10,7 @@ public class Day02 {
 
 
     public void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2022/day02/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2022/day02/input.txt");
 
         int scoreA = 0;
         int scoreB = 0;

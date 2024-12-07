@@ -1,6 +1,6 @@
 package com.fmolnar.code.year2023.day17;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -37,7 +37,7 @@ public class Day17Practise {
     }
 
     private void calculateDay17() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2023/day17/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2023/day17/input.txt");
         yMax = lines.size();
         xMax = lines.get(0).length();
         end = new Point(xMax - 1, yMax - 1);

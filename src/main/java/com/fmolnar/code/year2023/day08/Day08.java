@@ -1,10 +1,9 @@
 package com.fmolnar.code.year2023.day08;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +13,7 @@ import java.util.stream.IntStream;
 public class Day08 {
 
     public static void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2023/day08/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2023/day08/input.txt");
 
         List<String> instructions = new ArrayList<>();
         Map<String, Parok> dict = new HashMap<>();

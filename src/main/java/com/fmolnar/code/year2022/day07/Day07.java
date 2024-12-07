@@ -1,6 +1,6 @@
 package com.fmolnar.code.year2022.day07;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ public class Day07 {
     public static final String DIR = "dir";
 
     public void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2022/day07/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2022/day07/input.txt");
         Map<String, Long> sizeMap = new HashMap<>();
         Map<String, List<String>> mapper = new HashMap<String, List<String>>();
 

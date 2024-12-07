@@ -1,6 +1,6 @@
 package com.fmolnar.code.year2023.day07;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class Day07 {
     public static void calculate() throws IOException {
 
         intiMap();
-        List<String> lines = FileReaderUtils.readFile("/2023/day07/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2023/day07/input.txt");
         List<Poker> pokers = new ArrayList<>();
         for (String line : lines) {
             pokers.add(new LinePoker(line.substring(0, line.indexOf(' ')), Integer.valueOf(line.substring(line.indexOf(' ') + 1))).calculatePoker());

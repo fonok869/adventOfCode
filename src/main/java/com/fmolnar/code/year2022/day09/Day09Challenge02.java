@@ -1,6 +1,6 @@
 package com.fmolnar.code.year2022.day09;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ public class Day09Challenge02 {
     Set<Point> second = new HashSet<>();
 
     public void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2022/day09/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2022/day09/input.txt");
         directions.put("L", new Point(-1, 0));
         directions.put("U", new Point(0, 1));
         directions.put("R", new Point(1, 0));

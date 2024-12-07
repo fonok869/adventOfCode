@@ -1,16 +1,12 @@
 package com.fmolnar.code.year2023.day23;
 
-import com.fmolnar.code.FileReaderUtils;
-import org.jgrapht.Graphs;
-import org.jgrapht.graph.DefaultUndirectedGraph;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -34,7 +30,7 @@ public class Day23 {
     public void calculate() throws IOException {
 
         long startTime = System.currentTimeMillis();
-        List<String> lines = FileReaderUtils.readFile("/2023/day23/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2023/day23/input.txt");
 
         maxY = (short) lines.size();
         maxX = (short) lines.get(0).length();

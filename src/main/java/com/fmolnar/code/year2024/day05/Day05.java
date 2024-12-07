@@ -1,6 +1,6 @@
 package com.fmolnar.code.year2024.day05;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ public class Day05 {
 
     public void calculateDay05_2024() throws IOException {
 
-        List<String> lines = FileReaderUtils.readFile("/2024/day05/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2024/day05/input.txt");
 
         boolean instructionFirstPart = true;
         int sum1 = 0;

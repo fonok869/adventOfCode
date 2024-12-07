@@ -1,6 +1,6 @@
 package com.fmolnar.code.year2022.day01;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
@@ -13,7 +13,7 @@ public class Day01 {
     private List<Integer> szamok = new ArrayList<>();
 
     public void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2022/day01/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2022/day01/input.txt");
 
         int osszeg = 0;
         for (String line : lines) {

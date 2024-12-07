@@ -1,13 +1,12 @@
 package com.fmolnar.code.year2023.day18;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
 public class Day18v2 {
@@ -21,7 +20,7 @@ public class Day18v2 {
 
 
     public static void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2023/day18/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2023/day18/input.txt");
 
         Set<Point> csucsok = new HashSet<>();
         Point initPoint = new Point(0, 0);

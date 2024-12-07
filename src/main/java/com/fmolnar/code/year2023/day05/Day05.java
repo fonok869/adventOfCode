@@ -1,18 +1,14 @@
 package com.fmolnar.code.year2023.day05;
 
-import com.fmolnar.code.FileReaderUtils;
-import org.apache.commons.lang3.StringUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.LongStream;
 
 public class Day05 {
 
@@ -21,7 +17,7 @@ public class Day05 {
     }
 
     public static void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2023/day05/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2023/day05/input.txt");
 
         Set<Long> seedsByDefault = new HashSet<>();
         List<SolMap> solmaps = new ArrayList<>();

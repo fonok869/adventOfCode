@@ -1,6 +1,6 @@
 package com.fmolnar.code.year2023.day03;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.Set;
 public class Day03v2 {
 
     public static void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2023/day03/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2023/day03/input.txt");
         List<Long> valids = new ArrayList<>();
         List<Point> directions = initdirections();
         int maxX = lines.get(0).length();

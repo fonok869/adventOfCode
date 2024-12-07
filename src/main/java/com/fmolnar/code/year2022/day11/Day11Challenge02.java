@@ -1,7 +1,5 @@
 package com.fmolnar.code.year2022.day11;
 
-import com.fmolnar.code.FileReaderUtils;
-
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;

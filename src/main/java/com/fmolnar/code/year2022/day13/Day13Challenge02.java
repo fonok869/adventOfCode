@@ -1,9 +1,8 @@
 package com.fmolnar.code.year2022.day13;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
@@ -17,7 +16,7 @@ public class Day13Challenge02 {
     public static final String ADD_2 = "[[6]]";
 
     public void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2022/day13/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2022/day13/input.txt");
         List<String> signals = lines.stream().filter(StringUtils::isNotEmpty).collect(Collectors.toList());
         signals.add(ADD_1);
         signals.add(ADD_2);

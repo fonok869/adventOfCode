@@ -1,6 +1,6 @@
 package com.fmolnar.code.year2023.day23;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class Day23Remake {
 
     private void calculate() throws IOException {
 
-        List<String> lines = FileReaderUtils.readFile("/2023/day23/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2023/day23/input.txt");
         xMax = lines.get(0).length();
         yMax = lines.size();
         for (int y = 0; y < lines.size(); y++) {

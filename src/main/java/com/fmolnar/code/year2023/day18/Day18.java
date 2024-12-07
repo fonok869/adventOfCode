@@ -1,7 +1,6 @@
 package com.fmolnar.code.year2023.day18;
 
-import com.fmolnar.code.FileReaderUtils;
-import com.fmolnar.code.year2023.day10.Day10;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -19,7 +18,7 @@ public class Day18 {
 
 
     public static void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2023/day18/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2023/day18/input.txt");
 
         Set<Point> walls = new HashSet<>();
         Point initPoint = new Point(0, 0);

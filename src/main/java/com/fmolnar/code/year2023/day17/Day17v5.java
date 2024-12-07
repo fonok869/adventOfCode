@@ -1,15 +1,13 @@
 package com.fmolnar.code.year2023.day17;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -29,7 +27,7 @@ public class Day17v5 {
 
 
     public static void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2023/day17/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2023/day17/input.txt");
 
         int maxX = lines.get(0).length();
         xMax = maxX;

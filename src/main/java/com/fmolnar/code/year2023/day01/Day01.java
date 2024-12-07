@@ -1,17 +1,15 @@
 package com.fmolnar.code.year2023.day01;
 
-import com.fmolnar.code.FileReaderUtils;
-import org.apache.commons.lang3.StringUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Day01 {
 
     public static void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2023/day01/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2023/day01/input.txt");
 
         Integer value = 0;
         List<Integer> osszegek = new ArrayList<>();

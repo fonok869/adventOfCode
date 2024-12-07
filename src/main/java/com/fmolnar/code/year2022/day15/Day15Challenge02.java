@@ -1,18 +1,16 @@
 package com.fmolnar.code.year2022.day15;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Day15Challenge02 {
 
     public void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2022/day15/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2022/day15/input.txt");
 
         Pointer sensor;
         Pointer beacon;

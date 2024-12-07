@@ -1,7 +1,6 @@
 package com.fmolnar.code.year2023.day21;
 
-import com.fmolnar.code.FileReaderUtils;
-import com.fmolnar.code.year2022.day15.Day15Challenge02Multithreading;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -19,7 +18,7 @@ public class Day21 {
 
 
     public static void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2023/day21/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2023/day21/input.txt");
 
         Set<Point> rocks = new HashSet<>();
         Set<Point> startingPoints = new HashSet<>();

@@ -1,6 +1,6 @@
 package com.fmolnar.code.year2024.day03;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public class Day03 {
     public void calculateDay03() throws IOException {
 
-        List<String> lines = FileReaderUtils.readFile("/2024/day03/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2024/day03/input.txt");
 
         String pattern = "(^mul\\((\\d{1,3}),(\\d{1,3})\\))";
         Pattern matcher = Pattern.compile(pattern);

@@ -1,6 +1,6 @@
 package com.fmolnar.code.year2021.day19;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -13,7 +13,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Scanner;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,7 +29,7 @@ public class Day19 {
     private final List<Point> allDirections = getAllDirections();
 
     public void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2021/day19/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2021/day19/input.txt");
         Pattern pattern = Pattern.compile("(--- scanner (\\d+) ---)");
 
         Map<Integer, Scanner> scanners = new HashMap<>();

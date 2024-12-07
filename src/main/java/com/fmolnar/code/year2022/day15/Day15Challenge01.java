@@ -1,7 +1,6 @@
 package com.fmolnar.code.year2022.day15;
 
-import com.fmolnar.code.FileReaderUtils;
-import com.fmolnar.code.year2020.day24.Day24Challenge02;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -10,7 +9,7 @@ import java.util.Set;
 
 public class Day15Challenge01 {
     public void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2022/day15/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2022/day15/input.txt");
 
         int ySearchFor = 2000000;
         PointXY sensor;

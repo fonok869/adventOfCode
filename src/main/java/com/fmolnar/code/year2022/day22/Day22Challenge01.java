@@ -1,6 +1,6 @@
 package com.fmolnar.code.year2022.day22;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
@@ -18,7 +18,7 @@ public class Day22Challenge01 {
     List<Instruction> ins = new ArrayList<>();
 
     public void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2022/day22/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2022/day22/input.txt");
 
         int xMax = lines.stream().mapToInt(s -> s.length()).max().getAsInt();
         int yMax = lines.size();

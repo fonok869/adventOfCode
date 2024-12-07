@@ -1,6 +1,6 @@
 package com.fmolnar.code.year2021.day23;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class Day23Challenge02 {
     private Map<Integer, Map<Integer, Integer>> distanceCache = new HashMap<>();
 
     public void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2021/day23/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2021/day23/input.txt");
 
         byte[] config = extracted(lines);
         Step step0 = new Step(config, 0);

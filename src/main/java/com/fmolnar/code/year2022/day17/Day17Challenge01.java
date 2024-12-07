@@ -1,6 +1,6 @@
 package com.fmolnar.code.year2022.day17;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ public class Day17Challenge01 {
     int maxHeight = maxY - 4;
 
     public void calculate() throws IOException {
-        List<String> lines = FileReaderUtils.readFile("/2022/day17/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2022/day17/input.txt");
         List<List<Point>> forms = new ArrayList<>();
         forms.add(createLineHorizzontal());
         forms.add(createCross());

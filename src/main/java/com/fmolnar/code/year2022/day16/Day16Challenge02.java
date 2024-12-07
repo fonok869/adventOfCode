@@ -1,6 +1,6 @@
 package com.fmolnar.code.year2022.day16;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 import org.paukov.combinatorics3.Generator;
 
 import java.io.IOException;
@@ -27,7 +27,7 @@ public class Day16Challenge02 {
 
     public void calculate() throws IOException {
 
-        List<String> lines = FileReaderUtils.readFile("/2022/day16/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2022/day16/input.txt");
 
         for (String line : lines) {
             String start = line.substring("Valve ".length(), line.indexOf("has") - 1);

@@ -1,6 +1,6 @@
 package com.fmolnar.code.year2023.day01;
 
-import com.fmolnar.code.FileReaderUtils;
+import com.fmolnar.code.AdventOfCodeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class Day01Solution02 {
 
     public static void calculate() throws IOException {
         initMapper();
-        List<String> lines = FileReaderUtils.readFile("/2023/day01/input.txt");
+        List<String> lines = AdventOfCodeUtils.readFile("/2023/day01/input.txt");
 
         List<Couple> couples = new ArrayList<>();
         for (String line : lines) {
