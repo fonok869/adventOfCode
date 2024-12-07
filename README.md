@@ -24,6 +24,26 @@
 		<td style="text-align: center;">&#10004;&#65039;</td>
 		<td style="text-align: center;">&#10004;&#65039;</td>
     </tr>
+<tr>
+        <td>2024/12/04</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+    </tr>
+<tr>
+        <td>2024/12/05</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+    </tr>
+<tr>
+        <td>2024/12/06</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+    </tr>
+<tr>
+        <td>2024/12/07</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+		<td style="text-align: center;">&#10004;&#65039;</td>
+    </tr>
 </table>
 </div>
 <div style="text-align: center;">

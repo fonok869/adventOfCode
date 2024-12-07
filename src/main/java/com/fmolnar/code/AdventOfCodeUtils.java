@@ -8,8 +8,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public final class AdventOfCodeUtils {
+
+    public static Set<PointXY> directionsDiagonal = Set.of(
+            new PointXY(1, 1),
+            new PointXY(1, -1),
+            new PointXY(-1, -1),
+            new PointXY(-1, 1));
+
+    public static Set<PointXY> directionsNormals = Set.of(
+            new PointXY(0, 1),
+            new PointXY(0, -1),
+            new PointXY(1, 0),
+            new PointXY(-1, 0));
 
     public static List<String> readFile(String fullpath) throws IOException {
         List<String> lines = new ArrayList<>();
