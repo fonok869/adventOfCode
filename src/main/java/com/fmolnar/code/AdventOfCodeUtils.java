@@ -42,7 +42,11 @@ public final class AdventOfCodeUtils {
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
             for (int j = 0; j < line.length(); j++) {
-                map.put(new PointXY(i, j), Integer.parseInt(String.valueOf(line.charAt(j))));
+                if (line.charAt(j) != '.') {
+
+
+                    map.put(new PointXY(j, i), Integer.parseInt(String.valueOf(line.charAt(j))));
+                }
             }
         }
         return map;
