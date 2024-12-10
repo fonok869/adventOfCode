@@ -39,10 +39,12 @@ public final class AdventOfCodeUtils {
 
     public static Map<PointXY, Integer> getMapIntegersInput(List<String> lines) {
         Map<PointXY, Integer> map = new HashMap<>();
-        for (int i = 0; i < lines.size(); i++) {
-            String line = lines.get(i);
-            for (int j = 0; j < line.length(); j++) {
-                map.put(new PointXY(i, j), Integer.parseInt(String.valueOf(line.charAt(j))));
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++) {
+                if (line.charAt(x) != '.') {
+                    map.put(new PointXY(x, y), Integer.parseInt(String.valueOf(line.charAt(x))));
+                }
             }
         }
         return map;
@@ -50,10 +52,10 @@ public final class AdventOfCodeUtils {
 
     public static Map<PointXY, String> getMapStringInput(List<String> lines) {
         Map<PointXY, String> map = new HashMap<>();
-        for (int i = 0; i < lines.size(); i++) {
-            String line = lines.get(i);
-            for (int j = 0; j < line.length(); j++) {
-                map.put(new PointXY(j, i), String.valueOf(line.charAt(j)));
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++) {
+                map.put(new PointXY(x, y), String.valueOf(line.charAt(x)));
             }
         }
         return map;
