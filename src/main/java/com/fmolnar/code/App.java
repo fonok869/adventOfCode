@@ -1,7 +1,7 @@
 package com.fmolnar.code;
 
 
-import com.fmolnar.code.year2024.day11.Day11;
+import com.fmolnar.code.year2024.day12.Day12Solution2;
 
 import java.io.IOException;
 
@@ -13,8 +13,8 @@ public class App {
 
     public static void main(String[] args) throws IOException {
 
-        Day11 day11 = new Day11();
-        day11.calculateDay11_2024();
+        Day12Solution2 day12Solution2 = new Day12Solution2();
+        day12Solution2.calculateDay12Year2024();
     }
 
 
