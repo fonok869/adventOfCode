@@ -34,47 +34,35 @@ public class Day08 {
             }
         }
 
-        Set<PointXY> antinodes = new HashSet<>();
+        Set<PointXY> antinodesFirst = new HashSet<>();
+        Set<PointXY> antinodesSecond = new HashSet<>();
         for (Map.Entry<String, Set<PointXY>> entry : setters.entrySet()) {
             Set<PointXY> esemenyek = entry.getValue();
             List<PointXY> lista = esemenyek.stream().toList();
 
-            antinodes.addAll(esemenyek);
 
             for (int i = 0; i < lista.size(); i++) {
                 PointXY actualPoint = lista.get(i);
                 for (int j = i + 1; j < lista.size(); j++) {
                     PointXY pointToCheck = lista.get(j);
-                    //search for antinodes
-                    getAntinodes(pointToCheck, actualPoint, antinodes, mapper);
+                    //search for antinodesFirst
+                    getAntinodes(pointToCheck, actualPoint, antinodesFirst, mapper, true);
+                    getAntinodes(pointToCheck, actualPoint, antinodesSecond, mapper, false);
                 }
             }
         }
 
-        for (int j = 0; j < yMax; j++) {
-            for (int i = 0; i < xMax; i++) {
-                if (antinodes.contains(new PointXY(i, j))) {
-                    System.out.print("#");
-                } else {
-                    System.out.print(".");
-                }
-            }
-            System.out.println();
-        }
 
-        for (PointXY pointXY : antinodes) {
-            System.out.println(pointXY);
-        }
-
-        System.out.println("Size: " + antinodes.size());
+        System.out.println("First: " + antinodesFirst.size());
+        System.out.println("Second: " + antinodesSecond.size());
     }
 
-    private void getAntinodes(PointXY pointToCheck, PointXY actualPoint, Set<PointXY> antinodes, Map<PointXY, String> mapper) {
+    private void getAntinodes(PointXY pointToCheck, PointXY actualPoint, Set<PointXY> antinodes, Map<PointXY, String> mapper, boolean first) {
         // pointToCheck -> Actual
         int yDiff = pointToCheck.y() - actualPoint.y();
         int xDiff = pointToCheck.x() - actualPoint.x();
 
-        for (int i = 1; i < 200; i++) {
+        for (int i = (first ? 1 : 0); i < (first ? 2 : 200); i++) {
             PointXY firstCandidate = new PointXY(pointToCheck.x() + xDiff * i, pointToCheck.y() + yDiff * i);
             PointXY secondeCandidate = new PointXY(actualPoint.x() + -1 * xDiff * i, actualPoint.y() + -1 * yDiff * i);
 
