@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +49,26 @@ public final class AdventOfCodeUtils {
             }
         }
         return map;
+    }
+
+    public static int getManhattanDistance(PointXY pointXYToCheck, PointXY pointXY) {
+        return Math.abs(pointXYToCheck.x() - pointXY.x()) + Math.abs(pointXYToCheck.y() - pointXY.y());
+    }
+
+    public static Map<Integer, Integer> getHistogramFromIntegers(Collection<Integer> elements) {
+        Map<Integer, Integer> frequences = new HashMap<>();
+        for (Integer element : elements) {
+            frequences.compute(element, (k, v) -> v == null ? 1 : v + 1);
+        }
+        return frequences;
+    }
+
+    public static Map<Long, Long> getHistogramFromLongs(Collection<Long> elements) {
+        Map<Long, Long> frequences = new HashMap<>();
+        for (Long element : elements) {
+            frequences.compute(element, (k, v) -> v == null ? 1 : v + 1);
+        }
+        return frequences;
     }
 
     public static Map<PointXY, String> getMapStringInput(List<String> lines) {
