@@ -57,6 +57,23 @@ public enum Direction {
     public PointXY toPoint() {
         return new PointXY(x, y);
     }
+
+    public String toChar() {
+        if (this == RIGHT) {
+            return ">";
+        }
+        if (this == LEFT) {
+            return "<";
+        }
+        if (this == DOWN) {
+            return "v";
+        }
+        if (this == UP) {
+            return "^";
+        }
+
+        throw new RuntimeException("Nem kellene itt lennie");
+    }
 }
 
 

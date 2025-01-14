@@ -52,10 +52,7 @@ public class Day21_2024 {
 
     public void calculateDay21_2024() throws IOException {
 
-        //List<String> lines = AdventOfCodeUtils.readFile("/2024/day21/input.txt");
-
-
-        Map<CachedSteps, Set<String>> cachedNumericKeyPadCache = new ConcurrentHashMap<>();
+        Map<CachedSteps, Set<String>> cachedNumericKeyPadCache = new HashMap<>();
 
         int szum = 0;
 
@@ -66,46 +63,43 @@ public class Day21_2024 {
 
             int minOccurrence = 0;
             int szam = Integer.valueOf(line.substring(0, line.length() - 1));
+
+
             for (int i = 0; i < line.length(); i++) {
                 String actualLetter = String.valueOf(line.charAt(i));
                 CachedSteps cachedStep = new CachedSteps(actualLetter, beginningLetter);
                 Map.Entry<PointXY, String> actualEntry = numericKeyPad.entrySet().stream().filter(s -> s.getValue().equals(actualLetter)).findFirst().get();
                 PointXY actualPoint = actualEntry.getKey();
 
-
-//                if (cachedNumericKeyPadCache.containsKey(cachedStep)) {
-//                    createAllLinesToSuccess(allLinesToSuccess, cachedNumericKeyPadCache.get(cachedStep));
-//                    beginningLetter = actualLetter;
-//                    beginningPoint = actualPoint;
-//                    continue;
-//                }
-
-
-                int diffX = actualPoint.x() - beginningPoint.x();
-                int diffY = actualPoint.y() - beginningPoint.y();
+                Set<String> allPossibilities = null;
+                if (!cachedNumericKeyPadCache.containsKey(cachedStep)) {
+                    allPossibilities = getAllPossibiliteWays(actualPoint, beginningPoint);
+                    cachedNumericKeyPadCache.put(cachedStep, allPossibilities);
+                } else {
+                    allPossibilities = cachedNumericKeyPadCache.get(cachedStep);
+                }
 
 
-                Set<String> allPossibilities = new LepesekNumeric(diffX, diffY).calculateStringOptions();
+                Set<String> third = callTwice(allPossibilities);
 
-                sanitaizeCorner(actualPoint, beginningPoint, diffX, diffY, allPossibilities);
+                int actualMin = third.stream().mapToInt(s -> s.length()).min().getAsInt();
 
-                Set<String> firstLevel = getAllDirectionalKepads(allPossibilities);
-                //Set<String> second = getAllDirectionalKepads(firstLevel, false, new HashSet<>());
-                Set<Integer> hosszak = new HashSet<>();
-                Set<String> third = getAllDirectionalKepads(firstLevel);
-
-                minOccurrence += third.stream().mapToInt(s -> s.length()).min().getAsInt();
-
-                //cachedNumericKeyPadCache.put(cachedStep, new HashSet<>(allPossibilities));
-                beginningLetter = actualLetter;
-                beginningPoint = actualPoint;
+                System.out.println("Count: " + third.stream().filter(s -> s.length() == actualMin).count());
+                third.stream().filter(s -> s.length() == actualMin).forEach(System.out::println);
+                System.out.println("All count: " + third.size());
+                minOccurrence += actualMin;
 
                 createAllLinesToSuccess(allLinesToSuccess, allPossibilities);
 
+                beginningLetter = actualLetter;
+                beginningPoint = actualPoint;
+
             }
 
-            szum += minOccurrence * szam;
+            System.out.println("Line");
+            System.out.println(allLinesToSuccess);
 
+            szum += minOccurrence * szam;
 
             System.out.println("Min:" + minOccurrence);
             System.out.println("Szam: " + szam + " line: " + line);
@@ -115,6 +109,31 @@ public class Day21_2024 {
 
 
         System.out.println(szum);
+    }
+
+    private Set<String> callTwice(Set<String> allPossibilities) {
+        Set<String> firstLevel = getAllDirectionalKepads(allPossibilities);
+        Set<String> third = getAllDirectionalKepads(firstLevel);
+        return third;
+    }
+
+    private static Set<String> getAllPossibiliteWays(PointXY actualPoint, PointXY beginningPoint) {
+        int diffX = actualPoint.x() - beginningPoint.x();
+        int diffY = actualPoint.y() - beginningPoint.y();
+
+
+        Set<String> allPossibilities = new LepesekNumeric(diffX, diffY).calculateStringOptions();
+
+        sanitaizeCorner(actualPoint, beginningPoint, diffX, diffY, allPossibilities);
+        return allPossibilities;
+    }
+
+    private Set<String> deepCopyNewSet(Set<String> strings) {
+        Set<String> newStrings = new HashSet<>();
+        for (String str : strings) {
+            newStrings.add(str);
+        }
+        return newStrings;
     }
 
     private void createAllLinesToSuccess(Collection<String> allLinesToSuccess, Set<String> allPossibilities) {
@@ -134,23 +153,6 @@ public class Day21_2024 {
         }
     }
 
-    private void createAllLinesNbToSuccess(Collection<Integer> allLinesToSuccess, Set<String> allPossibilities) {
-        if (allLinesToSuccess.isEmpty()) {
-            allLinesToSuccess.addAll(allPossibilities.stream().map(s -> s.length()).collect(Collectors.toSet()));
-        } else {
-            Set<Integer> allNewLinesSize = new HashSet<>();
-            for (Integer lineAlreadySize : allLinesToSuccess) {
-                for (String newSuffix : allPossibilities) {
-                    allNewLinesSize.add(lineAlreadySize + newSuffix.length());
-                }
-            }
-            if (!allNewLinesSize.isEmpty()) {
-                allLinesToSuccess.clear();
-                allLinesToSuccess.addAll(allNewLinesSize);
-            }
-        }
-    }
-
     public Set<String> getAllDirectionalKepads(Collection<String> allNumericalPossibilities) {
 
         // directionalKeyPad
@@ -161,7 +163,6 @@ public class Day21_2024 {
             String beginningDirectionalLetter = "A";
             PointXY beginningDirectionnalPoint = new PointXY(2, 0);
             Set<String> allLinesToSuccess = new HashSet<>();
-            Set<Integer> allLinesNbSuccess = new HashSet<>();
             outer:
             for (int j = 0; j < numericalKeyPadNextStep.length(); j++) {
                 String actualDirectionalLetter = String.valueOf(numericalKeyPadNextStep.charAt(j));
@@ -170,14 +171,11 @@ public class Day21_2024 {
                 PointXY directionalPoint = actualNumericPadEntry.getKey();
 
                 if (cachedDirectionalKeyPadCache.containsKey(cachedSteps)) {
-
-                    createAllLinesToSuccess(allLinesToSuccess, cachedDirectionalKeyPadCache.get(cachedSteps));
-
+                    createAllLinesToSuccess(allLinesToSuccess, new HashSet<>(cachedDirectionalKeyPadCache.get(cachedSteps)));
                     beginningDirectionalLetter = actualDirectionalLetter;
                     beginningDirectionnalPoint = directionalPoint;
                     continue;
                 }
-
 
                 int diffX1 = directionalPoint.x() - beginningDirectionnalPoint.x();
                 int diffY1 = directionalPoint.y() - beginningDirectionnalPoint.y();
@@ -186,17 +184,17 @@ public class Day21_2024 {
 
                 sanitaizeDirectionCorner(directionalPoint, beginningDirectionnalPoint, diffX1, diffY1, allPossibilitiesNumericPad);
 
+                int min2 = allPossibilitiesNumericPad.stream().mapToInt(s -> s.length()).min().getAsInt();
+                System.out.println("First level : " + min2 + " " + cachedSteps);
+                allPossibilitiesNumericPad.stream().filter(s -> s.length() == min2).collect(Collectors.toSet()).forEach(System.out::println);
+
                 cachedDirectionalKeyPadCache.put(cachedSteps, new HashSet<>(allPossibilitiesNumericPad));
                 beginningDirectionalLetter = actualDirectionalLetter;
                 beginningDirectionnalPoint = directionalPoint;
 
                 createAllLinesToSuccess(allLinesToSuccess, allPossibilitiesNumericPad);
             }
-
-
             globals.addAll(allLinesToSuccess);
-
-
         }
         return globals;
     }
@@ -230,7 +228,7 @@ public class Day21_2024 {
 
 }
 
-record CachedSteps(String from, String to) {
+record CachedSteps(String to, String from) {
 
 }
 
