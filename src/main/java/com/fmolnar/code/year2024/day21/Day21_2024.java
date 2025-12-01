@@ -11,8 +11,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Day21_2024 {
@@ -29,8 +27,8 @@ public class Day21_2024 {
     final List<String> lines;
 
     public Map<PointXY, String> numericKeyPad = new HashMap<>();
-    Map<CachedSteps, Set<String>> cachedDirectionalKeyPadCache = new ConcurrentHashMap<>();
-    Map<String, Set<String>> cachedDirectionalLinesCache = new ConcurrentHashMap<>();
+    Map<CachedSteps, Set<String>> cachedDirectionalKeyPadCache = new HashMap<>();
+    Map<CachedSteps, Set<String>> cachedNumericKeyPadCache = new HashMap<>();
 
     public Day21_2024(List<String> lines) {
         Map<PointXY, String> mapSzamok = Map.of(
@@ -52,9 +50,16 @@ public class Day21_2024 {
 
     public void calculateDay21_2024() throws IOException {
 
-        Map<CachedSteps, Set<String>> cachedNumericKeyPadCache = new HashMap<>();
-
         int szum = 0;
+
+        initNumericKeyPadCache();
+
+        initDirectionalKeyPadCache();
+
+        int sum = 0;
+        for (String line : lines) {
+            getBestLongeurWithProfondeur(line);
+        }
 
         for (String line : lines) {
             String beginningLetter = "A";
@@ -84,9 +89,6 @@ public class Day21_2024 {
 
                 int actualMin = third.stream().mapToInt(s -> s.length()).min().getAsInt();
 
-                System.out.println("Count: " + third.stream().filter(s -> s.length() == actualMin).count());
-                third.stream().filter(s -> s.length() == actualMin).forEach(System.out::println);
-                System.out.println("All count: " + third.size());
                 minOccurrence += actualMin;
 
                 createAllLinesToSuccess(allLinesToSuccess, allPossibilities);
@@ -95,9 +97,6 @@ public class Day21_2024 {
                 beginningPoint = actualPoint;
 
             }
-
-            System.out.println("Line");
-            System.out.println(allLinesToSuccess);
 
             szum += minOccurrence * szam;
 
@@ -109,6 +108,51 @@ public class Day21_2024 {
 
 
         System.out.println(szum);
+    }
+
+    private void getBestLongeurWithProfondeur(String line) {
+        String beginningLetter = "A";
+        for (int i = 0; i < line.length(); i++) {
+            String actualLetter = String.valueOf(line.charAt(i));
+            CachedSteps cachedStep = new CachedSteps(actualLetter, beginningLetter);
+            calculateProfondeur(cachedStep, 2);
+            beginningLetter = actualLetter;
+        }
+
+
+    }
+
+    private void calculateProfondeur(CachedSteps cachedStep, int profondeur) {
+        Set<String> possibilities = cachedNumericKeyPadCache.get(cachedStep);
+        String beginningLetter = "A";
+        for (String possibility : possibilities) {
+            for (int i = 0; i < possibility.length(); i++) {
+
+            }
+        }
+
+    }
+
+    private void initDirectionalKeyPadCache() {
+        for (PointXY init : directionalKeyPad.keySet()) {
+            for (PointXY end : directionalKeyPad.keySet()) {
+                if (!init.equals(end)) {
+                    Set<String> allPosiibilitiees = getAllPossibilitiesNumericPad(end, init);
+                    cachedDirectionalKeyPadCache.put(new CachedSteps(directionalKeyPad.get(end), directionalKeyPad.get(init)), allPosiibilitiees);
+                }
+            }
+        }
+    }
+
+    private void initNumericKeyPadCache() {
+        for (PointXY init : numericKeyPad.keySet()) {
+            for (PointXY end : numericKeyPad.keySet()) {
+                if (!init.equals(end)) {
+                    Set<String> allPosiibilitiees = getAllPossibiliteWays(end, init);
+                    cachedNumericKeyPadCache.put(new CachedSteps(numericKeyPad.get(end), numericKeyPad.get(init)), allPosiibilitiees);
+                }
+            }
+        }
     }
 
     private Set<String> callTwice(Set<String> allPossibilities) {
@@ -128,13 +172,6 @@ public class Day21_2024 {
         return allPossibilities;
     }
 
-    private Set<String> deepCopyNewSet(Set<String> strings) {
-        Set<String> newStrings = new HashSet<>();
-        for (String str : strings) {
-            newStrings.add(str);
-        }
-        return newStrings;
-    }
 
     private void createAllLinesToSuccess(Collection<String> allLinesToSuccess, Set<String> allPossibilities) {
         if (allLinesToSuccess.isEmpty()) {
@@ -177,16 +214,9 @@ public class Day21_2024 {
                     continue;
                 }
 
-                int diffX1 = directionalPoint.x() - beginningDirectionnalPoint.x();
-                int diffY1 = directionalPoint.y() - beginningDirectionnalPoint.y();
-
-                Set<String> allPossibilitiesNumericPad = new LepesekNumeric(diffX1, diffY1).calculateStringOptions();
-
-                sanitaizeDirectionCorner(directionalPoint, beginningDirectionnalPoint, diffX1, diffY1, allPossibilitiesNumericPad);
+                Set<String> allPossibilitiesNumericPad = getAllPossibilitiesNumericPad(directionalPoint, beginningDirectionnalPoint);
 
                 int min2 = allPossibilitiesNumericPad.stream().mapToInt(s -> s.length()).min().getAsInt();
-                System.out.println("First level : " + min2 + " " + cachedSteps);
-                allPossibilitiesNumericPad.stream().filter(s -> s.length() == min2).collect(Collectors.toSet()).forEach(System.out::println);
 
                 cachedDirectionalKeyPadCache.put(cachedSteps, new HashSet<>(allPossibilitiesNumericPad));
                 beginningDirectionalLetter = actualDirectionalLetter;
@@ -197,6 +227,16 @@ public class Day21_2024 {
             globals.addAll(allLinesToSuccess);
         }
         return globals;
+    }
+
+    private static Set<String> getAllPossibilitiesNumericPad(PointXY directionalPoint, PointXY beginningDirectionnalPoint) {
+        int diffX1 = directionalPoint.x() - beginningDirectionnalPoint.x();
+        int diffY1 = directionalPoint.y() - beginningDirectionnalPoint.y();
+
+        Set<String> allPossibilitiesNumericPad = new LepesekNumeric(diffX1, diffY1).calculateStringOptions();
+
+        sanitaizeDirectionCorner(directionalPoint, beginningDirectionnalPoint, diffX1, diffY1, allPossibilitiesNumericPad);
+        return allPossibilitiesNumericPad;
     }
 
 

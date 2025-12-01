@@ -8,7 +8,10 @@ import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -114,33 +117,51 @@ public class LambdaExpressionsTest {
     }
 
     @Test
-    void testCount(){
+    void testCount() {
         System.out.println("Baskedtball count: " + getAllAStudents().stream().count());
     }
 
     @Test
-    void allMatchNoneMatchEtc(){
-        System.out.println("AllMatch (45 evnel fiatalabbak): " + getAllAStudents().stream().allMatch(s->s.age().age<45));
-        System.out.println("AnyMatch Bob: " + getAllAStudents().stream().anyMatch(s->s.firstName().firstName.equals("Bob")));
-        System.out.println("NoneMatch Bob: " + getAllAStudents().stream().noneMatch(s->s.firstName().firstName.equals("Bob")));
+    void allMatchNoneMatchEtc() {
+        System.out.println("AllMatch (45 evnel fiatalabbak): " + getAllAStudents().stream().allMatch(s -> s.age().age < 45));
+        System.out.println("AnyMatch Bob: " + getAllAStudents().stream().anyMatch(s -> s.firstName().firstName.equals("Bob")));
+        System.out.println("NoneMatch Bob: " + getAllAStudents().stream().noneMatch(s -> s.firstName().firstName.equals("Bob")));
     }
 
     @Test
-    void testTerminationOperation(){
-        Map<String, Student> students = getAllAStudents().stream().collect(Collectors.toMap(s-> s.firstName.firstName, Function.identity()));
+    void testTerminationOperation() {
+        Map<String, Student> students = getAllAStudents().stream().collect(Collectors.toMap(s -> s.firstName.firstName, Function.identity()));
         System.out.println(students);
     }
 
     @Test
-    void testSummarizing(){
-        IntSummaryStatistics summaryStatistics = getAllAStudents().stream().map(s->s.age().age).collect(Collectors.summarizingInt(a->a));
+    void testSummarizing() {
+        IntSummaryStatistics summaryStatistics = getAllAStudents().stream().map(s -> s.age().age).collect(Collectors.summarizingInt(a -> a));
 
         System.out.println(summaryStatistics);
     }
 
     @Test
-    void concatFields(){
-        System.out.println(getAllAStudents().stream().map(s->s.firstName().firstName).sorted(Comparator.reverseOrder()).collect(Collectors.joining(",","Starting: ", " Ending")));
+    void concatFields() {
+        System.out.println(getAllAStudents().stream().map(s -> s.firstName().firstName).sorted(Comparator.reverseOrder()).collect(Collectors.joining(",", "Starting: ", " Ending")));
+    }
+
+    @Test
+    void testPredicate() {
+        Predicate<Age> ages = age -> age.age > 45;
+        Predicate doubles = ages.and(age -> age.age > 40);
+        assertThat(true).isTrue();
+    }
+
+    @Test
+    void testSupplier() {
+        List<Age> ages = List.of(new Age(18), new Age(25));
+        Supplier<Age> supplier = () -> new Age(18);
+    }
+
+    @Test
+    void testConsummer() {
+        Consumer<Age> ageConsummer = age -> System.out.println(age);
     }
 
     record Team(SportType name, List<Student> students) {
@@ -154,21 +175,19 @@ public class LambdaExpressionsTest {
     }
 
     private static List<Student> getAllBStudents() {
-        List<Student> lists = List.of(new Student(new FirstName("Bob1"), new Age(18)),
+        return List.of(new Student(new FirstName("Bob1"), new Age(18)),
                 new Student(new FirstName("Ted1"), new Age(17)),
                 new Student(new FirstName("Zeka1"), new Age(19)),
                 new Student(new FirstName("Johnny1"), new Age(20)),
                 new Student(new FirstName("Eric1"), new Age(21)));
-        return lists;
     }
 
     private static List<Student> getAllAStudents() {
-        List<Student> lists = List.of(new Student(new FirstName("Bob"), new Age(18)),
+        return List.of(new Student(new FirstName("Bob"), new Age(18)),
                 new Student(new FirstName("Ted"), new Age(17)),
                 new Student(new FirstName("Zeka"), new Age(19)),
                 new Student(new FirstName("Johnny"), new Age(20)),
                 new Student(new FirstName("Eric"), new Age(21)));
-        return lists;
     }
 
 
