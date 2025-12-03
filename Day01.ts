@@ -13,36 +13,57 @@ const input = [
     'L82']
 
 
-function initLeft(): Array<Record<number, number>> {
-    let value = new Array<Record<number, number>>();
-    for (let i = 0; i < 100; i++) {
-        let dic = {
-            i: (i === 99 ? 0 : (i + 1))
-        } as Record<number, number>;
-
-        value.push(dic)
+function initRight(): Record<number, number>[] {
+    let value: Record<number, number>[] = [];
+    for (let number = 0; number < 100; number++) {
+        if (number === 99) {
+            value.push({99: 0})
+        }
+        value.push({[number]: number + 1})
     }
     return value;
 }
 
-function initRight(): Record<number, number>[] {
-    let value: Record<number, number>[];
-    for (let i = 99; 0 < i; i--) {
-        let dic = {
-            i: (i === 0 ? 99 : (i - 1))
-        } as Record<number, number>;
-        value.push(dic);
+
+function initLeft(): Record<number, number>[] {
+    let value: Record<number, number>[] = [];
+    for (let number = 99; 0 < number; number--) {
+        if (number === 0) {
+            value.push({0: 99})
+        }
+        value.push({[number]: number - 1})
     }
     return value;
 }
 
 function helloWorld(): void {
+
+
+    // Create a single Record object
+    let value: Record<number, number> = {};
+
+// Populate with key:value pairs
+    for (let i = 1; i <= 99; i++) {
+        value[i] = i + 1;
+    }
+
+    // Get the value of key 50 - much simpler!
+    console.log(value[50]); // Output: 51
     let counterZeroPoint = 0;
-    let LEFTS: Array<Record<number, number>> = initLeft();
-    let RIGHTS: Array<Record<number, number>> = initRight();
+    let LEFTS: Record<number, number>[] = initLeft();
+    let RIGHTS: Record<number, number>[] = initRight();
+    let actualIndex = 50;
     input.forEach((value) => {
         if (value.charAt(0) === 'L') {
-            console.log(LEFTS[0])
+            const steps = Number(value.substring(1));
+            for (let index = 0; index < steps; index++) {
+                const actualValue = LEFTS[actualIndex];
+                actualIndex = actualValue;
+            }
+
+        } else if (value.charAt(0) === 'R') {
+            const steps = Number(value.substring(1));
+
         }
         console.log("Itt vagyok")
 
