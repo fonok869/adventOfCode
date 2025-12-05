@@ -86,7 +86,7 @@ public class Day22Challenge02Beauty02 {
             Cuboid cuboidActual = Cuboid.fromRectangle(1, rectangleActual);
 
             for (Cuboid cuboid : reactor) {
-                Cuboid cuboidIntersection = calculateIntersection(cuboidActual,cuboid);
+                Cuboid cuboidIntersection = calculateIntersection(cuboidActual, cuboid);
                 if (cuboidIntersection != null) {
                     int elojel = (-1) * cuboid.elojel;
                     newCubs.add(Cuboid.fromCuboidWithElojel(elojel, cuboidIntersection));
@@ -95,7 +95,7 @@ public class Day22Challenge02Beauty02 {
 
             reactor.addAll(newCubs);
 
-            System.out.println("Counter: : " + counter++  + " " + reactor.size()+ " " + reactor.stream().mapToLong(s -> s.volume()).sum());
+            System.out.println("Counter: : " + counter++ + " " + reactor.size() + " " + reactor.stream().mapToLong(s -> s.volume()).sum());
 
         }
 
@@ -135,7 +135,7 @@ public class Day22Challenge02Beauty02 {
 
     public static record Cuboid(int elojel, int x1, int x2, int y1, int y2, int z1, int z2) {
 
-        public static Cuboid fromCuboidWithElojel(int elojel, Cuboid r){
+        public static Cuboid fromCuboidWithElojel(int elojel, Cuboid r) {
             return new Cuboid(elojel, r.x1, r.x2, r.y1, r.y2, r.z1, r.z2);
         }
 
@@ -144,10 +144,10 @@ public class Day22Challenge02Beauty02 {
         }
 
         public long volume() {
-            long x = Math.abs((x2 - x1)+1);
-            long y = Math.abs((y2 - y1)+1);
-            long z = Math.abs((z2 - z1)+1);
-            return (elojel*1L) * x *y *z;
+            long x = Math.abs((x2 - x1) + 1);
+            long y = Math.abs((y2 - y1) + 1);
+            long z = Math.abs((z2 - z1) + 1);
+            return (elojel * 1L) * x * y * z;
         }
 
     }
@@ -165,7 +165,7 @@ public class Day22Challenge02Beauty02 {
 
         @Override
         public String toString() {
-            return (on? "on" : "off") + " x=" + x1 + ".." + x2 + ",y=" + y1 + ".." + y2 + ",z=" + z1 + ".." + z2;
+            return (on ? "on" : "off") + " x=" + x1 + ".." + x2 + ",y=" + y1 + ".." + y2 + ",z=" + z1 + ".." + z2;
         }
     }
 
