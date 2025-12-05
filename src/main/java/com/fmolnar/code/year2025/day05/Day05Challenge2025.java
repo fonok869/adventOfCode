@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class Day05Challenge2025 {
@@ -13,7 +14,7 @@ public class Day05Challenge2025 {
     public void calculate() throws IOException {
         List<String> lines = AdventOfCodeUtils.readFile("/2025/day05/input.txt");
 
-        Set<InterValleWithElojel> intervalls = new HashSet<>();
+        Set<IntervalWithSign> intervalls = new HashSet<>();
         boolean firstPart = true;
         int counter = 0;
         for (String line : lines) {
@@ -23,7 +24,7 @@ public class Day05Challenge2025 {
                 int index = line.indexOf('-');
                 Long start = Long.parseLong(line.substring(0, index));
                 Long end = Long.parseLong(line.substring(index + 1));
-                intervalls.add(new InterValleWithElojel(1, start, end));
+                intervalls.add(new IntervalWithSign(1, start, end));
             } else {
                 long value = Long.parseLong(line);
                 if (intervalls.stream().filter(intervalle -> intervalle.isInside(value)).findFirst().isPresent()) {
@@ -32,27 +33,15 @@ public class Day05Challenge2025 {
             }
         }
 
-        List<InterValleWithElojel> interValleWithElojels = withAllIntervals(intervalls);
-        System.out.println("Second: " + interValleWithElojels.stream().mapToLong(InterValleWithElojel::distance).sum());
-        System.out.println("Second: " + interValleWithElojels.stream().mapToLong(InterValleWithElojel::distance).sum());
+        List<IntervalWithSign> intervalWithSigns = withAllIntervals(intervalls);
         System.out.println("Number of intervalls: " + counter);
+        System.out.println("Second: " + intervalWithSigns.stream().mapToLong(IntervalWithSign::distance).sum());
     }
 
-    private List<InterValleWithElojel> withAllIntervals(Set<InterValleWithElojel> intervalls) {
-        List<InterValleWithElojel> allNews = new ArrayList<>();
-        for (InterValleWithElojel interval : intervalls) {
-            List<InterValleWithElojel> allNewIntervalls = new ArrayList<>();
-            if (allNews.isEmpty()) {
-
-            } else {
-                for (InterValleWithElojel inter : allNews) {
-                    InterValleWithElojel intersection = interval.getIntersection(inter);
-                    if (intersection != null) {
-                        allNewIntervalls.add(intersection);
-                    }
-                }
-                allNews.addAll(allNewIntervalls);
-            }
+    private List<IntervalWithSign> withAllIntervals(Set<IntervalWithSign> intervals) {
+        List<IntervalWithSign> allNews = new ArrayList<>();
+        for (IntervalWithSign interval : intervals) {
+            allNews.addAll(allNews.stream().map(interval::getIntersection).filter(Objects::nonNull).toList());
             allNews.add(interval);
         }
         return allNews;
@@ -60,10 +49,10 @@ public class Day05Challenge2025 {
 
 }
 
-record InterValleWithElojel(int elojel, long start, long end) {
-    InterValleWithElojel getIntersection(InterValleWithElojel inter) {
+record IntervalWithSign(int sign, long start, long end) {
+    IntervalWithSign getIntersection(IntervalWithSign inter) {
         if (inter.end < start || end < inter.start) return null;
-        return new InterValleWithElojel(-1 * elojel * inter.elojel, Math.max(start, inter.start()), Math.min(end, inter.end()));
+        return new IntervalWithSign(-1 * sign * inter.sign, Math.max(start, inter.start()), Math.min(end, inter.end()));
     }
 
     public boolean isInside(long value) {
@@ -71,6 +60,6 @@ record InterValleWithElojel(int elojel, long start, long end) {
     }
 
     public long distance() {
-        return elojel * ((end - start) + 1);
+        return sign * ((end - start) + 1);
     }
 }
