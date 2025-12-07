@@ -40,16 +40,17 @@ public class Day05Challenge2025 {
 
     private List<IntervalWithSign> withAllIntervals(Set<IntervalWithSign> intervals) {
         List<IntervalWithSign> allNews = new ArrayList<>();
-        for (IntervalWithSign interval : intervals) {
+        intervals.forEach(interval -> {
             allNews.addAll(allNews.stream().map(interval::getIntersection).filter(Objects::nonNull).toList());
             allNews.add(interval);
-        }
+        });
         return allNews;
     }
 
 }
 
 record IntervalWithSign(int sign, long start, long end) {
+
     IntervalWithSign getIntersection(IntervalWithSign inter) {
         if (inter.end < start || end < inter.start) return null;
         return new IntervalWithSign(-1 * sign * inter.sign, Math.max(start, inter.start()), Math.min(end, inter.end()));
