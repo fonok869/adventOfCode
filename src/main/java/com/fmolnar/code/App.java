@@ -1,7 +1,7 @@
 package com.fmolnar.code;
 
 
-import com.fmolnar.code.year2025.day09.Day09Challenge2025;
+import com.fmolnar.code.year2025.day10.Day10Challenge2025;
 
 import java.io.IOException;
 
@@ -29,9 +29,11 @@ public class App {
 //        Day08Challenge2025 day08Challenge2025 = new Day08Challenge2025();
 //        day08Challenge2025.calculate();
 
-        Day09Challenge2025 day = new Day09Challenge2025();
-        day.calculate();
+//        Day09Challenge2025 day = new Day09Challenge2025();
+//        day.calculate();
 
+        Day10Challenge2025 day10Challenge2025 = new Day10Challenge2025();
+        day10Challenge2025.calculate();
 
     }
 
