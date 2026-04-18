@@ -4,7 +4,8 @@ public class TwoArraysMerge {
 
     // Problem: Given two sorted arrays, merge them into a single sorted array.
     int[] merging(int[] merge1, int[] merge2) {
-        int m1 = 0, m2 = 0;
+        int m1 = 0;
+        int m2 = 0;
         int m = 0;
         int[] sum = new int[merge1.length + merge2.length];
         while (m1 < merge1.length && m2 < merge2.length) {
